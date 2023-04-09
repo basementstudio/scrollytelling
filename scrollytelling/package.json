@@ -1,0 +1,34 @@
+{
+  "name": "@bsmnt/scrollytelling",
+  "author": "JB <jb@basement.studio>",
+  "version": "0.0.1",
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "source": "./src/index.ts",
+  "sideEffects": false,
+  "scripts": {
+    "dev": "yarn build --watch",
+    "build": "tsup ./src/index.ts --format esm,cjs --dts"
+  },
+  "peerDependencies": {
+    "gsap": ">=3",
+    "react": ">=18",
+    "react-dom": ">=18"
+  },
+  "dependencies": {
+    "@radix-ui/react-portal": ">=1",
+    "@radix-ui/react-slot": ">=1"
+  },
+  "devDependencies": {
+    "@types/react": "^18.0.17",
+    "@types/react-dom": "^18.0.6",
+    "gsap": "^3.11.5",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "tsconfig": "*",
+    "tsup": "^6.2.3",
+    "type-fest": "^3.0.0",
+    "typescript": "^4.8.4"
+  }
+}

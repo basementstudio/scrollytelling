@@ -1,0 +1,32 @@
+{
+  "name": "scrollytelling",
+  "namespace": "@bsmnt",
+  "private": true,
+  "version": "0.0.0",
+  "workspaces": [
+    "website",
+    "scrollytelling",
+    "internal/*"
+  ],
+  "scripts": {
+    "build": "turbo run build",
+    "build:packages": "turbo run build --filter=@bsmnt/scrollytelling",
+    "dev": "turbo run dev --parallel",
+    "lint": "turbo run lint",
+    "generate": "turbo run generate",
+    "format": "prettier --write \"**/*.{ts,tsx,md}\"",
+    "version:packages": "yarn changeset version",
+    "release": "yarn build:packages && yarn changeset publish"
+  },
+  "devDependencies": {
+    "@changesets/cli": "^2.22.0",
+    "eslint-config-custom": "*",
+    "prettier": "latest",
+    "turbo": "latest"
+  },
+  "engines": {
+    "node": "16.x"
+  },
+  "dependencies": {},
+  "packageManager": "yarn@1.22.19"
+}
