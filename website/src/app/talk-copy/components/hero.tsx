@@ -1,3 +1,4 @@
+"use client";
 import * as React from "react";
 import * as Scrollytelling from "@bsmnt/scrollytelling";
 import { ScrollToWaypointTest } from "./scroll-to-waypoint-test";
