@@ -1,3 +1,4 @@
+"use client";
 /* eslint-disable @next/next/no-img-element */
 import { Yellowtail } from "next/font/google";
 import { projects } from "./fix-studio/projects";
