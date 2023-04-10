@@ -24,9 +24,6 @@
     "prettier": "latest",
     "turbo": "latest"
   },
-  "engines": {
-    "node": "16.x"
-  },
   "dependencies": {},
   "packageManager": "yarn@1.22.19"
 }
