@@ -12,7 +12,7 @@
   "dependencies": {
     "@bsmnt/scrollytelling": "*",
     "clsx": "^1.2.1",
-    "gsap": "^3.11.5",
+    "gsap": "./src/lib/gsap/gsap-bonus.tgz",
     "next": "^13.3.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
