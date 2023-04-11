@@ -1,7 +1,7 @@
 "use client";
 
 import * as Scrollytelling from "@bsmnt/scrollytelling";
-import { gsap } from "../../../lib/gsap";
+import { gsap, MorphSVGPlugin, SplitText } from "../../../lib/gsap";
 import { useIsoLayoutEffect } from "../../hooks/use-iso-layout-effect";
 import { Header } from "../header";
 
@@ -59,9 +59,15 @@ export const Hero = () => {
 
     // timeline.play();
   }, []);
+
   return (
     <>
       <Header />
+
+      <Scrollytelling.RegisterGsapPlugins
+        plugins={[MorphSVGPlugin, SplitText]}
+      />
+
       <Scrollytelling.Root>
         <Scrollytelling.Pin
           childHeight={"80vh"}
@@ -167,9 +173,9 @@ export const Hero = () => {
                     />
                     <path
                       fill="#fff"
-                      fill-rule="evenodd"
+                      fillRule="evenodd"
                       d="M1149.14 3h-72.5v18.125h-18.12v18.124h-18.13v54.374h18.13v18.125h18.12v18.124h18.13v18.125h18.12v18.124h18.13v18.125h18.12v36.249h-18.12v18.125h-72.5v-18.125h-18.13v-36.249h-18.12v36.249h-18.13v36.249h18.13v-36.249h18.12v18.125h18.13v18.124h90.62V238.62h18.13v-18.125h18.12v-54.374h-18.12v-18.124h-18.13v-18.125h-18.12v-18.124h-18.13V93.623h-18.12V75.498h-18.13V39.25h18.13V21.125h54.37v18.124h18.13V75.5h18.12v-36.25h18.13V3h-18.13v36.25h-18.12V21.124h-18.13V3Zm344.23 0h-72.5v18.125h18.12v54.373h-18.12v54.374h-108.75V75.498h18.13V21.125h18.12V3h-72.5v18.125H1294v54.373h-18.13v72.499h-18.12v54.374h-18.13v36.249h-18.12v18.124h72.5V238.62h-18.13v-36.249H1294v-54.374h108.74v54.374h-18.12v36.249h-18.13v18.124h72.5V238.62h-18.12v-36.249h18.12v-54.374h18.13V75.498h18.12V21.125h18.13V3Zm54.37 0h72.5v18.125h-18.13v54.373h-18.12v54.374h-18.12v72.499h-18.13v36.249h18.13v18.124h-72.5V238.62h18.12v-36.249h18.13v-72.499h18.12V75.498h18.13V21.125h-18.13V3ZM1856 3h-199.37v36.25h-18.12v18.124h18.12V39.249h18.12V21.125h54.38v54.373H1711v72.499h-18.12v54.374h-18.13v36.249h-18.12v18.124h72.5V238.62H1711v-36.249h18.13v-54.374h18.12V75.498h18.13V21.125h72.5v18.124h-18.13v18.125h18.13V39.249H1856V3Zm-55 183h27.54v24h27v24h-27v23H1801v-23h-27v-24h27v-24Zm27 47v-23h-26.46v23H1828Z"
-                      clip-rule="evenodd"
+                      clipRule="evenodd"
                     />
                   </svg>
                 </div>
