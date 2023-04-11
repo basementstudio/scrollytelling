@@ -22,7 +22,7 @@ export const mapItemsToCylinder = <T,>(
 
   const cylinderRadius = 240;
   /* Bigger number, more visible */
-  const visibleRangeFactor = 5;
+  const visibleRangeFactor = 3;
   const availableRadians = Math.PI / 1.25;
   const itemDuration = 1 / relevantArrayLength;
   const opacityDiminishFactor = 0.5;
