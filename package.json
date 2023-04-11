@@ -21,8 +21,8 @@
   "devDependencies": {
     "@changesets/cli": "^2.22.0",
     "eslint-config-custom": "*",
-    "prettier": "latest",
-    "turbo": "latest"
+    "prettier": "2.5.1",
+    "turbo": "1.9.0"
   },
   "dependencies": {},
   "packageManager": "yarn@1.22.19"
