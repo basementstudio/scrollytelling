@@ -54,6 +54,7 @@
     height: tovw(115px);
     // right: 0;
     position: relative;
+    transform-origin: left center;
   }
 
   .svg-that {
@@ -61,5 +62,6 @@
     height: tovw(115px);
     margin-right: tovw(70px);
     position: relative;
+    transform-origin: left center;
   }
 }
