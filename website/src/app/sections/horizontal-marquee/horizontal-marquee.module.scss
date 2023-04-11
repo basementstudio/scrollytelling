@@ -1,0 +1,41 @@
+@import "../../css/helpers";
+
+.section {
+  height: 800vh;
+  position: relative;
+}
+
+.pinned {
+  height: 100vh;
+  position: sticky;
+  top: 0;
+  overflow: hidden;
+  display: flex;
+  justify-content: flex-end;
+
+  --svg-width: #{tovw(674px)};
+
+  --right: calc(50vw - var(--svg-width) / 2);
+}
+
+.animated {
+  height: 100vh;
+  position: absolute;
+  right: var(--right);
+
+  display: flex;
+  align-items: center;
+  width: fit-content;
+  white-space: nowrap;
+  font-weight: 900;
+  font-size: tovw(500px);
+
+  cursor: default;
+  user-select: none;
+}
+
+.worldSvg {
+  width: var(--svg-width);
+  height: tovw(467px);
+  margin-left: tovw(80px);
+}
