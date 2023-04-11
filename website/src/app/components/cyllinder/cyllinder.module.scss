@@ -35,16 +35,15 @@
       }
 
       .image {
-        transition-property: opacity transform;
-        transition-duration: 0.25s;
-        transition-timing-function: ease-out;
+        --scale: 1.8;
+
         opacity: 0;
         border-radius: tovw(8px);
         z-index: -1;
         position: absolute;
         top: 50%;
         left: 50%;
-        transform: translate(-50%, -50%) scale(0.9);
+        transform: translate(-50%, -50%) scale(var(--scale));
         border: 1px solid rgba(255, 255, 255, 0.4);
         max-width: none;
       }
@@ -52,8 +51,12 @@
       &[data-state='active'] {
         z-index: 1;
         .image {
+          --transition-duration: 0.4s;
+          --scale: 1;
+
+          transition: transform var(--transition-duration) var(--custom-ease-out),
+                      opacity var(--transition-duration) ease-in-out;
           opacity: 1;
-          transform: translate(-50%, -50%) scale(1);
         }
       }
     }
