@@ -18,6 +18,7 @@ export default function HomePage() {
       {/* end fonts preview */}
 
       <Hero />
+      <p style={{ fontWeight: 900, fontSize: "5vw" }}>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Distinctio, eius, perspiciatis esse animi quaerat nihil facere blanditiis eos ducimus fugiat deserunt nesciunt eveniet odio porro provident iure ut praesentium. Ea.</p>
       <FallingCaps />
       <HorizontalMarquee />
       <LastParallax />

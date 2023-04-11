@@ -1,41 +1,65 @@
 @import "../../css/helpers";
 
 .section {
+  padding-top: tovw(28px);
   height: calc(100vh - var(--header-height));
-  background: red;
 }
 
 .content {
   display: grid;
   grid-template-columns: 1fr;
-  grid-template-rows: repeat(4, 1fr);
+  row-gap: tovw(40px);
+  grid-template-rows: repeat(4, auto);
+
+  div:nth-child(3) {
+    height: tovw(115px);
+  }
 }
 
 .svg__container {
   position: relative;
   display: flex;
-  align-items: center;
-  justify-content: space-between;
+  align-items: flex-start;
   width: 100%;
   height: tovw(183px);
 
+  
+
   svg {
     position: absolute;
-    // width: 50vw;
   }
-}
 
-.svg-we {
-  top: 0;
-  left: 0;
-  width: tovw(543px);
-  height: tovw(183px);
-}
+  .svg-we {
+    top: 0;
+    left: 0;
+    width: tovw(543px);
+    height: tovw(183px);
+  }
 
-.svg-make {
-  right: 0.85vw;
-  bottom: 0;
-  width: tovw(924px);
-  height: tovw(183px);
-  transform-origin: center bottom;
+  .svg-make {
+    right: 0;
+    bottom: 0;
+    width: tovw(924px);
+    height: tovw(183px);
+    transform-origin: center bottom;
+  }
+
+  .svg-coolshit {
+    width: tovw(1856px);
+    height: tovw(257px);
+  }
+
+  .svg-performs {
+    width: tovw(1118px);
+    height: tovw(115px);
+    // right: 0;
+    position: relative;
+  }
+
+  .svg-that {
+    width: tovw(415px);
+    height: tovw(115px);
+    margin-right: tovw(70px);
+    position: relative;
+  }
 }

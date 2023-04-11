@@ -3,7 +3,7 @@ import { MorphSVGPlugin } from "gsap/dist/MorphSVGPlugin";
 import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
 import { SplitText } from "gsap/dist/SplitText";
 
-gsap.registerPlugin(CustomEase, MorphSVGPlugin, ScrollTrigger, SplitText);
+gsap.registerPlugin(MorphSVGPlugin, ScrollTrigger, SplitText);
 
 const GOLDEN_RATIO = (1 + Math.sqrt(5)) / 2;
 const RECIPROCAL_GR = 1 / GOLDEN_RATIO;
