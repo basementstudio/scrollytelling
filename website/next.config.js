@@ -5,6 +5,9 @@ const nextConfig = {
   reactStrictMode: false,
   swcMinify: true,
   experimental: { appDir: true },
+  images: {
+    domains: ["dummyimage.com"],
+  }
 };
 
 module.exports = (_phase, { defaultConfig: _ }) => {

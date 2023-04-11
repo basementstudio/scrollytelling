@@ -2,58 +2,81 @@
 import { gsap } from "gsap";
 import * as Scrollytelling from "@bsmnt/scrollytelling";
 import { useCallback } from "react";
+import Image from "next/image";
+
+import s from "./cyllinder.module.scss";
+import clsx from "clsx";
 
 const mapItemsToCylinder = <T,>(
   itemsArray: T[],
   callback: (
     item: T,
     props: {
-      idx: number,
-      y: number,
-      z: number,
-      rotationX: number,
-      opacity: number
+      data: {
+        idx: number
+        progress: number
+      }
+      y: number;
+      z: number;
+      rotationX: number;
+      opacity: number;
     }
   ) => any,
   progress: number
 ) => {
-  const relevantArrayLength = itemsArray.length - 1
+  const relevantArrayLength = itemsArray.length - 1;
   const arrayLength = itemsArray.length;
 
   const cylinderRadius = 240;
   /* Bigger number, more visible */
-  const visibleRangeFactor = 4;
-  const availableRadians = Math.PI;
-  const itemDuration = (1 / relevantArrayLength);
+  const visibleRangeFactor = 5;
+  const availableRadians = Math.PI / 1.25;
+  const itemDuration = 1 / relevantArrayLength;
+  const opacityDiminishFactor = 0.5;
 
   return itemsArray.map((item, idx) => {
     // Position is the center
     const itemPosition = idx * itemDuration;
 
     const distanceFromMarker = Math.abs(itemPosition - progress);
-    const transformedDistanceFromMarker = distanceFromMarker * (arrayLength / visibleRangeFactor);
+    const transformedDistanceFromMarker =
+      distanceFromMarker * (arrayLength / visibleRangeFactor);
     /*
       This is the progress of the item.
       Goes from 0 to 1 as it approaches to the target, once it passes, back to 0
     */
-    const itemProgress = gsap.utils.clamp(0, 1, 1 - transformedDistanceFromMarker);
+    const itemProgress = gsap.utils.clamp(
+      0,
+      1,
+      1 - distanceFromMarker * arrayLength * 2
+    ); // Only changes once the box intersects the middle
+    const transformedProgress = gsap.utils.clamp(
+      0,
+      1,
+      1 - transformedDistanceFromMarker
+    );
 
     // Map elements over the cylinder
-    const offsetAngle = (progress) * availableRadians ;
+    const offsetAngle = progress * availableRadians;
     const angle = (idx / relevantArrayLength) * availableRadians - offsetAngle;
     const y = Math.sin(angle) * cylinderRadius;
     const z = Math.cos(angle) * cylinderRadius;
     const angleInDegrees = -((angle * 180) / Math.PI);
 
     return callback(item, {
-      idx,
+      data: {
+        progress: itemProgress,
+        idx
+      },
       y,
       z,
       rotationX: angleInDegrees,
-      opacity: itemProgress
-    })
+      opacity: transformedProgress * opacityDiminishFactor
+    });
   });
-}
+};
+
+const progress = { value: 0 };
 
 export const Cyllinder = () => {
   const itemHeight = "7vh";
@@ -64,83 +87,79 @@ export const Cyllinder = () => {
     Math.max(itemsInViewAtOnce, experiments.length) + itemsPadding
   }`;
 
-  const animateCylinder = useCallback((st: ScrollTrigger) => {
-    const elements = document.querySelectorAll<HTMLDivElement>(
-      `[data-experiment]`
-    );
+  const animateCylinder = useCallback((progress: number) => {
+    const elements =
+      document.querySelectorAll<HTMLDivElement>(`[data-experiment]`);
 
-    mapItemsToCylinder(Array.from(elements), (element, { y, z, rotationX, opacity }) => {
-      gsap.set(element, {
-        rotateX: rotationX,
-        opacity: opacity,
-        y: y,
-        z: z,
-      });
-    }, st.progress);
-  }, [])
+    mapItemsToCylinder(
+      Array.from(elements),
+      (element, { y, z, rotationX, opacity, data }) => {
+        gsap.set(element, {
+          rotateX: rotationX,
+          opacity: data.progress === 0 ? opacity : 1,
+          y: y,
+          z: z,
+          attr: { ["data-state"]: data.progress != 0 ? "active" : "disabled" }
+        });
+      },
+      progress
+    );
+  }, []);
 
   return (
     <Scrollytelling.Root
+      scrub={0.75}
       callbacks={{
-        onRefresh: animateCylinder,
-        onUpdate: animateCylinder
+        onRefresh: () => animateCylinder(progress.value),
       }}
       end="bottom bottom"
-      //   end="+=300%"
-      debug
     >
       <div
-        className="flex justify-center"
+        className={s["section"]}
         style={{
           height: pinSpacerHeight,
         }}
       >
         <div
-          className="sticky top-0 py-[50vh] w-full"
+          className={s["pin"]}
           style={{
             height: itemContainerHeight,
           }}
         >
-          <Scrollytelling.Animation
-            tween={{
-              start: 0,
-              end: 100,
-              to: {
-                yPercent: -100,
-                ease: "linear",
-              },
-            }}
-          >
-            <div className="relative flex flex-col w-full" style={{ perspective: "700px" }}>
-              <span style={{width: '100%', height: 1, background: "red"}} />
-              {experiments.map((experiment, i) => {
-                return (
-                  <Scrollytelling.Animation
-                    tween={{ start: 0, end: 0, to: {} }}
-                    key={i}
-                  >
-                    <div style={{
-                      position: "absolute",
-                      left: "50%",
-                      transform: `translate(-50%, -50%) scale(0.7)`,
-                      opacity: 0
-                    }} data-experiment={i} key={i}>
-                      <h2
-                        className="font-bold text-center whitespace-nowrap"
-                        style={{
+          <div className={s["cyllinder"]}>
+            {/* Just for debug purposes */}
+            {/* <span style={{ width: "100%", height: 1, background: "red" }} /> */}
 
-                          fontSize: "6vw",
-                          fontFamily: "basement grotesque",
-                        }}
-                      >
-                        {experiment.title}
-                      </h2>
-                    </div>
-                  </Scrollytelling.Animation>
-                );
-              })}
-            </div>
-          </Scrollytelling.Animation>
+            <Scrollytelling.Animation
+              tween={{
+                start: 0,
+                end: 100,
+                target: progress,
+                to: {
+                  value: 1,
+                  onUpdate: () => animateCylinder(progress.value),
+                },
+              }}
+            />
+
+            {experiments.map((experiment, i) => {
+              return (
+                <div className={s["item"]} data-experiment={i} key={i}>
+                  <h2 className={s["title"]}>
+                    <Image
+                      className={clsx("image", s["image"])}
+                      src={"https://dummyimage.com/760x496/000000/ffffff"}
+                      width={760}
+                      height={496}
+                      alt={"dummy image"}
+                    />
+
+                    {experiment.title}
+                  </h2>
+                </div>
+              );
+            })}
+          </div>
         </div>
       </div>
     </Scrollytelling.Root>

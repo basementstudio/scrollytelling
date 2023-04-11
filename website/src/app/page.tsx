@@ -1,3 +1,4 @@
+import { Cyllinder } from "./components/cyllinder";
 import { FallingCaps } from "./sections/falling-caps";
 import { Footer } from "./sections/footer";
 import { Hero } from "./sections/hero";
@@ -20,6 +21,7 @@ export default function HomePage() {
       <Hero />
       <FallingCaps />
       <HorizontalMarquee />
+      <Cyllinder />
       <LastParallax />
       <MysteriousSection />
       <Footer />

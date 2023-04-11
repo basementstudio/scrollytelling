@@ -1,0 +1,61 @@
+@import '../../css/helpers';
+
+.section {
+  display: flex;
+  justify-content: center;
+
+  .pin {
+    position: sticky;
+    top: 0;
+    padding-top: 50vh;
+    width: 100%;
+  }
+
+  .cyllinder {
+    position: relative;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    perspective: 700px;
+
+    .item {
+      position: absolute;
+      left: 50%;
+      transform: translate(-50%, -50%) scale(0.7);
+      opacity: 0;
+
+      .title {
+        isolation: isolate;
+        width: 100%;
+        position: relative;
+        font-weight: 900;
+        text-align: center;
+        white-space: nowrap;
+        font-size: 3.5vw;
+      }
+
+      .image {
+        transition-property: opacity transform;
+        transition-duration: 0.25s;
+        transition-timing-function: ease-out;
+        opacity: 0;
+        border-radius: tovw(8px);
+        z-index: -1;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%) scale(0.9);
+        border: 1px solid rgba(255, 255, 255, 0.4);
+        max-width: none;
+      }
+
+      &[data-state='active'] {
+        z-index: 1;
+        .image {
+          opacity: 1;
+          transform: translate(-50%, -50%) scale(1);
+        }
+      }
+    }
+  }
+}
