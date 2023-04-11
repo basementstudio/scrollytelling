@@ -1,4 +1,4 @@
-import { Cyllinder } from "./components/cyllinder";
+import { Cyllinder, Experiment } from "./components/cyllinder";
 import { FallingCaps } from "./sections/falling-caps";
 import { Footer } from "./sections/footer";
 import { Hero } from "./sections/hero";
@@ -6,7 +6,16 @@ import { HorizontalMarquee } from "./sections/horizontal-marquee";
 import { LastParallax } from "./sections/last-parallax";
 import { MysteriousSection } from "./sections/mysterious";
 
-export default function HomePage() {
+export default async function HomePage() {
+  const experiments = await fetch(
+    "https://lab.basement.studio/experiments.json",
+    { next: { revalidate: 1 } }
+  ).then((res) => res.json());
+
+  const filteredExperiments = experiments.filter(
+    (experiment: any) => experiment.og !== null
+  ) as Experiment[];
+
   return (
     <main>
       {/* fonts preview: */}
@@ -21,7 +30,7 @@ export default function HomePage() {
       <Hero />
       <FallingCaps />
       <HorizontalMarquee />
-      <Cyllinder />
+      <Cyllinder experiments={filteredExperiments} />
       <LastParallax />
       <MysteriousSection />
       <Footer />
