@@ -1,8 +1,61 @@
 "use client";
 import { gsap } from "gsap";
 import * as Scrollytelling from "@bsmnt/scrollytelling";
+import { useCallback } from "react";
 
-export const Cillinder = () => {
+const mapItemsToCylinder = <T,>(
+  itemsArray: T[],
+  callback: (
+    item: T,
+    props: {
+      idx: number,
+      y: number,
+      z: number,
+      rotationX: number,
+      opacity: number
+    }
+  ) => any,
+  progress: number
+) => {
+  const relevantArrayLength = itemsArray.length - 1
+  const arrayLength = itemsArray.length;
+
+  const cylinderRadius = 240;
+  /* Bigger number, more visible */
+  const visibleRangeFactor = 4;
+  const availableRadians = Math.PI;
+  const itemDuration = (1 / relevantArrayLength);
+
+  return itemsArray.map((item, idx) => {
+    // Position is the center
+    const itemPosition = idx * itemDuration;
+
+    const distanceFromMarker = Math.abs(itemPosition - progress);
+    const transformedDistanceFromMarker = distanceFromMarker * (arrayLength / visibleRangeFactor);
+    /*
+      This is the progress of the item.
+      Goes from 0 to 1 as it approaches to the target, once it passes, back to 0
+    */
+    const itemProgress = gsap.utils.clamp(0, 1, 1 - transformedDistanceFromMarker);
+
+    // Map elements over the cylinder
+    const offsetAngle = (progress) * availableRadians ;
+    const angle = (idx / relevantArrayLength) * availableRadians - offsetAngle;
+    const y = Math.sin(angle) * cylinderRadius;
+    const z = Math.cos(angle) * cylinderRadius;
+    const angleInDegrees = -((angle * 180) / Math.PI);
+
+    return callback(item, {
+      idx,
+      y,
+      z,
+      rotationX: angleInDegrees,
+      opacity: itemProgress
+    })
+  });
+}
+
+export const Cyllinder = () => {
   const itemHeight = "7vh";
   const itemsInViewAtOnce = 7;
   const itemsPadding = 4;
@@ -11,29 +64,26 @@ export const Cillinder = () => {
     Math.max(itemsInViewAtOnce, experiments.length) + itemsPadding
   }`;
 
+  const animateCylinder = useCallback((st: ScrollTrigger) => {
+    const elements = document.querySelectorAll<HTMLDivElement>(
+      `[data-experiment]`
+    );
+
+    mapItemsToCylinder(Array.from(elements), (element, { y, z, rotationX, opacity }) => {
+      gsap.set(element, {
+        rotateX: rotationX,
+        opacity: opacity,
+        y: y,
+        z: z,
+      });
+    }, st.progress);
+  }, [])
+
   return (
     <Scrollytelling.Root
       callbacks={{
-        onUpdate: (st) => {
-          // const maxItemsInView = 7;
-          const itemDuration = 100 / experiments.length;
-          const itemCenter = itemDuration / 2;
-
-          experiments.forEach((experiment, i) => {
-            const element = document.querySelector<HTMLDivElement>(
-              `[data-experiment="${i}"]`
-            );
-            const h2 = element?.querySelector("h2");
-            if (!element || !h2) return;
-            const itemPosition = (i + 1) * itemDuration - itemCenter;
-            const itemProgress = itemPosition / 100 - st.progress;
-
-            const opacity = 1 - Math.abs(itemProgress * 3);
-            const scale = 1 - Math.abs(itemProgress * 1.4);
-            const y = itemProgress * -250;
-            gsap.set(element, { opacity, scale, y });
-          });
-        },
+        onRefresh: animateCylinder,
+        onUpdate: animateCylinder
       }}
       end="bottom bottom"
       //   end="+=300%"
@@ -46,7 +96,7 @@ export const Cillinder = () => {
         }}
       >
         <div
-          className="sticky top-0 py-[50vh] overflow-hidden"
+          className="sticky top-0 py-[50vh] w-full"
           style={{
             height: itemContainerHeight,
           }}
@@ -61,20 +111,32 @@ export const Cillinder = () => {
               },
             }}
           >
-            <div className="flex flex-col">
+            <div className="relative flex flex-col w-full" style={{ perspective: "700px" }}>
+              <span style={{width: '100%', height: 1, background: "red"}} />
               {experiments.map((experiment, i) => {
                 return (
-                  <div data-experiment={i} key={i}>
-                    <h2
-                      className="font-bold text-center"
-                      style={{
-                        fontSize: "6vw",
-                        fontFamily: "basement grotesque",
-                      }}
-                    >
-                      {experiment.title}
-                    </h2>
-                  </div>
+                  <Scrollytelling.Animation
+                    tween={{ start: 0, end: 0, to: {} }}
+                    key={i}
+                  >
+                    <div style={{
+                      position: "absolute",
+                      left: "50%",
+                      transform: `translate(-50%, -50%) scale(0.7)`,
+                      opacity: 0
+                    }} data-experiment={i} key={i}>
+                      <h2
+                        className="font-bold text-center whitespace-nowrap"
+                        style={{
+
+                          fontSize: "6vw",
+                          fontFamily: "basement grotesque",
+                        }}
+                      >
+                        {experiment.title}
+                      </h2>
+                    </div>
+                  </Scrollytelling.Animation>
                 );
               })}
             </div>
