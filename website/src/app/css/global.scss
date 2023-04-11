@@ -10,6 +10,9 @@
   --color-black: #000;
   --color-white: #efefef;
   --color-orange: #ff4d00;
+
+  // Layout
+  --header-height: #{tovw(152px, 'desktop-large')}
 }
 
 html {
@@ -41,4 +44,9 @@ body:not(.user-is-tabbing) input:focus,
 body:not(.user-is-tabbing) select:focus,
 body:not(.user-is-tabbing) textarea:focus {
   outline: none;
+}
+
+.wrapper {
+  width: 100%;
+  padding: 0 tovw(32px);
 }
