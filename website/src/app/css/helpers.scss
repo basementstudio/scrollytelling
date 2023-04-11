@@ -1,0 +1,53 @@
+@use "sass:string";
+@use "sass:math";
+
+/* stylelint-disable-next-line number-max-precision */
+$golden-ratio: 1.6180339887498948482;
+$reciprocal-golden-ratio: 1 / $golden-ratio;
+$duration: $reciprocal-golden-ratio * 1.2;
+
+@function tovw($target, $context: 1920px, $min: "placeholder") {
+  @if $context == "desktop-large" {
+    $context: 1920px;
+  }
+
+  @if $context == "desktop" {
+    $context: 1440px;
+  }
+
+  @if $context == "tablet" {
+    $context: 620px;
+  }
+
+  @if $context == "mobile" {
+    $context: 375px;
+  }
+
+  @if $target == 0 {
+    @return 0;
+  }
+
+  @if $min != "placeholder" {
+    @return string.unquote(
+      "max(" + $min + ", " + (math.div($target, $context) * 100) + "vw)"
+    );
+  }
+
+  @return string.unquote((math.div($target, $context) * 100) + "vw");
+}
+
+@function torem($target, $context: 16px) {
+  @if $target == 0 {
+    @return 0;
+  }
+
+  @return math.div($target, $context) + 0rem;
+}
+
+@function toem($target, $context) {
+  @if $target == 0 {
+    @return 0;
+  }
+
+  @return math.div($target, $context) + 0em;
+}

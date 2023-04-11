@@ -1,0 +1,44 @@
+@import "./helpers";
+@import "./reset.css";
+
+:root {
+  --font-system: -apple-system, blinkmacsystemfont, segoe ui, roboto, oxygen,
+    ubuntu, cantarell, fira sans, droid sans, helvetica neue, sans-serif;
+  --inspect-color: #f00;
+
+  // colors
+  --color-black: #000;
+  --color-white: #efefef;
+  --color-orange: #ff4d00;
+}
+
+html {
+  line-height: 1.5;
+  box-sizing: border-box;
+  text-rendering: geometricprecision;
+  -webkit-text-size-adjust: 100%;
+  -webkit-font-smoothing: antialiased;
+  -webkit-font-smoothing: subpixel-antialiased;
+  -moz-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+  // tweak if site is light mode.
+  color-scheme: dark;
+  background-color: black;
+}
+
+body {
+  font-family: var(--font-basement-grotesque, var(--font-system));
+  transition: opacity #{$duration / 3 + "s"} ease-in;
+}
+
+body.inspect * {
+  outline: 1px solid var(--inspect-color) !important;
+}
+
+body:not(.user-is-tabbing) button:focus,
+body:not(.user-is-tabbing) input:focus,
+body:not(.user-is-tabbing) select:focus,
+body:not(.user-is-tabbing) textarea:focus {
+  outline: none;
+}
