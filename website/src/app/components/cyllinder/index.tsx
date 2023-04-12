@@ -8,18 +8,19 @@ import clsx from "clsx";
 import { defaultConfig, useMapToCylinder } from "./helpers";
 import { Experiment } from "../../../lib/types";
 import { useMedia } from "../../../hooks/use-media";
+import Link from "next/link";
 
 const progress = { value: 0 };
 
 type CyllinderProps = {
   experiments: Experiment[];
-}
+};
 
 const itemHeight = "7vh";
 const itemsInViewAtOnce = 7;
 const itemsPadding = 4;
 
-export const Cyllinder: React.FC<CyllinderProps> = ({experiments}) => {
+export const Cyllinder: React.FC<CyllinderProps> = ({ experiments }) => {
   const isMobileSize = useMedia("(max-width: 768px)");
   const pinSpacerHeight = `calc(3 * ${itemHeight} * ${
     Math.max(itemsInViewAtOnce, experiments.length) + itemsPadding
@@ -33,13 +34,15 @@ export const Cyllinder: React.FC<CyllinderProps> = ({experiments}) => {
         opacity: data.progress === 0 ? opacity : 1,
         y: y,
         z: z,
-        attr: { ["data-state"]: data.progress != 0 ? "active" : "disabled" }
+        attr: { ["data-state"]: data.progress != 0 ? "active" : "disabled" },
       });
     },
     config: {
-      availableRadians: isMobileSize ? defaultConfig.availableRadians / 2 : defaultConfig.availableRadians,
-    }
-  })
+      availableRadians: isMobileSize
+        ? defaultConfig.availableRadians / 2
+        : defaultConfig.availableRadians,
+    },
+  });
 
   return (
     <Scrollytelling.Root
@@ -55,9 +58,7 @@ export const Cyllinder: React.FC<CyllinderProps> = ({experiments}) => {
           height: pinSpacerHeight,
         }}
       >
-        <div
-          className={s["pin"]}
-        >
+        <div className={s["pin"]}>
           <div className={s["cyllinder"]}>
             <Scrollytelling.Animation
               tween={{
@@ -76,10 +77,12 @@ export const Cyllinder: React.FC<CyllinderProps> = ({experiments}) => {
 
               return (
                 <div className={s["item"]} data-experiment={i} key={i}>
-                  <h2 className={s["title"]}>
-                    {experiment.title}
-                  </h2>
-                  <div className={s['info']}>
+                  <h2 className={s["title"]}>{experiment.title}</h2>
+                  <div className={s["info"]}>
+                    <Link
+                      className={s["link"]}
+                      href={"https://lab.basement.studio" + experiment.href}
+                    >
                       {experiment.og && (
                         <Image
                           draggable={false}
@@ -91,9 +94,17 @@ export const Cyllinder: React.FC<CyllinderProps> = ({experiments}) => {
                           alt={"dummy image"}
                         />
                       )}
+                    </Link>
 
-                      {author?.name && <p className={s['credits']}><span>Made by</span> {author?.name}</p>}
-                    </div>
+                    {author?.name && (
+                      <p className={s["credits"]}>
+                        <span>Made by</span>{" "}
+                        <Link href={author.url} target="_blank" rel="noopener">
+                          {author?.name}
+                        </Link>
+                      </p>
+                    )}
+                  </div>
                 </div>
               );
             })}

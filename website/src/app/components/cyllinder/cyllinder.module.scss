@@ -38,17 +38,18 @@
         text-align: center;
         white-space: nowrap;
         font-size: 3.5vw;
+        pointer-events: none;
       }
 
       .credits {
         position: absolute;
-        font-size: tovw(16px, "desktop", 7px);
+        font-size: tovw(14px, "desktop", 7px);
         background: var(--color-white);
         color: rgba(0, 0, 0, 0.5);
         text-transform: uppercase;
         transform: translateX(-50%);
         margin-top: tovw(20px, "desktop", 10px);
-        padding: tovw(4px) tovw(4px);
+        padding: tovw(4px) tovw(5px);
         line-height: 1;
         border-radius: tovw(2px);
         left: 50%;
@@ -90,8 +91,16 @@
         z-index: 5;
       }
 
+      .link {
+        pointer-events: none;
+      }
+
       &[data-state='active'] {
         z-index: 10;
+
+        .link {
+          pointer-events: auto;
+        }
 
         .info {
           --scale: 1;
