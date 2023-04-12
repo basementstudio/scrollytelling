@@ -288,7 +288,7 @@ export const Hero = () => {
                       },
                       {
                         xPercent: 0,
-                        scaleY: 0.6,
+                        scaleY: 0.613,
                         ease: "linear",
                       },
                     ],
