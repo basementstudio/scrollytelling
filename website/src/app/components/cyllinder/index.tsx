@@ -15,14 +15,14 @@ type CyllinderProps = {
   experiments: Experiment[];
 }
 
+const itemHeight = "7vh";
+const itemsInViewAtOnce = 7;
+const itemsPadding = 4;
+
 export const Cyllinder: React.FC<CyllinderProps> = ({experiments}) => {
-  const itemHeight = "7vh";
-  const itemsInViewAtOnce = 7;
-  const itemsPadding = 4;
-  const itemContainerHeight = `calc(${itemHeight} * ${itemsInViewAtOnce}`;
   const pinSpacerHeight = `calc(3 * ${itemHeight} * ${
     Math.max(itemsInViewAtOnce, experiments.length) + itemsPadding
-  }`;
+  })`;
 
   const animateCylinder = useCallback((progress: number) => {
     const elements =
@@ -59,14 +59,8 @@ export const Cyllinder: React.FC<CyllinderProps> = ({experiments}) => {
       >
         <div
           className={s["pin"]}
-          style={{
-            height: itemContainerHeight,
-          }}
         >
           <div className={s["cyllinder"]}>
-            {/* Just for debug purposes */}
-            {/* <span style={{ width: "100%", height: 1, background: "red" }} /> */}
-
             <Scrollytelling.Animation
               tween={{
                 start: 0,

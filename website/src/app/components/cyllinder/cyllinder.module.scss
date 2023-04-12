@@ -5,9 +5,11 @@
   justify-content: center;
 
   .pin {
+    display: flex;
+    align-items: center;
     position: sticky;
+    height: 100vh;
     top: 0;
-    padding-top: 50vh;
     width: 100%;
   }
 
