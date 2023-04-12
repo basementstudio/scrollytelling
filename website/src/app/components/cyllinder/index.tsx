@@ -7,25 +7,9 @@ import Image from "next/image";
 import s from "./cyllinder.module.scss";
 import clsx from "clsx";
 import { mapItemsToCylinder } from "./helpers";
+import { Experiment } from "../../../lib/types";
 
 const progress = { value: 0 };
-
-export type Experiment = {
-  filename: string
-  title: string
-  href: string
-  tags: string[]
-  number: number
-  og: string | null
-  contributors: Array<{
-    id: string
-    url: string
-    name: string
-    avatarUrl: string
-    email: string
-    company: string
-  }>
-}
 
 type CyllinderProps = {
   experiments: Experiment[];
@@ -101,6 +85,7 @@ export const Cyllinder: React.FC<CyllinderProps> = ({experiments}) => {
                   <h2 className={s["title"]}>
                     {experiment.og && (
                       <Image
+                        draggable={false}
                         className={clsx("image", s["image"])}
                         src={experiment.og}
                         width={760}
@@ -121,64 +106,3 @@ export const Cyllinder: React.FC<CyllinderProps> = ({experiments}) => {
     </Scrollytelling.Root>
   );
 };
-
-// const experiments: {
-//   title: string;
-//   image: string;
-// }[] = [
-//   {
-//     title: "GRID BUMP",
-//     image:
-//       "https://images.ctfassets.net/coilcgtyhxyc/7aNUelMZ4GWFG52Un5ddaR/572eb8fd39c9f689e1a04f7e1ba39b10/Cover.jpg?w=2800&h=1575&fm=webp",
-//   },
-//   {
-//     title: "SVG GRADIENT",
-//     image:
-//       "https://images.ctfassets.net/coilcgtyhxyc/7aNUelMZ4GWFG52Un5ddaR/572eb8fd39c9f689e1a04f7e1ba39b10/Cover.jpg?w=2800&h=1575&fm=webp",
-//   },
-//   {
-//     title: "SCULPTURE GALLERY",
-//     image:
-//       "https://images.ctfassets.net/coilcgtyhxyc/7aNUelMZ4GWFG52Un5ddaR/572eb8fd39c9f689e1a04f7e1ba39b10/Cover.jpg?w=2800&h=1575&fm=webp",
-//   },
-//   {
-//     title: "HOLOGRAM WITH NORMALS",
-//     image:
-//       "https://images.ctfassets.net/coilcgtyhxyc/7aNUelMZ4GWFG52Un5ddaR/572eb8fd39c9f689e1a04f7e1ba39b10/Cover.jpg?w=2800&h=1575&fm=webp",
-//   },
-//   {
-//     title: "CD FOUND UNDER THE DESK",
-//     image:
-//       "https://images.ctfassets.net/coilcgtyhxyc/7aNUelMZ4GWFG52Un5ddaR/572eb8fd39c9f689e1a04f7e1ba39b10/Cover.jpg?w=2800&h=1575&fm=webp",
-//   },
-//   {
-//     title: "TRANSMISSION MATERIAL",
-//     image:
-//       "https://images.ctfassets.net/coilcgtyhxyc/7aNUelMZ4GWFG52Un5ddaR/572eb8fd39c9f689e1a04f7e1ba39b10/Cover.jpg?w=2800&h=1575&fm=webp",
-//   },
-//   {
-//     title: "3D CUPCAKE",
-//     image:
-//       "https://images.ctfassets.net/coilcgtyhxyc/7aNUelMZ4GWFG52Un5ddaR/572eb8fd39c9f689e1a04f7e1ba39b10/Cover.jpg?w=2800&h=1575&fm=webp",
-//   },
-//   {
-//     title: "HOLOGRAM WITH NORMALS",
-//     image:
-//       "https://images.ctfassets.net/coilcgtyhxyc/7aNUelMZ4GWFG52Un5ddaR/572eb8fd39c9f689e1a04f7e1ba39b10/Cover.jpg?w=2800&h=1575&fm=webp",
-//   },
-//   {
-//     title: "CD FOUND UNDER THE DESK",
-//     image:
-//       "https://images.ctfassets.net/coilcgtyhxyc/7aNUelMZ4GWFG52Un5ddaR/572eb8fd39c9f689e1a04f7e1ba39b10/Cover.jpg?w=2800&h=1575&fm=webp",
-//   },
-//   {
-//     title: "TRANSMISSION MATERIAL",
-//     image:
-//       "https://images.ctfassets.net/coilcgtyhxyc/7aNUelMZ4GWFG52Un5ddaR/572eb8fd39c9f689e1a04f7e1ba39b10/Cover.jpg?w=2800&h=1575&fm=webp",
-//   },
-//   {
-//     title: "3D CUPCAKE",
-//     image:
-//       "https://images.ctfassets.net/coilcgtyhxyc/7aNUelMZ4GWFG52Un5ddaR/572eb8fd39c9f689e1a04f7e1ba39b10/Cover.jpg?w=2800&h=1575&fm=webp",
-//   },
-// ];

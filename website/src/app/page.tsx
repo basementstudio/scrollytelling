@@ -1,10 +1,11 @@
-import { Cyllinder, Experiment } from "./components/cyllinder";
+import { Cyllinder } from "./components/cyllinder";
 import { FallingCaps } from "./sections/falling-caps";
 import { Footer } from "./sections/footer";
 import { Hero } from "./sections/hero";
 import { HorizontalMarquee } from "./sections/horizontal-marquee";
 import { LastParallax } from "./sections/last-parallax";
 import { MysteriousSection } from "./sections/mysterious";
+import { Experiment } from "../lib/types";
 
 export default async function HomePage() {
   const experiments = await fetch(
