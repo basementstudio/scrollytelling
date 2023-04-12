@@ -22,7 +22,7 @@ export function MacModel(props: JSX.IntrinsicElements["group"]) {
     "/models/Mac128k-light.glb"
   ) as GLTFResult;
 
-  const width = useThree((state) => state.viewport.width);
+  const width = useThree((state) => state.viewport.width); 
 
   return (
     <Float>

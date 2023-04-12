@@ -201,7 +201,7 @@ export const Hero = () => {
                     />
                     <Scrollytelling.Animation
                       tween={{
-                        start: 0,
+                        start: 20,
                         end: 100,
                         fromTo: [
                           {
@@ -228,7 +228,7 @@ export const Hero = () => {
                     </Scrollytelling.Animation>
                     <Scrollytelling.Animation
                       tween={{
-                        start: 0,
+                        start: 20,
                         end: 100,
                         fromTo: [
                           {
@@ -255,7 +255,7 @@ export const Hero = () => {
                     </Scrollytelling.Animation>
                     <Scrollytelling.Animation
                       tween={{
-                        start: 0,
+                        start: 20,
                         end: 100,
                         fromTo: [
                           {
@@ -426,35 +426,17 @@ export const Hero = () => {
                   110% to bring projects from a realm of ideas to reality
                   through branding, visual design & development of the highest
                   quality.
-                </p>
-                <Scrollytelling.Animation
-                  tween={{
-                    start: 0,
-                    end: 100,
-                    fromTo: [
-                      {
-                        scale: 1,
-                        yPercent: 0,
-                      },
-                      {
-                        ease: "linear",
-                        scale: 1.5,
-                        yPercent: 400,
-                      },
-                    ],
-                  }}
+                </p> 
+                <svg
+                  viewBox="0 0 24 12"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
                 >
-                  <svg
-                    viewBox="0 0 24 12"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M14 0.226562L24 6.00007L14 11.7736L14 7.00006L0 7.00006V5.00006L14 5.00007L14 0.226562Z"
-                      fill="white"
-                    />
-                  </svg>
-                </Scrollytelling.Animation>
+                  <path
+                    d="M14 0.226562L24 6.00007L14 11.7736L14 7.00006L0 7.00006V5.00006L14 5.00007L14 0.226562Z"
+                    fill="white"
+                  />
+                </svg>
                 <p>
                   We don&apos;t settle, we are intentional about building with
                   surgical precision and creating extraordinary experiences. We
