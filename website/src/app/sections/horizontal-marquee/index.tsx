@@ -5,47 +5,40 @@ import { forwardRef } from "react";
 
 export const HorizontalMarquee = () => {
   return (
-    <>
-      <Scrollytelling.Root end="bottom bottom">
-        <section className={s.section}>
-          <div className={s.pinned}>
-            <Scrollytelling.Animation
-              tween={{
-                start: 0,
-                end: 90,
-                from: { x: "92%", ease: "linear" },
-              }}
-            >
-              <div className={s.animated}>
-                <Scrollytelling.Animation
-                  tween={{
-                    start: 90,
-                    end: 100,
-                    to: { x: "-=50vw", ease: "linear" },
-                  }}
-                >
-                  <p>OUR WOR IS SERIOUS WE ARE NOT</p>
-                </Scrollytelling.Animation>
-                <Scrollytelling.Animation
-                  tween={{
-                    start: 90,
-                    end: 100,
-                    to: { scale: 1.35, ease: "linear" },
-                  }}
-                >
-                  <WorldSvg />
-                </Scrollytelling.Animation>
-              </div>
-            </Scrollytelling.Animation>
-          </div>
-        </section>
-      </Scrollytelling.Root>
-      <div
-        style={{
-          height: "200vh",
-        }}
-      />
-    </>
+    <Scrollytelling.Root end="bottom bottom">
+      <section className={s.section}>
+        <div className={s.pinned}>
+          <Scrollytelling.Animation
+            tween={{
+              start: 0,
+              end: 90,
+              from: { x: "92%", ease: "linear" },
+            }}
+          >
+            <div className={s.animated}>
+              <Scrollytelling.Animation
+                tween={{
+                  start: 90,
+                  end: 100,
+                  to: { x: "-=50vw", ease: "linear" },
+                }}
+              >
+                <p>OUR WOR IS SERIOUS WE ARE NOT</p>
+              </Scrollytelling.Animation>
+              <Scrollytelling.Animation
+                tween={{
+                  start: 90,
+                  end: 100,
+                  to: { scale: 1.35, ease: "linear" },
+                }}
+              >
+                <WorldSvg />
+              </Scrollytelling.Animation>
+            </div>
+          </Scrollytelling.Animation>
+        </div>
+      </section>
+    </Scrollytelling.Root>
   );
 };
 
