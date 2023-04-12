@@ -6,7 +6,7 @@ import { forwardRef } from "react";
 export const HorizontalMarquee = () => {
   return (
     <>
-      <Scrollytelling.Root end="bottom bottom" debug>
+      <Scrollytelling.Root end="bottom bottom">
         <section className={s.section}>
           <div className={s.pinned}>
             <Scrollytelling.Animation
