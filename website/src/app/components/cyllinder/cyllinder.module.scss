@@ -23,6 +23,7 @@
       left: 50%;
       transform: translate(-50%, -50%) scale(0.7);
       opacity: 0;
+      text-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
 
       .title {
         isolation: isolate;
@@ -45,7 +46,7 @@
         left: 50%;
         transform: translate(-50%, -50%) scale(var(--scale));
         border: 1px solid rgba(255, 255, 255, 0.4);
-        max-width: none;
+        max-width: 70vw;
       }
 
       &[data-state='active'] {
