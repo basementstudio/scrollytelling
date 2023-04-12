@@ -10,15 +10,15 @@ import { toVw } from "../../../lib/utils";
 import Link from "next/link";
 import { LogoBasement } from "../../logos/logo";
 import { Canvas } from "@react-three/fiber";
-import { OrbitControls, View } from "@react-three/drei";
+import { View } from "@react-three/drei";
 import { MacModel } from "./mac-model";
+import { useAppStore } from "../../../context/use-app-store";
 
 export const Hero = () => {
   const svgMakeRef = useRef<SVGSVGElement>(null);
   const svgWeRef = useRef<SVGSVGElement>(null);
-  const container = useRef<HTMLDivElement>(null!);
-  const tracking = useRef<HTMLDivElement>(null!);
-  const tracking2 = useRef<HTMLDivElement>(null!);
+  const containerRef = useRef<HTMLDivElement>(null!);
+  const trackingRef = useRef<HTMLDivElement>(null!);
 
   useIsoLayoutEffect(() => {
     if (!svgMakeRef.current || !svgWeRef.current) return;
@@ -131,12 +131,12 @@ export const Hero = () => {
           <p>I got the whole band set up in the basement & we are jamming.</p>
         </header>
 
-        <section className={s["section"]} ref={container}>
+        <section className={s["section"]} ref={containerRef}>
           <div
-            ref={tracking}
+            ref={trackingRef}
             style={{
-              width: toVw(500),
-              height: toVw(500),
+              width: toVw(500, 1920, 300),
+              height: toVw(500, 1920, 300),
               position: "absolute",
               zIndex: 100,
               top: "50%",
@@ -144,31 +144,19 @@ export const Hero = () => {
               transform: "translateY(-50%)",
             }}
           />
-          <div
-            ref={tracking2}
-            style={{
-              width: toVw(500),
-              height: toVw(500),
-              position: "absolute",
-              zIndex: 100,
-              top: "50%",
-              left: 0,
-              transform: "translateY(-50%)",
-            }}
-          />
           <Canvas
-            className="canvas"
-            eventSource={container}
             camera={{ position: [0, 0, 10], fov: 35 }}
+            className="canvas"
+            eventSource={containerRef}
+            onCreated={() => useAppStore.setState({ canvasLoaded: true })}
             gl={{
               alpha: true,
               antialias: true,
               powerPreference: "high-performance",
             }}
           >
-            <View track={tracking}>
+            <View track={trackingRef}>
               <MacModel />
-              <OrbitControls />
             </View>
           </Canvas>
 
@@ -218,13 +206,13 @@ export const Hero = () => {
                         fromTo: [
                           {
                             attr: {
-                              width: toVw(143),
+                              width: toVw(143, 1920, 70),
                             },
                           },
                           {
                             ease: "linear",
                             attr: {
-                              width: toVw(490),
+                              width: toVw(490, 1920, 490),
                             },
                           },
                         ],
@@ -245,13 +233,13 @@ export const Hero = () => {
                         fromTo: [
                           {
                             attr: {
-                              width: toVw(143),
+                              width: toVw(143, 1920, 70),
                             },
                           },
                           {
                             ease: "linear",
                             attr: {
-                              width: toVw(490),
+                              width: toVw(490, 1920, 490),
                             },
                           },
                         ],
@@ -272,13 +260,13 @@ export const Hero = () => {
                         fromTo: [
                           {
                             attr: {
-                              width: toVw(143),
+                              width: toVw(143, 1920, 70),
                             },
                           },
                           {
                             ease: "linear",
                             attr: {
-                              width: toVw(1440),
+                              width: toVw(1440, 1920, 1440),
                             },
                           },
                         ],

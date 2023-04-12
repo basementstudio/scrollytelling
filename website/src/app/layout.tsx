@@ -1,6 +1,7 @@
 import "./css/global.scss";
 import type { Metadata } from "next";
 import localFont from "next/font/local";
+import { Providers } from "./providers";
 
 const basementGrotesque = localFont({
   src: [
@@ -33,7 +34,9 @@ export default function RootLayout({
         ["--font-basement-grotesque" as string]: `${basementGrotesque.style.fontFamily}, var(--font-system), sans-serif`,
       }}
     >
-      <body>{children}</body>
+      <body>
+        <Providers>{children}</Providers>
+      </body>
     </html>
   );
 }

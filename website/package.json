@@ -20,7 +20,8 @@
     "next": "^13.3.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "three": "^0.151.3"
+    "three": "^0.151.3",
+    "zustand": "^4.3.7"
   },
   "devDependencies": {
     "@next/bundle-analyzer": "^12.2.5",
