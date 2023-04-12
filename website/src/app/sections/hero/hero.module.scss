@@ -36,7 +36,6 @@
   position: relative;
   overflow-x: hidden;
   padding-top: tovw(28px);
-  height: calc(100vh - var(--header-height));
 }
 
 .content {
@@ -55,9 +54,7 @@
   display: flex;
   align-items: flex-start;
   width: 100%;
-  height: tovw(183px);
-
-  
+  height: tovw(183px); 
 
   svg {
     position: absolute;

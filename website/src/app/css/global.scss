@@ -57,5 +57,6 @@ body:not(.user-is-tabbing) textarea:focus {
   left: 0; 
   width: 100vw !important; 
   height: 100vh !important;
+  z-index: 10;
 }
 
