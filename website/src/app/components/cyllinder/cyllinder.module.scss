@@ -42,12 +42,12 @@
 
       .credits {
         position: absolute;
-        font-size: tovw(16px);
+        font-size: tovw(16px, "desktop", 7px);
         background: var(--color-white);
         color: rgba(0, 0, 0, 0.5);
         text-transform: uppercase;
         transform: translateX(-50%);
-        margin-top: tovw(20px);
+        margin-top: tovw(20px, "desktop", 10px);
         padding: tovw(4px) tovw(4px);
         line-height: 1;
         border-radius: tovw(2px);
@@ -64,8 +64,8 @@
           position: absolute;
           top: 50%;
           left: 0;
-          width: tovw(6px);
-          height: tovw(9px);
+          width: tovw(6px, "desktop", 4px);
+          height: tovw(9px, "desktop", 6px);
           transform: translate(-700%, -50%);
           background-image: url("data:image/svg+xml,%3Csvg width='6' height='9' viewBox='0 0 6 9' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M5.59827 4.53004L0.0201411 8.99221L0.0201415 0.0678713L5.59827 4.53004Z' fill='%23EFEFEF'/%3E%3C/svg%3E%0A");
           background-repeat: no-repeat;
@@ -86,7 +86,7 @@
         position: absolute;
         top: 50%;
         left: 50%;
-        transform: translate(-50%, -50%) scale(var(--scale));
+        transform: translate3d(-50%, -50%, 0) scale(var(--scale));
         z-index: 5;
       }
 
