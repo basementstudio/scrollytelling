@@ -9,10 +9,14 @@ import { useRef } from 'react';
 import { toVw } from '../../../lib/utils';
 import Link from 'next/link';
 import { LogoBasement } from '../../logos/logo';
+import { Canvas } from '@react-three/fiber';
+import { OrbitControls, View } from '@react-three/drei';
 
 export const Hero = () => {
   const svgMakeRef = useRef<SVGSVGElement>(null);
   const svgWeRef = useRef<SVGSVGElement>(null);
+  const container = useRef<HTMLDivElement>(null!);
+  const tracking = useRef<HTMLDivElement>(null!);
 
   useIsoLayoutEffect(() => {
     if (!svgMakeRef.current || !svgWeRef.current) return;
@@ -111,7 +115,27 @@ export const Hero = () => {
           <p>I got the whole band set up in the basement & we are jamming.</p>
         </header>
 
-        <section className={s['section']}>
+        <section className={s['section']} ref={container}>
+          <div ref={tracking} style={{ width: toVw(450), height: toVw(450), position: 'absolute', zIndex: 20, top: '50%', transform: 'translateY(-50%)' }} />
+          <Canvas
+            className="canvas"
+            eventSource={container}
+            camera={{ position: [0, 0, 10] }}
+            gl={{
+              alpha: true,
+              antialias: true,
+              powerPreference: 'high-performance',
+            }}
+          >
+            <View track={tracking}>
+              <mesh scale={5}>
+                <planeGeometry />
+                <meshBasicMaterial color="turquoise" />
+              </mesh>
+              <OrbitControls />
+            </View>
+          </Canvas>
+
           <div className="wrapper">
             <div className={s['content']}>
               <div className={s['svg__container']}>

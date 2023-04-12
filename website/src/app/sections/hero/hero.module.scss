@@ -33,6 +33,7 @@
 }
 
 .section {
+  position: relative;
   overflow-x: hidden;
   padding-top: tovw(28px);
   height: calc(100vh - var(--header-height));

@@ -50,3 +50,12 @@ body:not(.user-is-tabbing) textarea:focus {
   width: 100%;
   padding: 0 tovw(32px);
 }
+
+.canvas {
+  position: fixed !important;
+  top: 0;
+  left: 0; 
+  width: 100vw !important; 
+  height: 100vh !important;
+}
+
