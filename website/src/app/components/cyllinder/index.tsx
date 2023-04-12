@@ -1,13 +1,13 @@
 "use client";
 import { gsap } from "gsap";
 import * as Scrollytelling from "@bsmnt/scrollytelling";
-import { useCallback } from "react";
 import Image from "next/image";
 
 import s from "./cyllinder.module.scss";
 import clsx from "clsx";
-import { mapItemsToCylinder } from "./helpers";
+import { defaultConfig, useMapToCylinder } from "./helpers";
 import { Experiment } from "../../../lib/types";
+import { useMedia } from "../../../hooks/use-media";
 
 const progress = { value: 0 };
 
@@ -20,34 +20,32 @@ const itemsInViewAtOnce = 7;
 const itemsPadding = 4;
 
 export const Cyllinder: React.FC<CyllinderProps> = ({experiments}) => {
+  const isMobileSize = useMedia("(max-width: 768px)");
   const pinSpacerHeight = `calc(3 * ${itemHeight} * ${
     Math.max(itemsInViewAtOnce, experiments.length) + itemsPadding
   })`;
 
-  const animateCylinder = useCallback((progress: number) => {
-    const elements =
-      document.querySelectorAll<HTMLDivElement>(`[data-experiment]`);
-
-    mapItemsToCylinder(
-      Array.from(elements),
-      (element, { y, z, rotationX, opacity, data }) => {
-        gsap.set(element, {
-          rotateX: rotationX,
-          opacity: data.progress === 0 ? opacity : 1,
-          y: y,
-          z: z,
-          attr: { ["data-state"]: data.progress != 0 ? "active" : "disabled" }
-        });
-      },
-      progress
-    );
-  }, []);
+  const update = useMapToCylinder({
+    target: "[data-experiment]",
+    onUpdate: (element, { y, z, rotationX, opacity, data }) => {
+      gsap.set(element, {
+        rotateX: rotationX,
+        opacity: data.progress === 0 ? opacity : 1,
+        y: y,
+        z: z,
+        attr: { ["data-state"]: data.progress != 0 ? "active" : "disabled" }
+      });
+    },
+    config: {
+      availableRadians: isMobileSize ? defaultConfig.availableRadians / 2 : defaultConfig.availableRadians,
+    }
+  })
 
   return (
     <Scrollytelling.Root
       scrub={0.75}
       callbacks={{
-        onRefresh: () => animateCylinder(progress.value),
+        onRefresh: () => update(progress.value),
       }}
       end="bottom bottom"
     >
@@ -68,29 +66,34 @@ export const Cyllinder: React.FC<CyllinderProps> = ({experiments}) => {
                 target: progress,
                 to: {
                   value: 1,
-                  onUpdate: () => animateCylinder(progress.value),
+                  onUpdate: () => update(progress.value),
                 },
               }}
             />
 
             {experiments.map((experiment, i) => {
+              const author = experiment.contributors[0];
+
               return (
                 <div className={s["item"]} data-experiment={i} key={i}>
                   <h2 className={s["title"]}>
-                    {experiment.og && (
-                      <Image
-                        draggable={false}
-                        className={clsx("image", s["image"])}
-                        src={experiment.og}
-                        width={760}
-                        height={496}
-                        quality={100}
-                        alt={"dummy image"}
-                      />
-                    )}
-
                     {experiment.title}
                   </h2>
+                  <div className={s['info']}>
+                      {experiment.og && (
+                        <Image
+                          draggable={false}
+                          className={clsx("image", s["image"])}
+                          src={experiment.og}
+                          width={760}
+                          height={496}
+                          quality={100}
+                          alt={"dummy image"}
+                        />
+                      )}
+
+                      {author?.name && <p className={s['credits']}><span>Made by</span> {author?.name}</p>}
+                    </div>
                 </div>
               );
             })}
