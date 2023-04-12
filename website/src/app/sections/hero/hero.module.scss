@@ -1,6 +1,39 @@
 @import "../../css/helpers";
 
+.header {
+  display: grid;
+  align-items: center;
+  justify-content: space-between;
+  padding: tovw(16px) tovw(32px);
+  grid-template-columns: repeat(3, 1fr);
+
+  a {
+    width: max-content;
+  }
+
+  p {
+    font-size: tovw(24px);
+    font-weight: 800;
+    line-height: 1.2;
+    max-width: tovw(537px);
+    margin-right: 0;
+    margin-left: auto;
+    text-align: right;
+  }
+}
+
+.logo {
+  width: tovw(251px);
+  height: tovw(36px);
+}
+
+.star {
+  width: tovw(679px);
+  height: tovw(120px);
+}
+
 .section {
+  overflow-x: hidden;
   padding-top: tovw(28px);
   height: calc(100vh - var(--header-height));
 }
@@ -8,7 +41,7 @@
 .content {
   display: grid;
   grid-template-columns: 1fr;
-  row-gap: tovw(40px);
+  row-gap: tovw(28px);
   grid-template-rows: repeat(4, auto);
 
   div:nth-child(3) {
@@ -64,4 +97,32 @@
     position: relative;
     transform-origin: left center;
   }
+}
+
+
+.footer {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  grid-template-rows: 1fr; 
+  column-gap: tovw(24px);
+
+  p {
+    font-size: tovw(14px, 'desktop', 12px);
+    &:nth-child(1){
+      grid-area: 1 / 1 / 2 / 5; 
+    }
+    &:nth-child(3){
+      grid-area: 1 / 8 / 2 / 11; 
+    }
+    &:nth-child(4){
+      grid-area: 1 / 11 / 2 / 13;
+    }
+  }
+
+  svg {
+    width: tovw(24px);
+    height: tovw(12px);
+    grid-area: 1 / 7 / 2 / 8;
+  }
+
 }
