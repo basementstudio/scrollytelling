@@ -38,6 +38,7 @@
 
 .pre-footer {
 	display: flex;
+	align-items: center;
 	gap: tovw(100px, 'desktop-large', 100px);
 	width: tovw(1320px, 'desktop-large', 1320px);
 	margin: tovw(256px, 'desktop-large', 256px) auto;
@@ -57,6 +58,7 @@
 	.terminal {
 		border-radius: tovw(14px, 'desktop-large', 14px);
 		border: 1px solid #3a3a3a;
+		margin-top: tovw(42px, 'desktop-large', 42px);
 		overflow: hidden;
 
 		.content {
@@ -66,6 +68,8 @@
 			height: tovw(100px, 'desktop-large', 100px);
 			font-size: tovw(32px, 'desktop-large', 32px);
 			text-transform: uppercase;
+			font-family: var(--font-jetbrains-mono);
+			z-index: 50;
 		}
 
 		.upper-bar {
@@ -75,11 +79,15 @@
 			height: tovw(41px, 'desktop-large', 41px);
 			background-color: #121212;
 			border-bottom: 1px solid #3a3a3a;
+			text-transform: uppercase;
+			font-family: var(--font-jetbrains-mono);
+			font-size: tovw(21px, 'desktop-large', 21px);
 			z-index: 50;
 
 			.dots {
 				display: flex;
 				gap: tovw(7px, 'desktop-large', 7px);
+				padding-right: tovw(254px, 'desktop-large', 254px);
 
 				.circle {
 					display: block;

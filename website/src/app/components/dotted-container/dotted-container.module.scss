@@ -6,6 +6,7 @@
 	background-repeat: repeat;
 	position: relative;
 	overflow: hidden;
+	z-index: -1;
 }
 
 .mask {
@@ -26,6 +27,7 @@
 		position: absolute;
 		will-change: webkitmaskimage, opacity;
 		backface-visibility: hidden;
+		z-index: -1;
 		inset: 0;
 	}
 }

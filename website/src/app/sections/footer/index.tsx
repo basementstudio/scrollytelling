@@ -20,6 +20,7 @@ export const Footer = () => {
 									<span key={idx} className={s.circle} />
 								))}
 							</span>
+							<span>Terminal</span>
 						</div>
 						<DottedDiv className={s.content}>
 							<p>yarn add @bsmnt/scrollytelling</p>
