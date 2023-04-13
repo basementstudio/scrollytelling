@@ -1,0 +1,46 @@
+@import "../../css/helpers";
+
+.section {
+  min-height: 100vh;
+  overflow: hidden;
+
+  h2 {
+    font-size: tovw(102px);
+    font-weight: 800;
+    text-align: center;
+    line-height: 1;
+    position: relative;
+    z-index: 5;
+  }
+
+  :global(.wrapper) {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+
+  img {
+    position: absolute;
+    will-change: transform;
+  }
+
+  .pc {
+    top: 50%;
+    right: 0;
+    transform: translate(-50%, -50%);
+    width: tovw(603px);
+    height: tovw(664px);
+    z-index: 1;
+  }
+
+  .smile {
+    width: tovw(308px);
+    height: tovw(300px);
+    z-index: 10;
+    top: 70%;
+    left: 30%;
+    transform: translate(-50%, -50%);
+  }
+}
