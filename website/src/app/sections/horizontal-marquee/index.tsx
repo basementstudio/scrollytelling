@@ -3,27 +3,63 @@ import * as Scrollytelling from "@bsmnt/scrollytelling";
 import s from "./horizontal-marquee.module.scss";
 import { forwardRef } from "react";
 
+const phrase = "OUR WOR IS SERIOUS WE ARE NOT";
+const splitted = phrase.split("");
+const charsLength = splitted.length;
+
 export const HorizontalMarquee = () => {
   return (
-    <Scrollytelling.Root end="bottom bottom">
+    <Scrollytelling.Root start="top top+=300px" debug end="bottom bottom">
       <section className={s.section}>
         <div className={s.pinned}>
           <Scrollytelling.Animation
             tween={{
               start: 0,
-              end: 90,
+              end: 70,
               from: { x: "92%", ease: "linear" },
             }}
           >
             <div className={s.animated}>
               <Scrollytelling.Animation
                 tween={{
-                  start: 90,
+                  start: 70,
                   end: 100,
                   to: { x: "-=50vw", ease: "linear" },
                 }}
               >
-                <p>OUR WOR IS SERIOUS WE ARE NOT</p>
+                <p>
+                  {splitted.map((s, i) => {
+                    const charDuration = 70 / charsLength;
+                    const charStart = charDuration * i;
+                    const charEnd = charStart + charDuration;
+
+                    console.log({ charStart, charEnd });
+
+                    return (
+                      <Scrollytelling.Animation
+                        key={i}
+                        tween={{
+                          start: charStart,
+                          end: charEnd,
+                          to: { y: 0 },
+                        }}
+                      >
+                        <span
+                          data-character
+                          style={{
+                            transform: `translateY(${Math.min(
+                              50,
+                              (i + 1) * 5
+                            )}vw)`,
+                            display: "inline-block",
+                          }}
+                        >
+                          {s}
+                        </span>
+                      </Scrollytelling.Animation>
+                    );
+                  })}
+                </p>
               </Scrollytelling.Animation>
               <Scrollytelling.Animation
                 tween={{
