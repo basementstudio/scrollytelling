@@ -17,7 +17,7 @@ export const Hero = () => {
   const trackingRef = useRef<HTMLDivElement>(null);
 
   return (
-    <Scrollytelling.Root end="bottom bottom">
+    <Scrollytelling.Root end="bottom bottom" scrub={0.75}>
       <Scrollytelling.Pin
         childHeight={"100vh"}
         pinSpacerHeight={"200vh"}
