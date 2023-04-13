@@ -2,7 +2,7 @@ import Image from 'next/image';
 import bsmtTeamImg from '../../../../public/footer/basement-team-footer.jpg';
 import * as Scrollytelling from '@bsmnt/scrollytelling';
 import QRImg from '../../../../public/footer/QR.svg';
-import { toVw } from '../../../lib/utils';
+
 import s from './footer.module.scss';
 import Link from '../../components/link';
 import { DottedDiv } from '../../components/dotted-container';
@@ -10,7 +10,7 @@ import basementTeamSVG from '../../../../public/footer/basement-team.svg';
 
 export const Footer = () => {
 	return (
-		<Scrollytelling.Root end="bottom bottom">
+		<Scrollytelling.Root start="top bottom" end="bottom bottom">
 			<footer className={s.footer}>
 				<div className={s['pre-footer']}>
 					<div className={s['left-content']}>
@@ -30,31 +30,23 @@ export const Footer = () => {
 							</DottedDiv>
 						</div>
 					</div>
-
+				</div>
+				<div className={s['imgs-container']}>
+					<Image className={s['team-img']} src={bsmtTeamImg} alt="Basement Team" />
 					<Scrollytelling.Animation
 						tween={{
-							start: 10,
+							start: 60,
 							end: 100,
-							fromTo: [
-								{
-									yPercent: 0,
-									height: toVw(436, 1920, 180),
-									width: toVw(436, 1920, 180),
-								},
-								{
-									yPercent: 113.8,
-									xPercent: 36,
-									height: toVw(620, 1920, 220),
-									width: toVw(620, 1920, 220),
-								},
-							],
+							from: {
+								y: '-36vw',
+								xPercent: -36,
+								scale: 0.6,
+							},
 						}}
 					>
 						<Image className={s.QR} src={QRImg} alt="QR" />
 					</Scrollytelling.Animation>
 				</div>
-
-				<Image className={s['team-img']} src={bsmtTeamImg} alt="Basement Team" />
 				<Image className={s['footer-heading-text']} src={basementTeamSVG} alt="basement team" />
 				<div className={s.links}>
 					<div>

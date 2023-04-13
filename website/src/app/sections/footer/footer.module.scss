@@ -4,16 +4,28 @@
 	padding: tovw(40px, 'desktop-large', 40px) tovw(32px, 'desktop-large', 32px);
 	overflow: hidden;
 
-	.team-img {
-		width: tovw(1203px, 'desktop-large', 603px);
+	.imgs-container {
+		display: grid;
+		grid-template-columns: 2fr auto;
+		gap: tovw(32px, 'desktop-large', 20px);
 		margin-bottom: tovw(16px, 'desktop-large', 12px);
+
+		.team-img {
+			height: tovw(620px, 'desktop-large', 320px);
+			object-fit: cover;
+		}
+
+		.QR {
+			height: tovw(620px, 'desktop-large', 320px);
+			width: auto;
+		}
 	}
 
 	.footer-heading-text {
 		width: 100.8%;
 		margin-left: -8px;
 		max-width: unset;
-		margin-bottom: tovw(16px, 'desktop-large', 12px);
+		margin-bottom: tovw(16px, 'desktop-large', 16px);
 	}
 
 	.links {
@@ -41,7 +53,7 @@
 	align-items: center;
 	gap: tovw(100px, 'desktop-large', 100px);
 	width: tovw(1320px, 'desktop-large', 1320px);
-	margin: tovw(256px, 'desktop-large', 56px) auto;
+	margin: tovw(330px, 'desktop-large', 80px) auto;
 
 	p {
 		font-size: tovw(36px, 'desktop-large', 28px);
@@ -55,12 +67,12 @@
 		width: tovw(768px, 'desktop-large', 568px);
 	}
 
-	.QR {
-		position: absolute;
-		right: tovw(256px, 'desktop-large', 26px);
-		width: tovw(436px, 'desktop-large', 236px);
-		height: tovw(436px, 'desktop-large', 236px);
-	}
+	// .QR {
+	// 	position: absolute;
+	// 	right: tovw(256px, 'desktop-large', 26px);
+	// 	width: tovw(436px, 'desktop-large', 236px);
+	// 	height: tovw(436px, 'desktop-large', 236px);
+	// }
 
 	.terminal {
 		border-radius: tovw(14px, 'desktop-large', 14px);
