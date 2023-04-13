@@ -24,7 +24,7 @@ export const Footer = () => {
 										<span key={idx} className={s.circle} />
 									))}
 								</span>
-								<span>Terminal</span>
+								<span>terminal</span>
 							</div>
 							<DottedDiv className={s.content}>
 								<p>yarn add @bsmnt/scrollytelling</p>
@@ -41,7 +41,7 @@ export const Footer = () => {
 							from: {
 								y: toVw(-800),
 								x: toVw(-100),
-								scale: 0.6,
+								scale: 0.7,
 							},
 						}}
 					>
@@ -54,12 +54,10 @@ export const Footer = () => {
 						<span>social media</span>
 						<ul>
 							{socials.map((social, idx) => (
-								<>
+								<li key={idx}>
 									{idx !== 0 && <span>&nbsp;—&nbsp;</span>}
-									<li key={social.name}>
-										<Link href={social.url}>{social.name}</Link>
-									</li>
-								</>
+									<Link href={social.url}>{social.name}</Link>
+								</li>
 							))}
 						</ul>
 					</div>
@@ -67,11 +65,7 @@ export const Footer = () => {
 						<span>get in touch</span>
 						<Link href="mailto:sayhi@basement.studio">sayhi@basement.studio</Link>
 					</div>
-					<div
-						style={{
-							alignItems: 'end',
-						}}
-					>
+					<div>
 						<span>@basement.studio llc {new Date().getFullYear()}</span>
 						<span>all rights reserved</span>
 					</div>
