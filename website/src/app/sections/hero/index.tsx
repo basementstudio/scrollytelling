@@ -22,7 +22,7 @@ export interface AnimationStore {
 
 export const useAnimationHeroStore = create<AnimationStore>((set) => ({
   progress: 0,
-  setProgress: (bears: number) => set((s) => ({ ...s, bears })),
+  setProgress: (progress: number) => set((s) => ({ ...s, progress })),
 }));
 
 export const Hero = () => {
@@ -137,16 +137,8 @@ export const Hero = () => {
 
         <section className={s['section']} ref={containerRef}>
           <div
+            className={s['tracking']}
             ref={trackingRef}
-            style={{
-              width: toVw(500, 1920, 300),
-              height: toVw(500, 1920, 300),
-              position: 'absolute',
-              zIndex: 100,
-              top: '50%',
-              right: 0,
-              transform: 'translateY(-50%)',
-            }}
           />
           <Canvas
             camera={{ position: [0, 0, 10], fov: 35 }}

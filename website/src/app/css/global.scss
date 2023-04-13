@@ -48,7 +48,7 @@ body:not(.user-is-tabbing) textarea:focus {
 
 .wrapper {
   width: 100%;
-  padding: 0 tovw(32px);
+  padding: 0 tovw(32px, 'desktop-large', 16px);
 }
 
 .canvas {
