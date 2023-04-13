@@ -7,6 +7,7 @@ import s from './footer.module.scss';
 import Link from '../../components/link';
 import { DottedDiv } from '../../components/dotted-container';
 import basementTeamSVG from '../../../../public/footer/basement-team.svg';
+import { toVw } from '../../../lib/utils';
 
 export const Footer = () => {
 	return (
@@ -38,8 +39,8 @@ export const Footer = () => {
 							start: 60,
 							end: 100,
 							from: {
-								y: '-36vw',
-								xPercent: -36,
+								y: toVw(-800),
+								x: toVw(-100),
 								scale: 0.6,
 							},
 						}}
