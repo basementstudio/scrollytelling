@@ -1,6 +1,13 @@
 import "./css/global.scss";
 import type { Metadata } from "next";
 import localFont from "next/font/local";
+import { Providers } from "./providers";
+
+const jetbrainsMono = localFont({
+  src: [
+    { path: "../../public/fonts/JetBrainsMono-Regular.woff2", weight: "400" }
+  ]
+})
 
 const basementGrotesque = localFont({
   src: [
@@ -31,9 +38,12 @@ export default function RootLayout({
       lang="en"
       style={{
         ["--font-basement-grotesque" as string]: `${basementGrotesque.style.fontFamily}, var(--font-system), sans-serif`,
+        ["--font-jetbrains-mono" as string]: `${jetbrainsMono.style.fontFamily}, var(--font-system), sans-serif`,
       }}
     >
-      <body>{children}</body>
+      <body>
+        <Providers>{children}</Providers>
+      </body>
     </html>
   );
 }
