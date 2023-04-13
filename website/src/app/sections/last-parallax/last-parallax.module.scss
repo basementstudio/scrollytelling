@@ -5,7 +5,7 @@
   overflow: hidden;
 
   h2 {
-    font-size: tovw(102px);
+    font-size: tovw(102px, "desktop-large", 40px);
     font-weight: 800;
     text-align: center;
     line-height: 1;
@@ -42,5 +42,9 @@
     top: 70%;
     left: 30%;
     transform: translate(-50%, -50%);
+
+    @media screen and (max-width: 800px) {
+      top: 55%;
+    }
   }
 }
