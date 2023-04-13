@@ -1,6 +1,7 @@
 import "./css/global.scss";
 import type { Metadata } from "next";
 import localFont from "next/font/local";
+import { Providers } from "./providers";
 
 const jetbrainsMono = localFont({
   src: [
@@ -40,7 +41,9 @@ export default function RootLayout({
         ["--font-jetbrains-mono" as string]: `${jetbrainsMono.style.fontFamily}, var(--font-system), sans-serif`,
       }}
     >
-      <body>{children}</body>
+      <body>
+        <Providers>{children}</Providers>
+      </body>
     </html>
   );
 }
