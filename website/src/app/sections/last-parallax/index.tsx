@@ -11,64 +11,58 @@ import s from "./last-parallax.module.scss";
 export const LastParallax = () => {
   return (
     <Scrollytelling.Root start="top bottom" end="bottom bottom" scrub={0.75}>
-      <Scrollytelling.Pin
-        childHeight={"100vh"}
-        pinSpacerHeight={"200vh"}
-        top={0}
-      >
-        <section className={s["section"]}>
-          <div className="wrapper">
-            <Scrollytelling.Parallax
-              tween={{
-                start: 0,
-                end: 100,
-                movementY: { value: -30, unit: "px" },
-              }}
-            >
-              <Image
-                alt="Smile"
-                className={s["smile"]}
-                src={SMILE_IMAGE}
-                placeholder="blur"
-              />
-            </Scrollytelling.Parallax>
-            <Scrollytelling.Animation
-              tween={{
-                start: 0,
-                end: 100,
-                fromTo: [
-                  {
-                    scale: 60,
-                  },
-                  {
-                    ease: "linear",
-                    scale: 1,
-                  },
-                ],
-              }}
-            >
-              <h2>
-                LAST BUT <br />
-                NOT LEAST
-              </h2>
-            </Scrollytelling.Animation>
-            <Scrollytelling.Parallax
-              tween={{
-                start: 0,
-                end: 100,
-                movementY: { value: 40, unit: "px" },
-              }}
-            >
-              <Image
-                alt="PC"
-                className={s["pc"]}
-                src={PC_IMAGE}
-                placeholder="blur"
-              />
-            </Scrollytelling.Parallax>
-          </div>
-        </section>
-      </Scrollytelling.Pin>
+      <section className={s["section"]}>
+        <div className="wrapper">
+          <Scrollytelling.Parallax
+            tween={{
+              start: 0,
+              end: 100,
+              movementY: { value: -30, unit: "px" },
+            }}
+          >
+            <Image
+              alt="Smile"
+              className={s["smile"]}
+              src={SMILE_IMAGE}
+              placeholder="blur"
+            />
+          </Scrollytelling.Parallax>
+          <Scrollytelling.Animation
+            tween={{
+              start: 0,
+              end: 100,
+              fromTo: [
+                {
+                  scale: 0,
+                },
+                {
+                  ease: "linear",
+                  scale: 1,
+                },
+              ],
+            }}
+          >
+            <h2>
+              LAST BUT <br />
+              NOT LEAST
+            </h2>
+          </Scrollytelling.Animation>
+          <Scrollytelling.Parallax
+            tween={{
+              start: 0,
+              end: 100,
+              movementY: { value: 40, unit: "px" },
+            }}
+          >
+            <Image
+              alt="PC"
+              className={s["pc"]}
+              src={PC_IMAGE}
+              placeholder="blur"
+            />
+          </Scrollytelling.Parallax>
+        </div>
+      </section>
     </Scrollytelling.Root>
   );
 };
