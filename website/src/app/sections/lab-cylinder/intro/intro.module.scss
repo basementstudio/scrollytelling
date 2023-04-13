@@ -1,0 +1,134 @@
+@import "../../../css/helpers.scss";
+
+.container {
+  position: relative;
+  z-index: 1;
+  padding: tovw(32px) 0;
+}
+
+.pretitle {
+  text-transform: uppercase;
+  display: flex;
+  align-items: center;
+  margin-left: tovw(500px);
+
+  svg {
+    width: tovw(5px);
+    height: tovw(9px);
+  }
+
+  span {
+    font-size: tovw(16px);
+    height: toem(21px, 16px);
+    padding: 0 toem(4px, 16px);
+    margin-left: 1em;
+    border-radius: 2px;
+    border: 1px solid white;
+    display: inline-flex;
+    align-items: center;
+  }
+}
+
+.backgroundSvg {
+  position: absolute;
+  width: tovw(732px);
+  height: tovw(301px);
+  left: tovw(815px);
+}
+
+.title {
+  position: relative;
+  z-index: 1;
+  font-size: tovw(128px);
+  font-weight: 900;
+  line-height: 0.91;
+  max-width: tovw(1551px);
+  margin-top: tovw(52px);
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.subtitle {
+  font-size: tovw(32px);
+  letter-spacing: -0.005em;
+  margin-top: tovw(64px);
+  max-width: tovw(750px);
+  margin-left: tovw(972px);
+  position: relative;
+
+  .arrowDown {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    left: tovw(-465px);
+    height: tovw(168.3px);
+    width: tovw(10.8px);
+  }
+}
+
+.marquees {
+  //   position: absolute;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: tovw(300px);
+  margin-top: tovw(80px);
+  //   bottom: tovw(100px);
+
+  .marquee1 {
+    position: absolute;
+    transform: rotate(-7.37deg);
+  }
+
+  .marquee2 {
+    position: absolute;
+    transform: rotate(2.52deg);
+  }
+}
+
+// MARQUEE
+
+.marqueeContainer {
+  font-size: tovw(64px);
+  font-weight: 900;
+  height: tovw(75px);
+  width: 100%;
+  display: flex;
+  align-items: center;
+  border-top: 2px solid var(--marquee-color);
+  border-bottom: 2px solid var(--marquee-color);
+  color: var(--marquee-color);
+  overflow: hidden;
+  line-height: 1;
+  position: relative;
+  background: black;
+}
+
+.marqueeAnimationContainer {
+  flex-wrap: nowrap;
+  width: fit-content;
+  display: flex;
+  align-items: center;
+  position: absolute;
+
+  &.reverse {
+    right: 0;
+  }
+}
+
+.marqueeItem {
+  display: inline-flex;
+  align-items: center;
+  flex-shrink: 0;
+  flex-wrap: nowrap;
+  white-space: nowrap;
+  --mx: #{tovw(12px)};
+  margin: 0 var(--mx);
+  user-select: none;
+
+  svg {
+    width: tovw(90px);
+    height: tovw(48px);
+    margin-left: var(--mx);
+  }
+}
