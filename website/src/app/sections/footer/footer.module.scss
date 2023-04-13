@@ -35,3 +35,22 @@
 		}
 	}
 }
+
+.pre-footer {
+	display: flex;
+	gap: tovw(100px, 'desktop-large', 100px);
+	width: tovw(1320px, 'desktop-large', 1320px);
+	margin: tovw(256px, 'desktop-large', 256px) auto;
+
+	p {
+		font-size: tovw(36px, 'desktop-large', 28px);
+		line-height: 130%;
+		letter-spacing: 0.01em;
+		font-weight: 400;
+	}
+
+	.QR {
+		width: tovw(436px, 'desktop-large', 436px);
+		height: tovw(436px, 'desktop-large', 436px);
+	}
+}

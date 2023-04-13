@@ -1,5 +1,6 @@
 import Image from 'next/image';
 import bsmtTeamImg from '../../../../public/footer/basement-team-footer.jpg';
+import QRImg from '../../../../public/footer/QR.svg';
 
 import s from './footer.module.scss';
 import Link from '../../components/link';
@@ -7,6 +8,15 @@ import Link from '../../components/link';
 export const Footer = () => {
 	return (
 		<footer className={s.footer}>
+			<div className={s['pre-footer']}>
+				<div>
+					<p>Now we are talking! Say hello to our OSS brand new scrollytelling library</p>
+					<div>fasfasfasfasf</div>
+				</div>
+
+				<Image className={s.QR} src={QRImg} alt="QR" />
+			</div>
+
 			<Image className={s['team-img']} src={bsmtTeamImg} alt="Basement Team" />
 			<h2>BSMNT TEAM</h2>
 			<div className={s.links}>
