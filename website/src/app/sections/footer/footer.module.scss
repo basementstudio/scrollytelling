@@ -100,7 +100,7 @@
 	}
 
 	p {
-		font-size: tovw(36px, 'desktop-large', 28px);
+		font-size: tovw(36px, 'desktop-large', 24px);
 		line-height: 130%;
 		letter-spacing: 0.01em;
 		font-weight: 400;
@@ -112,10 +112,21 @@
 
 	.left-content {
 		overflow: hidden;
-		width: tovw(768px, 'desktop-large', 468px);
+		width: tovw(768px, 'desktop-large', 368px);
 
 		@media screen and (max-width: 800px) {
 			width: 100%;
+		}
+
+		.QR-mobile {
+			display: none;
+
+			@media screen and (max-width: 800px) {
+				display: block;
+				margin: auto;
+				padding-top: tovw(36px, mobile);
+				width: tovw(250px, 'mobile');
+			}
 		}
 	}
 
@@ -164,10 +175,14 @@
 			font-size: tovw(18px, 'desktop-large', 16px);
 			z-index: 50;
 
+			.terminal-title {
+				margin: auto;
+			}
+
 			.dots {
+				position: absolute;
 				display: flex;
 				gap: tovw(7px, 'desktop-large', 7px);
-				padding-right: tovw(264px, 'desktop-large', 54px);
 
 				.circle {
 					display: block;

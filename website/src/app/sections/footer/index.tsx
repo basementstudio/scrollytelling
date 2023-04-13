@@ -1,3 +1,5 @@
+'use client';
+
 import Image from 'next/image';
 import bsmtTeamImg from '../../../../public/footer/basement-team-footer.jpg';
 import * as Scrollytelling from '@bsmnt/scrollytelling';
@@ -7,7 +9,6 @@ import s from './footer.module.scss';
 import Link from '../../components/link';
 import { DottedDiv } from '../../components/dotted-container';
 import basementTeamSVG from '../../../../public/footer/basement-team.svg';
-import { toVw } from '../../../lib/utils';
 
 export const Footer = () => {
 	return (
@@ -24,12 +25,13 @@ export const Footer = () => {
 										<span key={idx} className={s.circle} />
 									))}
 								</span>
-								<span>terminal</span>
+								<span className={s['terminal-title']}>terminal</span>
 							</div>
 							<DottedDiv className={s.content}>
 								<p>yarn add @bsmnt/scrollytelling</p>
 							</DottedDiv>
 						</div>
+						<Image className={s['QR-mobile']} src={QRImg} alt="QR" />
 					</div>
 				</div>
 				<div className={s['imgs-container']}>
@@ -39,9 +41,9 @@ export const Footer = () => {
 							start: 60,
 							end: 100,
 							from: {
-								y: toVw(-800),
-								x: toVw(-100),
-								scale: 0.7,
+								y: '-120%',
+								x: '-10vw',
+								scale: 0.6,
 							},
 						}}
 					>
