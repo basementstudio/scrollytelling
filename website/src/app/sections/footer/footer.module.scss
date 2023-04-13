@@ -2,24 +2,24 @@
 
 .footer {
 	padding: tovw(40px, 'desktop-large', 40px) tovw(32px, 'desktop-large', 32px);
+	overflow: hidden;
 
 	.team-img {
-		width: tovw(1203px, 'desktop-large', 1203px);
-		margin-bottom: tovw(32px, 'desktop-large', 16px);
+		width: tovw(1203px, 'desktop-large', 603px);
+		margin-bottom: tovw(16px, 'desktop-large', 12px);
 	}
 
-	h2 {
-		font-weight: 900;
-		margin: 0 -6px;
-		letter-spacing: 0.015em;
-		font-size: tovw(153.65px, 'desktop-large', 153.65px);
-		line-height: 105.5%;
+	.footer-heading-text {
+		width: 100.8%;
+		margin-left: -8px;
+		max-width: unset;
+		margin-bottom: tovw(16px, 'desktop-large', 12px);
 	}
 
 	.links {
 		display: flex;
 		justify-content: space-between;
-		font-size: tovw(18px, 'desktop-large', 18px);
+		font-size: tovw(18px, 'desktop-large', 12px);
 		line-height: 134%;
 		letter-spacing: 0.01em;
 		font-weight: 400;
@@ -41,7 +41,7 @@
 	align-items: center;
 	gap: tovw(100px, 'desktop-large', 100px);
 	width: tovw(1320px, 'desktop-large', 1320px);
-	margin: tovw(256px, 'desktop-large', 256px) auto;
+	margin: tovw(256px, 'desktop-large', 56px) auto;
 
 	p {
 		font-size: tovw(36px, 'desktop-large', 28px);
@@ -50,9 +50,16 @@
 		font-weight: 400;
 	}
 
+	.left-content {
+		overflow: hidden;
+		width: tovw(768px, 'desktop-large', 568px);
+	}
+
 	.QR {
-		width: tovw(436px, 'desktop-large', 436px);
-		height: tovw(436px, 'desktop-large', 436px);
+		position: absolute;
+		right: tovw(256px, 'desktop-large', 26px);
+		width: tovw(436px, 'desktop-large', 236px);
+		height: tovw(436px, 'desktop-large', 236px);
 	}
 
 	.terminal {
@@ -66,10 +73,13 @@
 			align-items: center;
 			padding: 0 tovw(28px, 'desktop-large', 28px);
 			height: tovw(100px, 'desktop-large', 100px);
-			font-size: tovw(32px, 'desktop-large', 32px);
 			text-transform: uppercase;
 			font-family: var(--font-jetbrains-mono);
 			z-index: 50;
+
+			p {
+				font-size: tovw(32px, 'desktop-large', 18px);
+			}
 		}
 
 		.upper-bar {
@@ -87,7 +97,7 @@
 			.dots {
 				display: flex;
 				gap: tovw(7px, 'desktop-large', 7px);
-				padding-right: tovw(254px, 'desktop-large', 254px);
+				padding-right: tovw(254px, 'desktop-large', 164px);
 
 				.circle {
 					display: block;
