@@ -4,6 +4,7 @@ import { gsap } from "gsap";
 import ScrollTrigger from "gsap/dist/ScrollTrigger";
 import * as Portal from "@radix-ui/react-portal";
 import { buildDeclarativeTween } from "./util/build-declarative-tween";
+import { useIsoLayoutEffect } from "./hooks/use-iso-layout-effect";
 
 /* -------------------------------------------------------------------------------------------------
  * Root
@@ -491,8 +492,8 @@ const Pin = React.forwardRef<
   HTMLDivElement,
   {
     children?: React.ReactNode;
-    start?: number;
-    end?: number;
+    // start?: number;
+    // end?: number;
     top: string | number;
     childHeight: string | number;
     pinSpacerHeight: string | number;
@@ -529,6 +530,21 @@ const Pin = React.forwardRef<
 );
 
 Pin.displayName = "Pin";
+
+/* -------------------------------------------------------------------------------------------------
+ * RegisterGsapPlugins
+ * -----------------------------------------------------------------------------------------------*/
+
+type Plugin = Parameters<typeof gsap.registerPlugin>[number];
+
+const RegisterGsapPlugins = ({ plugins }: { plugins: Plugin[] }) => {
+  // this needs to run before scrolltrigger does any animations
+  useIsoLayoutEffect(() => {
+    gsap.registerPlugin(...plugins);
+  }, []);
+
+  return null;
+};
 
 /* -------------------------------------------------------------------------------------------------
  * useScrollToLabel
@@ -601,6 +617,7 @@ export {
   Waypoint,
   Parallax,
   Pin,
+  RegisterGsapPlugins,
   //
   useScrollytelling,
   useScrollToLabel,
