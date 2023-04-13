@@ -4,6 +4,7 @@ import QRImg from '../../../../public/footer/QR.svg';
 
 import s from './footer.module.scss';
 import Link from '../../components/link';
+import { DottedDiv } from '../../components/dotted-container';
 
 export const Footer = () => {
 	return (
@@ -11,7 +12,19 @@ export const Footer = () => {
 			<div className={s['pre-footer']}>
 				<div>
 					<p>Now we are talking! Say hello to our OSS brand new scrollytelling library</p>
-					<div>fasfasfasfasf</div>
+
+					<div className={s.terminal}>
+						<div className={s['upper-bar']}>
+							<span className={s.dots}>
+								{[1, 2, 3].map((_, idx) => (
+									<span key={idx} className={s.circle} />
+								))}
+							</span>
+						</div>
+						<DottedDiv className={s.content}>
+							<p>yarn add @bsmnt/scrollytelling</p>
+						</DottedDiv>
+					</div>
 				</div>
 
 				<Image className={s.QR} src={QRImg} alt="QR" />

@@ -53,4 +53,42 @@
 		width: tovw(436px, 'desktop-large', 436px);
 		height: tovw(436px, 'desktop-large', 436px);
 	}
+
+	.terminal {
+		border-radius: tovw(14px, 'desktop-large', 14px);
+		border: 1px solid #3a3a3a;
+		overflow: hidden;
+
+		.content {
+			display: flex;
+			align-items: center;
+			padding: 0 tovw(28px, 'desktop-large', 28px);
+			height: tovw(100px, 'desktop-large', 100px);
+			font-size: tovw(32px, 'desktop-large', 32px);
+			text-transform: uppercase;
+		}
+
+		.upper-bar {
+			display: flex;
+			align-items: center;
+			padding: 0 tovw(16px, 'desktop-large', 16px);
+			height: tovw(41px, 'desktop-large', 41px);
+			background-color: #121212;
+			border-bottom: 1px solid #3a3a3a;
+			z-index: 50;
+
+			.dots {
+				display: flex;
+				gap: tovw(7px, 'desktop-large', 7px);
+
+				.circle {
+					display: block;
+					border-radius: 50%;
+					width: tovw(13px, 'desktop-large', 13px);
+					height: tovw(13px, 'desktop-large', 13px);
+					background-color: white;
+				}
+			}
+		}
+	}
 }
