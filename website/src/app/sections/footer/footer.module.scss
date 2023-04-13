@@ -1,0 +1,37 @@
+@import '../../css/helpers';
+
+.footer {
+	padding: tovw(40px, 'desktop-large', 40px) tovw(32px, 'desktop-large', 32px);
+
+	.team-img {
+		width: tovw(1203px, 'desktop-large', 1203px);
+		margin-bottom: tovw(32px, 'desktop-large', 16px);
+	}
+
+	h2 {
+		font-weight: 900;
+		margin: 0 -6px;
+		letter-spacing: 0.015em;
+		font-size: tovw(153.65px, 'desktop-large', 153.65px);
+		line-height: 105.5%;
+	}
+
+	.links {
+		display: flex;
+		justify-content: space-between;
+		font-size: tovw(18px, 'desktop-large', 18px);
+		line-height: 134%;
+		letter-spacing: 0.01em;
+		font-weight: 400;
+		text-transform: uppercase;
+
+		> div {
+			display: flex;
+			flex-direction: column;
+
+			ul {
+				display: flex;
+			}
+		}
+	}
+}
