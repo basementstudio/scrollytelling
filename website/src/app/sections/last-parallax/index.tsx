@@ -10,7 +10,7 @@ import s from "./last-parallax.module.scss";
 
 export const LastParallax = () => {
   return (
-    <Scrollytelling.Root end="bottom bottom" scrub={0.75}>
+    <Scrollytelling.Root start="top bottom" end="bottom bottom" scrub={0.75}>
       <Scrollytelling.Pin
         childHeight={"100vh"}
         pinSpacerHeight={"200vh"}
@@ -18,19 +18,11 @@ export const LastParallax = () => {
       >
         <section className={s["section"]}>
           <div className="wrapper">
-            <Scrollytelling.Animation
+            <Scrollytelling.Parallax
               tween={{
                 start: 0,
                 end: 100,
-                fromTo: [
-                  {
-                    yPercent: -20,
-                  },
-                  {
-                    ease: "linear",
-                    yPercent: -50,
-                  },
-                ],
+                movementY: { value: -30, unit: "px" },
               }}
             >
               <Image
@@ -39,7 +31,7 @@ export const LastParallax = () => {
                 src={SMILE_IMAGE}
                 placeholder="blur"
               />
-            </Scrollytelling.Animation>
+            </Scrollytelling.Parallax>
             <Scrollytelling.Animation
               tween={{
                 start: 0,
@@ -60,19 +52,11 @@ export const LastParallax = () => {
                 NOT LEAST
               </h2>
             </Scrollytelling.Animation>
-            <Scrollytelling.Animation
+            <Scrollytelling.Parallax
               tween={{
                 start: 0,
                 end: 100,
-                fromTo: [
-                  {
-                    yPercent: -80,
-                  },
-                  {
-                    ease: "linear",
-                    yPercent: -50,
-                  },
-                ],
+                movementY: { value: 40, unit: "px" },
               }}
             >
               <Image
@@ -81,7 +65,7 @@ export const LastParallax = () => {
                 src={PC_IMAGE}
                 placeholder="blur"
               />
-            </Scrollytelling.Animation>
+            </Scrollytelling.Parallax>
           </div>
         </section>
       </Scrollytelling.Pin>
