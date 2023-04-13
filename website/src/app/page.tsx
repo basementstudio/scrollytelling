@@ -7,6 +7,7 @@ import { HorizontalMarquee } from "./sections/horizontal-marquee";
 import { LastParallax } from "./sections/last-parallax";
 import { MysteriousSection } from "./sections/mysterious";
 import { Experiment } from "../lib/types";
+import { LabIntro } from "./sections/lab-cylinder/intro";
 
 export default async function HomePage() {
   const experiments = await fetch(
@@ -23,6 +24,7 @@ export default async function HomePage() {
       <Hero />
       <FallingCaps />
       <HorizontalMarquee />
+      <LabIntro />
       <Cyllinder experiments={filteredExperiments} />
       <LastParallax />
       <MysteriousSection />
