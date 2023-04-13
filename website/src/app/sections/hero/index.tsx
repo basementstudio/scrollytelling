@@ -4,20 +4,20 @@ import * as Scrollytelling from "@bsmnt/scrollytelling";
 
 import s from "./hero.module.scss";
 import { useRef } from "react";
-import { toVw } from "../../../lib/utils";
 import Link from "next/link";
 import { LogoBasement } from "../../logos/logo";
 import { Canvas } from "@react-three/fiber";
 import { View } from "@react-three/drei";
 import { MacModel } from "./mac-model";
 import { useAppStore } from "../../../context/use-app-store";
+import { toVw } from "../../../lib/utils";
 
 export const Hero = () => {
   const containerRef = useRef<HTMLDivElement>(null);
   const trackingRef = useRef<HTMLDivElement>(null);
 
   return (
-    <Scrollytelling.Root end="bottom bottom">
+    <Scrollytelling.Root end="bottom bottom" scrub={0.75}>
       <Scrollytelling.Pin
         childHeight={"100vh"}
         pinSpacerHeight={"200vh"}

@@ -5,6 +5,9 @@ const nextConfig = {
   reactStrictMode: false,
   swcMinify: true,
   experimental: { appDir: true },
+  images: {
+    domains: ["lab.basement.studio"],
+  }
 };
 
 module.exports = (_phase, { defaultConfig: _ }) => {

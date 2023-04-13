@@ -165,8 +165,10 @@ const Scrollytelling = ({
         <Slot ref={ref}>{children}</Slot>
         {debug && (
           <Portal.Root container={ref.current} asChild>
-            <div className="absolute top-0 right-0 h-full">
-              <div className="sticky top-0">
+            <div
+              style={{ position: "absolute", top: 0, right: 0, height: "100%" }}
+            >
+              <div style={{ position: "sticky", top: 0 }}>
                 <Debugger />
               </div>
             </div>
@@ -209,7 +211,15 @@ const Debugger = () => {
   }, [timeline, rootRef]);
 
   return (
-    <div className="w-72 p-4 border border-black text-xs bg-red-400">
+    <div
+      style={{
+        width: "370px",
+        padding: "24px",
+        border: "1px solid black",
+        fontSize: "12px",
+        background: "#360202",
+      }}
+    >
       <pre>{JSON.stringify({ progress }, null, 2)}</pre>
     </div>
   );
