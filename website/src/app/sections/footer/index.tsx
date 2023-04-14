@@ -6,7 +6,7 @@ import * as Scrollytelling from '@bsmnt/scrollytelling';
 import QRImg from '../../../../public/footer/QR.svg';
 
 import s from './footer.module.scss';
-import Link from '../../components/link';
+import Link from 'next/link';
 import { DottedDiv } from '../../components/dotted-container';
 import basementTeamSVG from '../../../../public/footer/basement-team.svg';
 import { useMedia } from '../../../hooks/use-media';
@@ -54,14 +54,28 @@ export const Footer = () => {
 							{socials.map((social, idx) => (
 								<li key={idx}>
 									{idx !== 0 && <span>&nbsp;—&nbsp;</span>}
-									<Link href={social.url}>{social.name}</Link>
+									<Link
+										className={s.link}
+										href={social.url}
+										target="_blank"
+										rel="noreferrer"
+									>
+										{social.name}
+									</Link>
 								</li>
 							))}
 						</ul>
 					</div>
 					<div>
 						<span>get in touch</span>
-						<Link href="mailto:sayhi@basement.studio">sayhi@basement.studio</Link>
+						<Link
+							className={s.link}
+							href="mailto:sayhi@basement.studio"
+							target="_blank"
+							rel="noreferrer"
+						>
+							sayhi@basement.studio
+						</Link>
 					</div>
 					<div>
 						<span>@basement.studio llc {new Date().getFullYear()}</span>
