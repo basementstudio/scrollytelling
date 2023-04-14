@@ -112,13 +112,13 @@
 	}
 
 	p {
-		font-size: tovw(36px, 'desktop-large', 24px);
+		font-size: tovw(36px, 'desktop-large', 18px);
 		line-height: 130%;
 		letter-spacing: 0.01em;
 		font-weight: 400;
 
 		@media screen and (max-width: 800px) {
-			font-size: tovw(18px, 'mobile');
+			font-size: tovw(17px, 'mobile');
 		}
 	}
 
