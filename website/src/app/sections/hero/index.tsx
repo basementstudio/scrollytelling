@@ -184,7 +184,7 @@ export const Hero = () => {
                         fromTo: [
                           {
                             attr: {
-                              width: toVw(143, 1920, 70),
+                              width: toVw(143, 1920, 143),
                             },
                           },
                           {
@@ -211,7 +211,7 @@ export const Hero = () => {
                         fromTo: [
                           {
                             attr: {
-                              width: toVw(143, 1920, 70),
+                              width: toVw(143, 1920, 143),
                             },
                           },
                           {
@@ -239,7 +239,7 @@ export const Hero = () => {
                           keyframes: {
                             "0%": {
                               attr: {
-                                width: toVw(143, 1920, 70),
+                                width: toVw(143, 1920, 143),
                               },
                             },
                             "75%": {
