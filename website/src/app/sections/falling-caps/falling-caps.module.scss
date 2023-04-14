@@ -1,0 +1,27 @@
+@import '../../css/helpers';
+
+.spacer {
+  height: 700vh;
+}
+
+.pin {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  position: sticky;
+  top: 0;
+  
+  .paragraph {
+    font-size: tovw(56px, 'desktop', 20px);
+    font-weight: 900;
+    max-width: max-content;
+    margin: 0 auto;
+    text-transform: capitalize;
+    line-height: calc(86 / 72);
+
+    .highlight {
+      color: var(--color-orange);
+    }
+  }
+}
