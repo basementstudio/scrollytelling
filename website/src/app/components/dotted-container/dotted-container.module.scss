@@ -1,0 +1,33 @@
+@import '../../css/helpers';
+
+.div {
+	background-image: url("data:image/svg+xml,%3Csvg width='8' height='8' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill='%231D1D1D' d='M0 0h1v1H0z'/%3E%3C/svg%3E");
+	background-size: tovw(8px, 'desktop-large', 8px) tovw(8px, 'desktop-large', 8px);
+	background-repeat: repeat;
+	position: relative;
+	overflow: hidden;
+	z-index: -1;
+}
+
+.mask {
+	display: none;
+}
+
+@media (hover: hover) and (pointer: fine) {
+	.mask {
+		--bg: black;
+
+		opacity: 0;
+		display: block;
+		transition: opacity 0.2s ease-in-out;
+		background-image: url("data:image/svg+xml,%3Csvg width='8' height='8' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill='%23616161' d='M0 0h1v1H0z'/%3E%3C/svg%3E");
+		background-size: tovw(8px, 'desktop-large', 8px) tovw(8px, 'desktop-large', 8px);
+		background-repeat: repeat;
+		pointer-events: none;
+		position: absolute;
+		will-change: webkitmaskimage, opacity;
+		backface-visibility: hidden;
+		z-index: -1;
+		inset: 0;
+	}
+}

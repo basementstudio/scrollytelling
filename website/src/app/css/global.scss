@@ -10,6 +10,12 @@
   --color-black: #000;
   --color-white: #efefef;
   --color-orange: #ff4d00;
+
+  // easings
+  --custom-ease-out: cubic-bezier(0, 1, 0.5, 1.02);
+
+  // Layout
+  --header-height: #{tovw(152px, "desktop-large")};
 }
 
 html {
@@ -41,4 +47,18 @@ body:not(.user-is-tabbing) input:focus,
 body:not(.user-is-tabbing) select:focus,
 body:not(.user-is-tabbing) textarea:focus {
   outline: none;
+}
+
+.wrapper {
+  width: 100%;
+  padding: 0 tovw(32px, "desktop-large", 16px);
+}
+
+.canvas {
+  position: fixed !important;
+  top: 0;
+  left: 0;
+  width: 100vw !important;
+  height: 100vh !important;
+  z-index: 10;
 }
