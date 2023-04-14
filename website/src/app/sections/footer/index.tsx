@@ -18,7 +18,7 @@ export const Footer = () => {
 	const isDesktopSm = useMedia('(min-width: 1024px)');
 
 	return (
-		<Scrollytelling.Root start="top bottom" end="bottom bottom">
+		<Scrollytelling.Root start="top 80%" end="bottom bottom">
 			<footer className={s.footer}>
 				<PreFooter />
 				<div className={s['imgs-container']}>
@@ -130,11 +130,11 @@ const Terminal = () => {
 const socials = [
 	{
 		name: 'twitter',
-		url: 'https://twitter.com/bsmnt',
+		url: 'https://twitter.com/basementstudio',
 	},
 	{
 		name: 'instagram',
-		url: 'https://www.instagram.com/bsmnt/',
+		url: 'https://www.instagram.com/basementdotstudio/',
 	},
 	{
 		name: 'github',
@@ -142,7 +142,7 @@ const socials = [
 	},
 	{
 		name: 'dribbble',
-		url: 'https://dribbble.com/bsmnt',
+		url: 'https://dribbble.com/basementstudio',
 	},
 ];
 
