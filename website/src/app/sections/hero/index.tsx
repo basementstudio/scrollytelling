@@ -1,20 +1,19 @@
 "use client";
 
 import * as Scrollytelling from "@bsmnt/scrollytelling";
+import { gsap } from "gsap";
 
 import s from "./hero.module.scss";
 import { useRef } from "react";
 import Link from "next/link";
 import { LogoBasement } from "../../logos/logo";
 import { Canvas } from "@react-three/fiber";
-import { View } from "@react-three/drei";
 import { MacModel } from "./mac-model";
-import { useAppStore } from "../../../context/use-app-store";
 import { toVw } from "../../../lib/utils";
 
 export const Hero = () => {
   const containerRef = useRef<HTMLDivElement>(null);
-  const trackingRef = useRef<HTMLDivElement>(null);
+  const modelContainerRef = useRef<HTMLDivElement>(null);
 
   return (
     <Scrollytelling.Root end="bottom bottom">
@@ -120,24 +119,26 @@ export const Hero = () => {
         </header>
 
         <section className={s["section"]} ref={containerRef}>
-          <div className={s["tracking"]} ref={trackingRef} />
-          <Canvas
-            camera={{ position: [0, 0, 10], fov: 35 }}
-            className="canvas"
-            // @ts-ignore
-            eventSource={containerRef}
-            onCreated={() => useAppStore.setState({ canvasLoaded: true })}
-            gl={{
-              alpha: true,
-              antialias: true,
-              powerPreference: "high-performance",
-            }}
-          >
-            {/* @ts-ignore */}
-            <View track={trackingRef}>
+          <div className={s["model-container"]} ref={modelContainerRef}>
+            <Canvas
+              camera={{ position: [0, 0, 10], fov: 35 }}
+              onCreated={() => {
+                gsap.to(modelContainerRef.current, {
+                  opacity: 1,
+                  scale: 1,
+                  duration: 0.15,
+                });
+              }}
+              gl={{
+                alpha: true,
+                antialias: true,
+                powerPreference: "high-performance",
+              }}
+            >
+              {/* @ts-ignore */}
               <MacModel />
-            </View>
-          </Canvas>
+            </Canvas>
+          </div>
 
           <div className="wrapper">
             <div className={s["content"]}>
@@ -267,18 +268,11 @@ export const Hero = () => {
                   tween={{
                     start: 0,
                     end: 85,
-                    fromTo: [
-                      {
-                        xPercent: -35,
-                        scaleY: 1,
-                        ease: "linear",
-                      },
-                      {
-                        xPercent: 0,
-                        scaleY: 0.613,
-                        ease: "linear",
-                      },
-                    ],
+                    to: {
+                      translateX: "0%",
+                      scaleY: 0.613,
+                      ease: "linear",
+                    },
                   }}
                 >
                   <svg
