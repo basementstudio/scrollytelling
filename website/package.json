@@ -21,6 +21,7 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "three": "^0.151.3",
+    "tunnel-rat": "^0.1.2",
     "zustand": "^4.3.7"
   },
   "devDependencies": {

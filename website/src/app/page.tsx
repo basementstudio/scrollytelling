@@ -8,6 +8,7 @@ import { LastParallax } from "./sections/last-parallax";
 import { MysteriousSection } from "./sections/mysterious";
 import { Experiment } from "../lib/types";
 import { LabIntro } from "./sections/lab-cylinder/intro";
+import PageCanvas from "./components/page-canvas";
 
 export default async function HomePage() {
   const experiments = await fetch(
@@ -21,6 +22,7 @@ export default async function HomePage() {
 
   return (
     <main>
+      <PageCanvas />
       <Hero />
       <FallingCaps />
       <HorizontalMarquee />

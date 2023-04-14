@@ -6,10 +6,7 @@ import s from "./hero.module.scss";
 import { useRef } from "react";
 import Link from "next/link";
 import { LogoBasement } from "../../logos/logo";
-import { Canvas } from "@react-three/fiber";
-import { View } from "@react-three/drei";
-import { MacModel } from "./mac-model";
-import { useAppStore } from "../../../context/use-app-store";
+import { MacWebGL } from "./mac-model";
 import { toVw } from "../../../lib/utils";
 
 export const Hero = () => {
@@ -120,23 +117,8 @@ export const Hero = () => {
 
         <section className={s["section"]} ref={containerRef}>
           <div className={s["tracking"]} ref={trackingRef} />
-          <Canvas
-            camera={{ position: [0, 0, 10], fov: 35 }}
-            className="canvas"
-            // @ts-ignore
-            eventSource={containerRef}
-            onCreated={() => useAppStore.setState({ canvasLoaded: true })}
-            gl={{
-              alpha: true,
-              antialias: true,
-              powerPreference: "high-performance",
-            }}
-          >
-            {/* @ts-ignore */}
-            <View track={trackingRef}>
-              <MacModel />
-            </View>
-          </Canvas>
+
+          <MacWebGL track={trackingRef} />
 
           <div className="wrapper">
             <div className={s["content"]}>
