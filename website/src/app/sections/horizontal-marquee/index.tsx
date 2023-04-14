@@ -16,7 +16,7 @@ export const HorizontalMarquee = () => {
             tween={{
               start: 0,
               end: 70,
-              from: { x: "92%", ease: "linear" },
+              from: { xPercent: 98, ease: "linear" },
             }}
           >
             <div className={s.animated}>
@@ -27,43 +27,53 @@ export const HorizontalMarquee = () => {
                   to: { x: "-=50vw", ease: "linear" },
                 }}
               >
-                <p>
-                  {splitted.map((s, i) => {
-                    const charDuration = 70 / charsLength;
-                    const charStart = charDuration * i;
-                    const charEnd = charStart + charDuration;
+              <p>
+                {splitted.map((s, i) => {
+                  const charDuration = 70 / charsLength;
+                  const charStart = charDuration * i;
+                  const charEnd = charStart + charDuration;
 
-                    console.log({ charStart, charEnd });
-
-                    return (
-                      <Scrollytelling.Animation
-                        key={i}
-                        tween={{
-                          start: charStart,
-                          end: charEnd,
-                          to: { y: 0 },
+                  return (
+                    <Scrollytelling.Animation
+                      key={i}
+                      tween={{
+                        start: charStart === 0 ? 0 : charStart * 0.7,
+                        end: charEnd,
+                        fromTo: [
+                          {
+                            yPercent: 40,
+                            scale: 0.5,
+                            autoAlpha: 0,
+                            transformOrigin: "center right",
+                          },
+                          {
+                            keyframes: {
+                              "0%": { autoAlpha: 0, scale: 0.5 },
+                              "50%": { autoAlpha: 1, scale: 1 },
+                              "100%": { yPercent: 0,  },
+                              easeEach: "linear",
+                            },
+                            ease: "linear",
+                          },
+                        ],
+                      }}
+                    >
+                      <span
+                        data-character
+                        style={{ 
+                          display: "inline-block",
                         }}
                       >
-                        <span
-                          data-character
-                          style={{
-                            transform: `translateY(${Math.min(
-                              50,
-                              (i + 1) * 5
-                            )}vw)`,
-                            display: "inline-block",
-                          }}
-                        >
-                          {s}
-                        </span>
-                      </Scrollytelling.Animation>
-                    );
-                  })}
-                </p>
+                        {s}
+                      </span>
+                    </Scrollytelling.Animation>
+                  );
+                })}
+              </p>
               </Scrollytelling.Animation>
               <Scrollytelling.Animation
                 tween={{
-                  start: 90,
+                  start: 70,
                   end: 100,
                   to: { scale: 1.35, ease: "linear" },
                 }}
