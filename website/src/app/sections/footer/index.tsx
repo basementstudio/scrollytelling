@@ -11,7 +11,8 @@ import { DottedDiv } from '../../components/dotted-container';
 import basementTeamSVG from '../../../../public/footer/basement-team.svg';
 import { useMedia } from '../../../hooks/use-media';
 import { toVw } from '../../../lib/utils';
-import { useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
+import clsx from 'clsx';
 
 export const Footer = () => {
 	const isDesktopSm = useMedia('(min-width: 1024px)');
@@ -79,6 +80,8 @@ const PreFooter = () => {
 };
 
 const Terminal = () => {
+	const [isCopied, setIsCopied] = useState(false);
+
 	const contentRef = useRef<HTMLParagraphElement>(null);
 
 	const copyTextContent = () => {
@@ -86,9 +89,22 @@ const Terminal = () => {
 			const text = contentRef.current.textContent;
 			if (text) {
 				navigator.clipboard.writeText(text);
+				setIsCopied(true);
 			}
 		}
 	};
+
+	useEffect(() => {
+		if (!isCopied) return;
+
+		const timeId = setTimeout(() => {
+			setIsCopied(false);
+		}, 2000);
+
+		return () => {
+			clearTimeout(timeId);
+		};
+	}, [isCopied]);
 
 	return (
 		<div className={s.terminal}>
@@ -106,6 +122,7 @@ const Terminal = () => {
 					<CopyIconSVG />
 				</button>
 			</DottedDiv>
+			<CopiedNotification className={clsx(isCopied && s['text-copied-notif--visible'])} />
 		</div>
 	);
 };
@@ -129,6 +146,14 @@ const socials = [
 	},
 ];
 
+const CopiedNotification = ({ className }: { className?: string }) => {
+	return (
+		<div className={clsx(s['text-copied-notif'], className)}>
+			<p>Copied!</p>
+		</div>
+	);
+};
+
 const CopyIconSVG = ({ className }: { className?: string }) => {
 	return (
 		<svg
@@ -140,8 +165,8 @@ const CopyIconSVG = ({ className }: { className?: string }) => {
 			xmlns="http://www.w3.org/2000/svg"
 		>
 			<path
-				fill-rule="evenodd"
-				clip-rule="evenodd"
+				fillRule="evenodd"
+				clipRule="evenodd"
 				d="M2.25592 20.7437C2.25592 22.529 3.70318 23.9764 5.48849 23.9764H8.72106V21.8213H5.48849C4.89339 21.8213 4.41097 21.3388 4.41097 20.7437V5.65838C4.41097 5.06329 4.89339 4.58086 5.48849 4.58086H20.5738C21.1689 4.58086 21.6513 5.06329 21.6513 5.65838V8.89086H11.9536C10.1683 8.89086 8.72106 10.3381 8.72106 12.1234V27.2087C8.72106 28.9939 10.1683 30.4413 11.9536 30.4413H27.0389C28.8242 30.4413 30.2715 28.9939 30.2715 27.2087V12.1234C30.2715 10.3381 28.8242 8.89086 27.0389 8.89086H23.8064V5.65838C23.8064 3.87308 22.3591 2.42581 20.5738 2.42581H5.48849C3.70318 2.42581 2.25592 3.87308 2.25592 5.65838V20.7437ZM10.8761 12.1234C10.8761 11.5283 11.3585 11.0459 11.9536 11.0459H27.0389C27.634 11.0459 28.1165 11.5283 28.1165 12.1234V27.2087C28.1165 27.8039 27.634 28.2862 27.0389 28.2862H11.9536C11.3585 28.2862 10.8761 27.8039 10.8761 27.2087V12.1234Z"
 				fill="#EFEFEF"
 			/>
