@@ -61,6 +61,7 @@ const Scrollytelling = ({
   end,
   callbacks,
   scrub,
+  defaults,
 }: {
   children?: React.ReactNode;
   debug?: boolean;
@@ -77,6 +78,7 @@ const Scrollytelling = ({
     | "onRefresh"
   >;
   scrub?: boolean | number;
+  defaults?: gsap.TweenVars | undefined;
 }) => {
   const ref = React.useRef<HTMLDivElement>(null);
   const scopedQuerySelector = gsap.utils.selector(ref);
@@ -100,7 +102,7 @@ const Scrollytelling = ({
         ...callbacks,
       },
       paused: true,
-      defaults: { duration: 1 },
+      defaults: { ...defaults, duration: 1 },
     });
 
     setTimeline(tl);
@@ -108,7 +110,7 @@ const Scrollytelling = ({
     return () => {
       tl.revert();
     };
-  }, [end, debug, start, callbacks, scrub]);
+  }, [end, debug, start, callbacks, scrub, defaults]);
 
   // rest tween to ensure timeline is always 100 long
   const addRestToTimeline = React.useCallback(
@@ -504,7 +506,7 @@ const Pin = React.forwardRef<
     children?: React.ReactNode;
     // start?: number;
     // end?: number;
-    top: string | number;
+    top?: string | number;
     childHeight: string | number;
     pinSpacerHeight: string | number;
     childClassName?: string;
@@ -514,7 +516,7 @@ const Pin = React.forwardRef<
   (
     {
       children,
-      top,
+      top = 0,
       childHeight,
       pinSpacerHeight,
       pinSpacerClassName,
