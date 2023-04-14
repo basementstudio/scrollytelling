@@ -128,17 +128,29 @@
 		width: tovw(768px, 'desktop-large', 368px);
 
 		@media screen and (max-width: 800px) {
+			display: flex;
+			flex-direction: column;
 			width: 100%;
 		}
 
-		.QR-mobile {
+		.mobile-qr-link {
 			display: none;
 
 			@media screen and (max-width: 800px) {
-				display: block;
-				margin: auto;
-				padding-top: tovw(36px, mobile);
-				width: tovw(250px, 'mobile');
+				display: inline-block;
+				align-self: center;
+				width: fit-content;
+				margin-top: tovw(36px, mobile);
+			}
+
+			.QR-mobile {
+				display: none;
+
+				@media screen and (max-width: 800px) {
+					display: block;
+					margin: auto;
+					width: tovw(250px, 'mobile');
+				}
 			}
 		}
 

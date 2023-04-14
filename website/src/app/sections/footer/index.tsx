@@ -36,7 +36,13 @@ export const Footer = () => {
 								},
 							}}
 						>
-							<Image className={s.QR} src={QRImg} alt="QR" />
+							<a
+								href="https://github.com/basementstudio/scrollytelling"
+								target="_blank"
+								rel="noreferrer"
+							>
+								<Image className={s.QR} src={QRImg} alt="QR" />
+							</a>
 						</Scrollytelling.Animation>
 					</div>
 				</div>
@@ -73,7 +79,14 @@ const PreFooter = () => {
 			<div className={s['left-content']}>
 				<p>Now we are talking! Say hello to our OSS brand new scrollytelling library</p>
 				<Terminal />
-				<Image className={s['QR-mobile']} src={QRImg} alt="QR" />
+				<a
+					className={s['mobile-qr-link']}
+					href="https://github.com/basementstudio/scrollytelling"
+					target="_blank"
+					rel="noreferrer"
+				>
+					<Image className={s['QR-mobile']} src={QRImg} alt="QR" />
+				</a>
 			</div>
 		</div>
 	);
