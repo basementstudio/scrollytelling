@@ -9,8 +9,12 @@ import s from './footer.module.scss';
 import Link from '../../components/link';
 import { DottedDiv } from '../../components/dotted-container';
 import basementTeamSVG from '../../../../public/footer/basement-team.svg';
+import { useMedia } from '../../../hooks/use-media';
+import { toVw } from '../../../lib/utils';
 
 export const Footer = () => {
+	const isDesktopSm = useMedia('(min-width: 1024px)');
+
 	return (
 		<Scrollytelling.Root start="top bottom" end="bottom bottom">
 			<footer className={s.footer}>
@@ -36,19 +40,22 @@ export const Footer = () => {
 				</div>
 				<div className={s['imgs-container']}>
 					<Image className={s['team-img']} src={bsmtTeamImg} alt="Basement Team" />
-					<Scrollytelling.Animation
-						tween={{
-							start: 60,
-							end: 100,
-							from: {
-								y: '-120%',
-								x: '-10vw',
-								scale: 0.6,
-							},
-						}}
-					>
-						<Image className={s.QR} src={QRImg} alt="QR" />
-					</Scrollytelling.Animation>
+					<div className={s['QR-container']}>
+						<Scrollytelling.Animation
+							tween={{
+								start: 60,
+								end: 100,
+								from: {
+									y: '-120%',
+									position: 'absolute',
+									right: isDesktopSm ? '8vw' : toVw(20),
+									scale: 0.6,
+								},
+							}}
+						>
+							<Image className={s.QR} src={QRImg} alt="QR" />
+						</Scrollytelling.Animation>
+					</div>
 				</div>
 				<Image className={s['footer-heading-text']} src={basementTeamSVG} alt="basement team" />
 				<div className={s.links}>

@@ -30,12 +30,18 @@
 			}
 		}
 
-		.QR {
-			height: tovw(620px, 'desktop-large', 320px);
-			width: auto;
-
+		.QR-container {
 			@media screen and (max-width: 800px) {
 				display: none;
+			}
+
+			position: relative;
+			min-width: tovw(620px, 'desktop-large', 320px);
+			min-height: tovw(620px, 'desktop-large', 320px);
+
+			.QR {
+				height: tovw(620px, 'desktop-large', 320px);
+				width: auto;
 			}
 		}
 	}
@@ -91,11 +97,17 @@
 	display: flex;
 	align-items: center;
 	gap: tovw(100px, 'desktop-large', 100px);
-	width: tovw(1320px, 'desktop-large', 1320px);
-	margin: tovw(330px, 'desktop-large', 80px) auto;
+	padding: 0 tovw(282px, 'desktop-large', 32px);
+	margin: 14vw auto;
+
+	@media screen and (max-width: 1024px) {
+		margin: tovw(160px, 'desktop') auto;
+		padding: 0 8vw;
+	}
 
 	@media screen and (max-width: 800px) {
 		width: 100%;
+		padding: 0;
 		margin: 0 auto tovw(40px, 'mobile');
 	}
 
