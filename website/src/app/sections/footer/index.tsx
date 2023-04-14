@@ -94,36 +94,60 @@ const Terminal = () => {
 		}
 	};
 
+	const confettiRef = useRef<HTMLDivElement>(null);
+
 	useEffect(() => {
-		if (!isCopied) return;
+		if (!isCopied || !confettiRef.current) return;
+
+		const confeto = confettiRef.current;
+
+		const canvas = document.createElement('canvas');
+		confeto.appendChild(canvas);
+		canvas.setAttribute('style', 'width: 100%; height: 100%; position: absolute; top: 0; left: 0;');
+
+		import('canvas-confetti').then(({ create }) => {
+			create(canvas, {
+				resize: true,
+			})({
+				startVelocity: 20,
+				particleCount: 60,
+				spread: 100,
+				gravity: 0.6,
+				origin: { y: 0.42 },
+			});
+		});
 
 		const timeId = setTimeout(() => {
 			setIsCopied(false);
-		}, 2000);
+		}, 3000);
 
 		return () => {
 			clearTimeout(timeId);
+			confeto?.removeChild(canvas);
 		};
 	}, [isCopied]);
 
 	return (
-		<div className={s.terminal}>
-			<div className={s['upper-bar']}>
-				<span className={s.dots}>
-					{[1, 2, 3].map((_, idx) => (
-						<span key={idx} className={s.circle} />
-					))}
-				</span>
-				<span className={s['terminal-title']}>terminal</span>
+		<>
+			<div className={s.terminal}>
+				<div className={s['upper-bar']}>
+					<span className={s.dots}>
+						{[1, 2, 3].map((_, idx) => (
+							<span key={idx} className={s.circle} />
+						))}
+					</span>
+					<span className={s['terminal-title']}>terminal</span>
+				</div>
+				<DottedDiv className={s.content}>
+					<p ref={contentRef}>yarn add @bsmnt/scrollytelling</p>
+					<button className={s['copy-button']} onClick={copyTextContent}>
+						<CopyIconSVG />
+					</button>
+				</DottedDiv>
+				<CopiedNotification className={clsx(isCopied && s['text-copied-notif--visible'])} />
 			</div>
-			<DottedDiv className={s.content}>
-				<p ref={contentRef}>yarn add @bsmnt/scrollytelling</p>
-				<button className={s['copy-button']} onClick={copyTextContent}>
-					<CopyIconSVG />
-				</button>
-			</DottedDiv>
-			<CopiedNotification className={clsx(isCopied && s['text-copied-notif--visible'])} />
-		</div>
+			<div ref={confettiRef} className={s.confetti} />
+		</>
 	);
 };
 

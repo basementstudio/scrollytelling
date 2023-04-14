@@ -94,6 +94,7 @@
 }
 
 .pre-footer {
+	position: relative;
 	display: flex;
 	align-items: center;
 	gap: tovw(100px, 'desktop-large', 100px);
@@ -123,7 +124,7 @@
 	}
 
 	.left-content {
-		overflow: hidden;
+		position: relative;
 		width: tovw(768px, 'desktop-large', 368px);
 
 		@media screen and (max-width: 800px) {
@@ -138,6 +139,24 @@
 				margin: auto;
 				padding-top: tovw(36px, mobile);
 				width: tovw(250px, 'mobile');
+			}
+		}
+
+		.confetti {
+			position: absolute;
+			overflow: visible;
+			height: tovw(800px, 'desktop-large', 700px);
+			width: tovw(820px, 'desktop-large', 300px);
+			bottom: -140%;
+			right: -15vw;
+			z-index: 50;
+			pointer-events: none;
+
+			@media screen and (max-width: 800px) {
+				height: tovw(700px, 'mobile');
+				width: tovw(300px, 'mobile');
+				bottom: -15%;
+				right: -30vw;
 			}
 		}
 	}
