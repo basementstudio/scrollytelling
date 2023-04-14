@@ -14,6 +14,8 @@ import { toVw } from "../../../lib/utils";
 import { useEffect, useRef, useState } from "react";
 import clsx from "clsx";
 
+const ghHref = "https://github.com/basementstudio/scrollytelling";
+
 export const Footer = () => {
   const isDesktopSm = useMedia("(min-width: 1024px)");
 
@@ -40,11 +42,7 @@ export const Footer = () => {
                 },
               }}
             >
-              <a
-                href="https://github.com/basementstudio/scrollytelling"
-                target="_blank"
-                rel="noreferrer"
-              >
+              <a href={ghHref} target="_blank" rel="noreferrer">
                 <Image className={s.QR} src={QRImg} alt="QR" />
               </a>
             </Scrollytelling.Animation>
@@ -100,13 +98,20 @@ const PreFooter = () => {
     <div className={s["pre-footer"]}>
       <div className={s["left-content"]}>
         <p>
-          Now we are talking! Say hello to our OSS brand new scrollytelling
-          library
+          Now we are talking! Say hello to our brand new scrollytelling library.
         </p>
         <Terminal />
         <a
+          className={s["gh-link"]}
+          href={ghHref}
+          target="_blank"
+          rel="noreferrer"
+        >
+          Check it out on GitHub
+        </a>
+        <a
           className={s["mobile-qr-link"]}
-          href="https://github.com/basementstudio/scrollytelling"
+          href={ghHref}
           target="_blank"
           rel="noreferrer"
         >
