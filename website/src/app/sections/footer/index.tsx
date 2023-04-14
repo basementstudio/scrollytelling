@@ -31,7 +31,7 @@ export const Footer = () => {
 								from: {
 									y: '-120%',
 									position: 'absolute',
-									right: isDesktopSm ? '8vw' : toVw(20),
+									x: isDesktopSm ? '-8vw' : toVw(-20),
 									scale: 0.6,
 								},
 							}}
