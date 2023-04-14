@@ -17,7 +17,7 @@ export const Hero = () => {
   const trackingRef = useRef<HTMLDivElement>(null);
 
   return (
-    <Scrollytelling.Root end="bottom bottom" scrub={0.75}>
+    <Scrollytelling.Root end="bottom bottom">
       <Scrollytelling.Pin
         childHeight={"100vh"}
         pinSpacerHeight={"200vh"}
@@ -234,7 +234,7 @@ export const Hero = () => {
                     <Scrollytelling.Animation
                       tween={{
                         start: 0,
-                        end: 100, 
+                        end: 100,
                         to: {
                           keyframes: {
                             "0%": {
@@ -255,7 +255,7 @@ export const Hero = () => {
                             easeEach: "linear",
                           },
                           ease: "linear",
-                        }
+                        },
                       }}
                     >
                       <rect x="400" width="143" height="42" fill="white" />
