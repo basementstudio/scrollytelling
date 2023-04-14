@@ -173,6 +173,22 @@
 					font-size: tovw(16px, 'mobile');
 				}
 			}
+
+			.copy-button {
+				svg {
+					width: tovw(30px, 'desktop-large', 18px);
+					height: auto;
+					margin-left: tovw(14px, 'desktop-large', 6px);
+
+					@media screen and (max-width: 1024px) {
+						width: tovw(44px, 'desktop');
+					}
+
+					@media screen and (max-width: 800px) {
+						width: tovw(24px, 'mobile');
+					}
+				}
+			}
 		}
 
 		.upper-bar {
@@ -202,6 +218,20 @@
 					width: tovw(13px, 'desktop-large', 13px);
 					height: tovw(13px, 'desktop-large', 13px);
 					background-color: white;
+				}
+			}
+		}
+	}
+}
+
+@media (hover: hover) {
+	.terminal {
+		.content {
+			.copy-button {
+				transition: opacity 0.15s ease-in-out;
+
+				&:hover {
+					opacity: 0.6;
 				}
 			}
 		}
