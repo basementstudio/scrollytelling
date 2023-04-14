@@ -3,7 +3,6 @@ import { Footer } from "./sections/footer";
 import { Hero } from "./sections/hero";
 import { HorizontalMarquee } from "./sections/horizontal-marquee";
 import { LastParallax } from "./sections/last-parallax";
-import { MysteriousSection } from "./sections/mysterious";
 import { LabIntro } from "./sections/lab-cylinder/intro";
 import { LabCylinder } from "./sections/lab-cylinder";
 
@@ -17,7 +16,6 @@ export default function HomePage() {
       {/* @ts-expect-error rsc */}
       <LabCylinder />
       <LastParallax />
-      <MysteriousSection />
       <Footer />
     </main>
   );

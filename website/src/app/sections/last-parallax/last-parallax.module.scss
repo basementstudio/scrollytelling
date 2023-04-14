@@ -3,6 +3,8 @@
 .section {
   min-height: 100vh;
   overflow: hidden;
+  position: relative;
+  z-index: 1;
 
   h2 {
     font-size: tovw(102px, "desktop-large", 40px);

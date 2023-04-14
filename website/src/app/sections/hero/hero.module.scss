@@ -1,5 +1,10 @@
 @import "../../css/helpers";
 
+.pin-spacer {
+  position: relative;
+  z-index: 1;
+}
+
 .header {
   display: grid;
   align-items: center;

@@ -3,6 +3,8 @@
 .footer {
   padding: tovw(40px, "desktop-large", 40px) tovw(32px, "desktop-large", 32px);
   overflow: hidden;
+  position: relative;
+  z-index: 1;
 
   @media screen and (max-width: 800px) {
     padding: tovw(24px, "mobile") tovw(16px, "mobile");

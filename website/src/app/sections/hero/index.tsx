@@ -20,7 +20,8 @@ export const Hero = () => {
     <Scrollytelling.Root end="bottom bottom">
       <Scrollytelling.Pin
         childHeight={"100vh"}
-        pinSpacerHeight={"200vh"}
+        pinSpacerHeight={"300vh"}
+        pinSpacerClassName={s["pin-spacer"]}
         top={0}
       >
         <header className={s["header"]}>
