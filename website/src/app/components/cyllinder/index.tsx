@@ -82,6 +82,8 @@ export const Cyllinder: React.FC<CyllinderProps> = ({ experiments }) => {
                     <Link
                       className={s["link"]}
                       href={"https://lab.basement.studio" + experiment.href}
+                      target="_blank"
+                      rel="noopener"
                     >
                       {experiment.og && (
                         <Image
