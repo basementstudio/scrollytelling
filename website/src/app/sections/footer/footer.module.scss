@@ -174,7 +174,7 @@
       overflow: visible;
       height: tovw(800px, "desktop-large", 700px);
       width: tovw(820px, "desktop-large", 300px);
-      bottom: -140%;
+      bottom: -105%;
       right: -15vw;
       z-index: 50;
       pointer-events: none;
@@ -182,8 +182,8 @@
       @media screen and (max-width: 800px) {
         height: tovw(700px, "mobile");
         width: tovw(300px, "mobile");
-        bottom: -15%;
-        right: -30vw;
+        bottom: -10%;
+        right: -28vw;
       }
     }
   }
