@@ -43,7 +43,7 @@ export const FallingCaps = () => {
           <Scrollytelling.Animation
             tween={{
               start: 0,
-              end: 100,
+              end: 60,
               target: `.${s["paragraph"]} > *`,
               fromTo: [
                 {
