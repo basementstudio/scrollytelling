@@ -61,7 +61,7 @@ export const Footer = () => {
                 <li key={idx}>
                   {idx !== 0 && <span>&nbsp;—&nbsp;</span>}
                   <Link
-                    className={s.link}
+                    className="link"
                     href={social.url}
                     target="_blank"
                     rel="noreferrer"
@@ -75,7 +75,7 @@ export const Footer = () => {
           <div>
             <span>get in touch</span>
             <Link
-              className={s.link}
+              className="link"
               href="mailto:sayhi@basement.studio"
               target="_blank"
               rel="noreferrer"
@@ -102,7 +102,7 @@ const PreFooter = () => {
         </p>
         <Terminal />
         <a
-          className={s["gh-link"]}
+          className={clsx(s["gh-link"], "link")}
           href={ghHref}
           target="_blank"
           rel="noreferrer"
