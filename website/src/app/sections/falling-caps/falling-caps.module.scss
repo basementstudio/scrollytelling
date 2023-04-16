@@ -5,12 +5,26 @@
 }
 
 .pin {
+  position: relative;
   height: 100vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
   position: sticky;
   top: 0;
+
+  .canvas-container {
+    --offset-y: 20%;
+
+    z-index: 1;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: calc(100% + var(--offset-y));
+    transform: translateY(calc(-1 * (var(--offset-y) / 2)));
+    overflow: hidden;
+  }
   
   .paragraph {
     font-size: tovw(56px, 'desktop', 20px);

@@ -4,8 +4,6 @@ import { GLTF } from "three-stdlib";
 import { useFrame, useThree } from "@react-three/fiber";
 import { useRef } from "react";
 import { useScrollytelling } from "@bsmnt/scrollytelling";
-import { View } from "@react-three/drei";
-import { webglTunnel } from "../../../lib/webgl";
 
 type GLTFResult = GLTF & {
   nodes: {
@@ -20,7 +18,8 @@ type GLTFResult = GLTF & {
 
 useGLTF.preload("/models/Mac128k-light.glb");
 
-const MacModel = ({ timeline }: { timeline?: gsap.core.Timeline }) => {
+export const MacModel = () => {
+  const { timeline } = useScrollytelling();
   const { nodes, materials } = useGLTF(
     "/models/Mac128k-light.glb"
   ) as GLTFResult;
@@ -52,22 +51,5 @@ const MacModel = ({ timeline }: { timeline?: gsap.core.Timeline }) => {
         </group>
       </group>
     </Float>
-  );
-};
-
-export const MacWebGL = ({
-  track,
-}: {
-  track: React.RefObject<HTMLElement>;
-}) => {
-  const { timeline } = useScrollytelling();
-
-  return (
-    <webglTunnel.In>
-      {/* @ts-ignore */}
-      <View track={track}>
-        <MacModel timeline={timeline} />
-      </View>
-    </webglTunnel.In>
   );
 };

@@ -3,8 +3,8 @@
 import * as Scrollytelling from "@bsmnt/scrollytelling";
 
 import s from "./falling-caps.module.scss";
-import { useRef } from "react";
-import { CapsWebgl } from "./caps";
+import { CapsModel } from "./caps";
+import { Canvas } from "@react-three/fiber";
 
 const splitText = (text: string, wordClass?: string) => {
   const wordsArray = text.split(" ");
@@ -31,14 +31,23 @@ const totalWords = lines.reduce((acc, line) => {
 
 
 export const FallingCaps = () => {
-  const trackRef = useRef<HTMLDivElement>(null);
 
   return (
     <Scrollytelling.Root end="bottom bottom">
-
       <section className={s['spacer']}>
-        <div className={s["pin"]} ref={trackRef}>
-          <CapsWebgl track={trackRef} />
+        <div className={s["pin"]}>
+          <div className={s["canvas-container"]}>
+            <Canvas
+              camera={{ position: [0, 0, 10], fov: 35 }}
+              gl={{
+                alpha: true,
+                antialias: true,
+                powerPreference: "high-performance",
+              }}
+            >
+              <CapsModel />
+            </Canvas>
+          </div>
 
           <Scrollytelling.Animation
             tween={{

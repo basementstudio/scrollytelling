@@ -1,11 +1,9 @@
-import { useScrollytelling } from "@bsmnt/scrollytelling";
-import React from "react";
-import { View, useGLTF } from "@react-three/drei";
-import { webglTunnel } from "../../../lib/webgl";
+import * as Scrollytelling from "@bsmnt/scrollytelling";
+import React, { useMemo } from "react";
+import { Float, useGLTF } from "@react-three/drei";
 import { GLTF } from "three-stdlib";
 import { Euler, Vector3 } from "three";
-import { useFrame, useThree } from "@react-three/fiber";
-import gsap from "gsap";
+import { useThree } from "@react-three/fiber";
 
 type GLTFResult = GLTF & {
   nodes: {
@@ -18,102 +16,133 @@ type GLTFResult = GLTF & {
   };
 };
 
-const capProps: { position: Vector3; rotation: Euler }[] = [
+const capProps: { position: Vector3; rotation: Euler, progress: number }[] = [
   {
     position: new Vector3(-0.08, -0.1, 0.1),
     rotation: new Euler(0.4, -0.6, 0.4, "XZY"),
+    progress: 0,
   },
   {
     position: new Vector3(-0.5, -0.1, 0.55),
     rotation: new Euler(0, -0.3, -0.5, "ZYX"),
+    progress: 0,
   },
   {
     position: new Vector3(0.22, 0.15, 0.4),
     rotation: new Euler(0.55, -0.6, 0.8, "XZY"),
+    progress: 0,
   },
   {
     position: new Vector3(-0.05, 0.12, 1.1),
     rotation: new Euler(0.1, -0.6, -0.4, "XZY"),
+    progress: 0,
   },
   {
     position: new Vector3(0.3, -0.1, 1.1),
     rotation: new Euler(0.1, -0.7, 0.5, "XZY"),
+    progress: 0,
+  },
+  {
+    position: new Vector3(0.42, 0.22, 0.8),
+    rotation: new Euler(0.5, 0, 0.5, "XZY"),
+    progress: 0,
+  },
+  {
+    position: new Vector3(-0.42, 0.22, 0.8),
+    rotation: new Euler(0.5, 0.9, 0.5, "XZY"),
+    progress: 0,
+  },
+  {
+    position: new Vector3(-0.12, -0.2, 1),
+    rotation: new Euler(0.2, 0.65, 0.5, "XZY"),
+    progress: 0,
   },
 ];
 
-const CapsModel = ({ timeline }: { timeline?: gsap.core.Timeline }) => {
+export const CapsModel = () => {
   const innerRef = React.useRef<THREE.Group>(null);
   const { width } = useThree((state) => state.viewport);
   const { nodes, materials } = useGLTF("/models/Cap.glb") as GLTFResult;
 
-  useFrame(() => {
-    if (!innerRef.current || !timeline?.scrollTrigger) return;
+  const clonedMaterials: ({"m_Cap-v2": THREE.MeshStandardMaterial; m_Outline: THREE.MeshStandardMaterial;})[] = useMemo(() => {
+    materials["m_Cap-v2"].transparent = true;
+    materials["m_Cap-v2"].opacity = 0;
+    materials["m_Outline"].transparent = true;
+    materials["m_Outline"].opacity = 0;
 
-    const start = 0.6;
-    const end = 1;
-    const progress = gsap.utils.mapRange(
-      start,
-      end,
-      0,
-      1,
-      gsap.utils.clamp(start, end, timeline.scrollTrigger.progress)
-    );
+    return Array(capProps.length).fill(0).map((_, idx) => {
+      const clonedMaterials = {
+        ["m_Cap-v2"]: materials["m_Cap-v2"].clone(),
+        ["m_Outline"]: materials["m_Outline"].clone(),
+      }
 
-    innerRef.current.children.forEach((m, idx) => {
-      if (!timeline?.scrollTrigger) return;
+      clonedMaterials["m_Cap-v2"].userData.idx = idx
+      clonedMaterials["m_Outline"].userData.idx = idx
 
-      // Parallax y based on distance from the camera.
-      // m.position.y = -0.1 + (m.position.z / 2) * timeline.scrollTrigger.progress;
+      return clonedMaterials
+    })
+  }, [materials])
 
-      // Rotate on y
-      const isEven = idx % 2 === 0;
-      m.rotation.y = (isEven ? 1 : -1) * progress;
-    });
-  });
+  const halfViewportWidth = width / 2;
+  const fadeInYoffset = 0.1
 
   return (
-    <group ref={innerRef}>
-      {capProps.map(({ position, rotation }) => {
-        return (
-          <group
-            position={position.multiplyScalar(width / 2)}
-            rotation={rotation}
-          >
-            <group>
-              <axesHelper />
-              <mesh
-                castShadow
-                receiveShadow
-                geometry={nodes.Sphere007.geometry}
-                material={materials["m_Cap-v2"]}
-              />
-              <mesh
-                castShadow
-                receiveShadow
-                geometry={nodes.Sphere007_1.geometry}
-                material={materials.m_Outline}
-              />
-            </group>
-          </group>
-        );
-      })}
-    </group>
-  );
-};
+    <>
+      <Scrollytelling.Animation
+        tween={{
+          start: 60,
+          end: 100,
+          target: capProps,
+          to: {
+            progress: 1,
+            ease: "power2.inOut",
+            stagger: 10,
+            onUpdate: () => {
+              // return
+              clonedMaterials.forEach((m, idx) => {
+                const currCapProps = capProps[idx]
+                const currObj = innerRef.current?.children[idx] as THREE.Object3D
+                
+                
+                if (!currObj || !currCapProps) return;
+                
+                const isEven = idx % 2 === 0;
+                const currObjPosition = currCapProps.position.clone().multiplyScalar(halfViewportWidth)
+                const invProgress = 1 - currCapProps.progress
+                
+                m["m_Cap-v2"].opacity = currCapProps.progress
+                m["m_Outline"].opacity = currCapProps.progress
 
-export const CapsWebgl = ({
-  track,
-}: {
-  track: React.RefObject<HTMLElement>;
-}) => {
-  const { timeline } = useScrollytelling();
+                currObj.rotation.y = currCapProps.rotation.y + (isEven ? 1 : -1) * (currCapProps.progress * Math.PI * 2);
+                currObj.position.y = currObjPosition.y - (invProgress * fadeInYoffset);
+              })
+            }
+          }
+        }}
+      />
 
-  return (
-    <webglTunnel.In>
-      {/* @ts-ignore */}
-      <View track={track}>
-        <CapsModel timeline={timeline} />
-      </View>
-    </webglTunnel.In>
+      <group ref={innerRef}>
+          {capProps.map(({ position, rotation }, idx) => {
+            return (
+              <group
+                position={position.clone().multiplyScalar(halfViewportWidth)}
+                rotation={rotation.clone()}
+              >
+                <Float>
+                  {/* <axesHelper /> */}
+                  <mesh
+                    geometry={nodes.Sphere007.geometry}
+                    material={clonedMaterials[idx]?.["m_Cap-v2"]}
+                  />
+                  <mesh
+                    geometry={nodes.Sphere007_1.geometry}
+                    material={clonedMaterials[idx]?.["m_Outline"]}
+                  />
+                </Float>
+              </group>
+            );
+          })}
+        </group>
+    </>
   );
 };
