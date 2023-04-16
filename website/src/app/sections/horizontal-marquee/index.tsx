@@ -1,5 +1,5 @@
 "use client";
-import * as Scrollytelling from "@bsmnt/scrollytelling";
+import * as Scrollytelling from "~/lib/scrollytelling-client";
 import s from "./horizontal-marquee.module.scss";
 import { forwardRef } from "react";
 

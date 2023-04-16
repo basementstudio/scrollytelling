@@ -4,9 +4,10 @@ module.exports = {
     "turbo",
     "prettier",
     "plugin:@typescript-eslint/recommended",
+    "plugin:import/typescript",
   ],
   parser: "@typescript-eslint/parser",
-  plugins: ["@typescript-eslint", "import"],
+  plugins: ["@typescript-eslint"],
   rules: {
     "@next/next/no-html-link-for-pages": "off",
     "react/jsx-key": "off",
@@ -35,7 +36,7 @@ module.exports = {
     "import/resolver": {
       typescript: {
         alwaysTryTypes: true,
-        project: ["examples/*/tsconfig.json", "packages/*/tsconfig.json"],
+        project: ["website/tsconfig.json", "scrollytelling/tsconfig.json"],
       },
     },
     react: {

@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import bsmtTeamImg from "../../../../public/footer/basement-team-footer.jpg";
-import * as Scrollytelling from "@bsmnt/scrollytelling";
+import * as Scrollytelling from "~/lib/scrollytelling-client";
 import QRImg from "../../../../public/footer/QR.svg";
 
 import s from "./footer.module.scss";

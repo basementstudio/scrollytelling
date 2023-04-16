@@ -6,7 +6,7 @@ import { Canvas } from "@react-three/fiber";
 import { GLTF } from "three-stdlib";
 import { useFrame, useThree } from "@react-three/fiber";
 import { useRef } from "react";
-import { useScrollytelling } from "@bsmnt/scrollytelling";
+import { useScrollytelling } from "~/lib/scrollytelling-client";
 
 type GLTFResult = GLTF & {
   nodes: {

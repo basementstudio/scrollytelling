@@ -1,6 +1,6 @@
 "use client";
 
-import * as Scrollytelling from "@bsmnt/scrollytelling";
+import * as Scrollytelling from "~/lib/scrollytelling-client";
 import Image from "next/image";
 
 import SMILE_IMAGE from "../../../../public/images/parallax/smile.png";

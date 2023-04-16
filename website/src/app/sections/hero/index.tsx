@@ -1,10 +1,10 @@
-import * as Scrollytelling from "../../../lib/scrollytelling-client";
+import * as Scrollytelling from "~/lib/scrollytelling-client";
 
 import s from "./hero.module.scss";
 import Link from "next/link";
 import { LogoBasement } from "../../logos/logo";
 import { CanvasWithMacModel } from "./mac-model";
-import { toVw } from "../../../lib/utils";
+import { toVw } from "~/lib/utils";
 
 export const Hero = () => {
   return (
