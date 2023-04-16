@@ -65,7 +65,17 @@ const Scrollytelling = ({
 }: {
   children?: React.ReactNode;
   debug?: boolean;
+  /**
+   * The start position of the timeline. This can be a string like "top top" or a number.
+   * See https://greensock.com/docs/v3/Plugins/ScrollTrigger/start
+   * @default "top top"
+   */
   start?: ScrollTrigger.Vars["start"];
+  /**
+   * The end position of the timeline. This can be a string like "top top" or a number.
+   * See https://greensock.com/docs/v3/Plugins/ScrollTrigger/end
+   * @default "bottom bottom"
+   */
   end?: ScrollTrigger.Vars["end"];
   callbacks?: Pick<
     ScrollTrigger.Vars,
@@ -97,7 +107,7 @@ const Scrollytelling = ({
         markers: debug,
         scrub: scrub ?? true,
         start: start ?? "top top",
-        end: end ?? "bottom top",
+        end: end ?? "bottom bottom",
         trigger: ref.current,
         ...callbacks,
       },

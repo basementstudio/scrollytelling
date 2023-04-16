@@ -50,7 +50,6 @@ export const Cyllinder: React.FC<CyllinderProps> = ({ experiments }) => {
       callbacks={{
         onRefresh: () => update(progress.value),
       }}
-      end="bottom bottom"
     >
       <div
         className={s["section"]}
