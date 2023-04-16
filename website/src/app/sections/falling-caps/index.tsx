@@ -31,7 +31,6 @@ const totalWords = lines.reduce((acc, line) => {
 
 
 export const FallingCaps = () => {
-
   return (
     <Scrollytelling.Root end="bottom bottom">
       <section className={s['spacer']}>
@@ -52,7 +51,7 @@ export const FallingCaps = () => {
           <Scrollytelling.Animation
             tween={{
               start: 0,
-              end: 60,
+              end: 20,
               target: `.${s["paragraph"]} > *`,
               fromTo: [
                 {
@@ -60,8 +59,8 @@ export const FallingCaps = () => {
                 },
                 {
                   opacity: 1,
-                  stagger: 100 / totalWords,
-                  duration: 100,
+                  stagger: 50 / totalWords,
+                  duration: 50,
                   ease: "power2.out",
                 },
               ],

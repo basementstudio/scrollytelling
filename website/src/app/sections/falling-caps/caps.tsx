@@ -38,22 +38,22 @@ const capProps: { position: Vector3; rotation: Euler, progress: number }[] = [
     progress: 0,
   },
   {
-    position: new Vector3(0.3, -0.1, 1.1),
+    position: new Vector3(0.3, -0.13, 1.1),
     rotation: new Euler(0.1, -0.7, 0.5, "XZY"),
     progress: 0,
   },
   {
-    position: new Vector3(0.42, 0.22, 0.8),
+    position: new Vector3(0.48, 0.22, 0.8),
     rotation: new Euler(0.5, 0, 0.5, "XZY"),
     progress: 0,
   },
   {
-    position: new Vector3(-0.42, 0.22, 0.8),
+    position: new Vector3(-0.48, 0.26, 0.8),
     rotation: new Euler(0.5, 0.9, 0.5, "XZY"),
     progress: 0,
   },
   {
-    position: new Vector3(-0.12, -0.2, 1),
+    position: new Vector3(-0.12, -0.26, 1),
     rotation: new Euler(0.2, 0.65, 0.5, "XZY"),
     progress: 0,
   },
@@ -90,13 +90,13 @@ export const CapsModel = () => {
     <>
       <Scrollytelling.Animation
         tween={{
-          start: 60,
+          start: 50,
           end: 100,
           target: capProps,
           to: {
             progress: 1,
             ease: "power2.inOut",
-            stagger: 10,
+            stagger: 50 / capProps.length,
             onUpdate: () => {
               // return
               clonedMaterials.forEach((m, idx) => {
@@ -129,7 +129,6 @@ export const CapsModel = () => {
                 rotation={rotation.clone()}
               >
                 <Float>
-                  {/* <axesHelper /> */}
                   <mesh
                     geometry={nodes.Sphere007.geometry}
                     material={clonedMaterials[idx]?.["m_Cap-v2"]}
