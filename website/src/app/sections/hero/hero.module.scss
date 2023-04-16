@@ -1,10 +1,15 @@
-@import '../../css/helpers';
+@import "../../css/helpers";
+
+.pin-spacer {
+  position: relative;
+  z-index: 1;
+}
 
 .header {
   display: grid;
   align-items: center;
   justify-content: space-between;
-  padding: tovw(16px, 'desktop-large', 12px) tovw(32px, 'desktop-large', 16px);
+  padding: tovw(16px, "desktop-large", 12px) tovw(32px, "desktop-large", 16px);
   grid-template-columns: repeat(3, 1fr);
 
   @media screen and (max-width: 800px) {
@@ -22,7 +27,7 @@
     max-width: tovw(537px);
     text-align: right;
     line-height: 1.2;
-    font-size: tovw(24px, 'desktop-large', 16px);
+    font-size: tovw(24px, "desktop-large", 16px);
     font-weight: 800;
 
     @media screen and (max-width: 800px) {
@@ -32,8 +37,8 @@
 }
 
 .logo {
-  width: tovw(251px, 'desktop-large', 200px);
-  height: tovw(36px, 'desktop-large', 28px);
+  width: tovw(251px, "desktop-large", 200px);
+  height: tovw(36px, "desktop-large", 28px);
 }
 
 .star {
@@ -51,14 +56,15 @@
   overflow-x: hidden;
 }
 
-.tracking {
-  width: tovw(500px, 'desktop-large', 200px);
-  height: tovw(500px, 'desktop-large', 200px);
+.model-container {
+  width: tovw(500px, "desktop-large", 200px);
+  height: tovw(500px, "desktop-large", 200px);
   position: absolute;
   z-index: 100;
   top: 50%;
   right: 0;
-  transform: translateY(-50%);
+  transform: translateY(-50%) scale(0.9);
+  opacity: 0; // start hidden, will show when model loads
 
   @media screen and (max-width: 800px) {
     top: 15%;
@@ -69,7 +75,7 @@
   display: grid;
   grid-template-columns: 1fr;
   grid-template-rows: repeat(4, auto);
-  row-gap: tovw(28px, 'desktop-large', 16px);
+  row-gap: tovw(28px, "desktop-large", 16px);
 
   div:nth-child(3) {
     height: tovw(115px);
@@ -100,6 +106,7 @@
     transform-origin: center bottom;
     width: tovw(924px);
     height: tovw(183px);
+    transform: translateX(-35%);
   }
 
   .svg-coolshit {
@@ -124,7 +131,6 @@
   }
 }
 
-
 .footer {
   display: grid;
   column-gap: tovw(24px);
@@ -134,11 +140,11 @@
   @media screen and (max-width: 800px) {
     display: flex;
     flex-direction: column;
-    gap: tovw(20px, 'desktop', 16px);
+    gap: tovw(20px, "desktop", 16px);
   }
 
   p {
-    font-size: tovw(14px, 'desktop', 14px);
+    font-size: tovw(14px, "desktop", 14px);
     &:nth-child(1) {
       grid-area: 1 / 1 / 2 / 5;
     }

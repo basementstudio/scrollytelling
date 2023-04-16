@@ -1,18 +1,16 @@
 import "./css/global.scss";
 import type { Metadata } from "next";
 import localFont from "next/font/local";
-import { Providers } from "./providers";
+import { JetBrains_Mono } from "next/font/google";
 
-const jetbrainsMono = localFont({
-  src: [
-    { path: "../../public/fonts/JetBrainsMono-Regular.woff2", weight: "400" }
-  ]
-})
+const jetBrainsMono = JetBrains_Mono({
+  weight: "400",
+  subsets: ["latin"],
+});
 
 const basementGrotesque = localFont({
   src: [
     { path: "./fonts/BasementGrotesque-Regular.woff2", weight: "400" },
-    // { path: "./fonts/BasementGrotesque-Black.woff2", weight: "700" },
     { path: "./fonts/BasementGrotesque-BlackExpanded.woff2", weight: "800" },
     {
       path: "./fonts/BasementGrotesqueDisplay-UltraBlackExtraExpanded.woff2",
@@ -38,12 +36,10 @@ export default function RootLayout({
       lang="en"
       style={{
         ["--font-basement-grotesque" as string]: `${basementGrotesque.style.fontFamily}, var(--font-system), sans-serif`,
-        ["--font-jetbrains-mono" as string]: `${jetbrainsMono.style.fontFamily}, var(--font-system), sans-serif`,
+        ["--font-jetbrains-mono" as string]: `${jetBrainsMono.style.fontFamily}, var(--font-system), sans-serif`,
       }}
     >
-      <body>
-        <Providers>{children}</Providers>
-      </body>
+      <body>{children}</body>
     </html>
   );
 }
