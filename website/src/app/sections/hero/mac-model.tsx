@@ -65,6 +65,10 @@ export const CanvasWithMacModel = () => {
     <Canvas
       camera={{ position: [0, 0, 10], fov: 35 }}
       onCreated={() => {
+        gsap.set(canvasRef.current, {
+          width: "100%",
+          height: "100%",
+        });
         gsap.to(
           canvasRef.current?.closest('[data-mac-canvas-container="true"]') ||
             null,
