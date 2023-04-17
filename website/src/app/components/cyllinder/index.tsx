@@ -1,6 +1,6 @@
 "use client";
 import { gsap } from "gsap";
-import * as Scrollytelling from "@bsmnt/scrollytelling";
+import * as Scrollytelling from "~/lib/scrollytelling-client";
 import Image from "next/image";
 
 import s from "./cyllinder.module.scss";
@@ -50,7 +50,6 @@ export const Cyllinder: React.FC<CyllinderProps> = ({ experiments }) => {
       callbacks={{
         onRefresh: () => update(progress.value),
       }}
-      end="bottom bottom"
     >
       <div
         className={s["section"]}

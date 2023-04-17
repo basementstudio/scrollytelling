@@ -1,9 +1,12 @@
+"use client";
+import { gsap } from "gsap";
 import * as THREE from "three";
 import { Float, useGLTF } from "@react-three/drei";
+import { Canvas } from "@react-three/fiber";
 import { GLTF } from "three-stdlib";
 import { useFrame, useThree } from "@react-three/fiber";
 import { useRef } from "react";
-import { useScrollytelling } from "@bsmnt/scrollytelling";
+import { useScrollytelling } from "~/lib/scrollytelling-client";
 
 type GLTFResult = GLTF & {
   nodes: {
@@ -18,7 +21,7 @@ type GLTFResult = GLTF & {
 
 useGLTF.preload("/models/Mac128k-light.glb");
 
-export const MacModel = () => {
+const MacModel = () => {
   const { timeline } = useScrollytelling();
   const { nodes, materials } = useGLTF(
     "/models/Mac128k-light.glb"
@@ -51,5 +54,28 @@ export const MacModel = () => {
         </group>
       </group>
     </Float>
+  );
+};
+
+export const CanvasWithMacModel = () => {
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+
+  return (
+    <Canvas
+      camera={{ position: [0, 0, 10], fov: 35 }}
+      onCreated={() => {
+        gsap.to(
+          canvasRef.current?.closest('[data-mac-canvas-container="true"]') ||
+            null,
+          { opacity: 1, scale: 1, duration: 0.15 }
+        );
+      }}
+      gl={{ alpha: true, antialias: true, powerPreference: "high-performance" }}
+      style={{ opacity: 0, scale: 0.9 }}
+      ref={canvasRef}
+      data-mac-canvas-container
+    >
+      <MacModel />
+    </Canvas>
   );
 };
