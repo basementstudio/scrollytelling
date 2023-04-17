@@ -48,10 +48,12 @@ export const FallingCaps = () => {
         end: 50,
         /* Chunk per word */
         chunks: splittedText.length,
-        overlap: 0.5,
+        overlap: 0.7,
       }),
     [splittedText]
   );
+
+  console.log(perWordTimeline)
 
   return (
     <Scrollytelling.Root end="bottom bottom">
