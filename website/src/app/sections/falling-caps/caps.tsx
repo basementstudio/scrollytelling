@@ -83,7 +83,8 @@ export const CapsModel = () => {
     })
   }, [materials])
 
-  const halfViewportWidth = width / 2;
+  const responsiveVPWidth = Math.max(width, 4.5);
+  const halfViewportWidth = responsiveVPWidth / 2;
   const fadeInYoffset = 0.1
 
   return (
@@ -98,7 +99,6 @@ export const CapsModel = () => {
             ease: "power2.inOut",
             stagger: 50 / capProps.length,
             onUpdate: () => {
-              // return
               clonedMaterials.forEach((m, idx) => {
                 const currCapProps = capProps[idx]
                 const currObj = innerRef.current?.children[idx] as THREE.Object3D
@@ -125,6 +125,7 @@ export const CapsModel = () => {
           {capProps.map(({ position, rotation }, idx) => {
             return (
               <group
+                scale={responsiveVPWidth / 9}
                 position={position.clone().multiplyScalar(halfViewportWidth)}
                 rotation={rotation.clone()}
               >
