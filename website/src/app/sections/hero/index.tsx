@@ -147,7 +147,7 @@ export const Hero = () => {
                     <Scrollytelling.Animation
                       tween={{
                         start: 0,
-                        end: 100,
+                        end: 40,
                         fromTo: [
                           {
                             attr: {
@@ -173,7 +173,7 @@ export const Hero = () => {
                     <Scrollytelling.Animation
                       tween={{
                         start: 0,
-                        end: 100,
+                        end: 40,
                         fromTo: [
                           {
                             attr: {
@@ -197,30 +197,35 @@ export const Hero = () => {
                       />
                     </Scrollytelling.Animation>
                     <Scrollytelling.Animation
-                      tween={{
-                        start: 0,
-                        end: 100,
-                        to: {
-                          keyframes: {
-                            "0%": {
-                              attr: {
-                                width: toVw(143, 1920, 143),
-                              },
+                      tween={[
+                        {
+                          start: 0,
+                          end: 0,
+                          to: {
+                            attr: {
+                              width: toVw(143, 1920, 143),
                             },
-                            "75%": {
-                              attr: {
-                                width: toVw(490, 1920, 490),
-                              },
-                            },
-                            "100%": {
-                              attr: {
-                                width: toVw(1440, 1920, 1440),
-                              },
-                            },
-                            easeEach: "linear",
                           },
                         },
-                      }}
+                        {
+                          start: 0,
+                          end: 40,
+                          to: {
+                            attr: {
+                              width: toVw(490, 1920, 490),
+                            },
+                          },
+                        },
+                        {
+                          start: 40,
+                          end: 100,
+                          to: {
+                            attr: {
+                              width: toVw(1440, 1920, 1440),
+                            },
+                          },
+                        },
+                      ]}
                     >
                       <rect x="400" width="143" height="42" fill="white" />
                     </Scrollytelling.Animation>
@@ -229,7 +234,7 @@ export const Hero = () => {
                 <Scrollytelling.Animation
                   tween={{
                     start: 0,
-                    end: 85,
+                    end: 40,
                     to: {
                       translateX: "0%",
                       scaleY: 0.613,
