@@ -4627,13 +4627,6 @@ tunnel-agent@^0.6.0:
   dependencies:
     safe-buffer "^5.0.1"
 
-tunnel-rat@^0.1.2:
-  version "0.1.2"
-  resolved "https://registry.yarnpkg.com/tunnel-rat/-/tunnel-rat-0.1.2.tgz#1717efbc474ea2d8aa05a91622457a6e201c0aeb"
-  integrity sha512-lR5VHmkPhzdhrM092lI2nACsLO4QubF0/yoOhzX7c+wIpbN1GjHNzCc91QlpxBi+cnx8vVJ+Ur6vL5cEoQPFpQ==
-  dependencies:
-    zustand "^4.3.2"
-
 turbo-darwin-64@1.9.0:
   version "1.9.0"
   resolved "https://registry.yarnpkg.com/turbo-darwin-64/-/turbo-darwin-64-1.9.0.tgz#f8fc54f445f079c85a0ac7e8ab65be8070a0507a"
@@ -5004,7 +4997,7 @@ zustand@^3.5.13, zustand@^3.6.9, zustand@^3.7.1:
   resolved "https://registry.npmjs.org/zustand/-/zustand-3.7.2.tgz"
   integrity sha512-PIJDIZKtokhof+9+60cpockVOq05sJzHCriyvaLBmEJixseQ1a5Kdov6fWZfWOu5SK9c+FhH1jU0tntLxRJYMA==
 
-zustand@^4.3.2, zustand@^4.3.7:
+zustand@^4.3.7:
   version "4.3.7"
   resolved "https://registry.npmjs.org/zustand/-/zustand-4.3.7.tgz"
   integrity sha512-dY8ERwB9Nd21ellgkBZFhudER8KVlelZm8388B5nDAXhO/+FZDhYMuRnqDgu5SYyRgz/iaf8RKnbUs/cHfOGlQ==
