@@ -1,5 +1,11 @@
 # @bsmnt/scrollytelling
 
+## 0.1.2
+
+### Patch Changes
+
+- 1ce2500: expose defaults prop
+
 ## 0.1.1
 
 ### Patch Changes
