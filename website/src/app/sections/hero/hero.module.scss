@@ -63,8 +63,7 @@
   z-index: 100;
   top: 50%;
   right: 0;
-  transform: translateY(-50%) scale(0.9);
-  opacity: 0; // start hidden, will show when model loads
+  transform: translateY(-50%);
 
   @media screen and (max-width: 800px) {
     top: 15%;

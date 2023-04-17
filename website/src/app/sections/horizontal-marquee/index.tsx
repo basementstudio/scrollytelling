@@ -1,5 +1,4 @@
-"use client";
-import * as Scrollytelling from "@bsmnt/scrollytelling";
+import * as Scrollytelling from "~/lib/scrollytelling-client";
 import s from "./horizontal-marquee.module.scss";
 import { forwardRef } from "react";
 
@@ -10,7 +9,7 @@ const charsLength = splitted.length;
 
 export const HorizontalMarquee = () => {
   return (
-    <Scrollytelling.Root start="top top+=300px" end="bottom bottom">
+    <Scrollytelling.Root start="top top+=300px">
       <section className={s.section}>
         <div className={s.pinned}>
           <Scrollytelling.Animation

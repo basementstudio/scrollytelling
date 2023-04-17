@@ -1,6 +1,5 @@
-"use client";
 import clsx from "clsx";
-import * as Scrollytelling from "@bsmnt/scrollytelling";
+import * as Scrollytelling from "~/lib/scrollytelling-client";
 
 import s from "./intro.module.scss";
 

@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import bsmtTeamImg from "../../../../public/footer/basement-team-footer.jpg";
-import * as Scrollytelling from "@bsmnt/scrollytelling";
+import * as Scrollytelling from "~/lib/scrollytelling-client";
 import QRImg from "../../../../public/footer/QR.svg";
 
 import s from "./footer.module.scss";
@@ -20,7 +20,7 @@ export const Footer = () => {
   const isDesktopSm = useMedia("(min-width: 1024px)");
 
   return (
-    <Scrollytelling.Root start="top 80%" end="bottom bottom">
+    <Scrollytelling.Root start="top 80%">
       <footer className={s.footer}>
         <PreFooter />
         <div className={s["imgs-container"]}>

@@ -1,6 +1,4 @@
-"use client";
-
-import * as Scrollytelling from "@bsmnt/scrollytelling";
+import * as Scrollytelling from "~/lib/scrollytelling-client";
 import Image from "next/image";
 
 import SMILE_IMAGE from "../../../../public/images/parallax/smile.png";
@@ -10,7 +8,7 @@ import s from "./last-parallax.module.scss";
 
 export const LastParallax = () => {
   return (
-    <Scrollytelling.Root start="top bottom" end="bottom bottom" scrub={0.75}>
+    <Scrollytelling.Root start="top bottom" scrub={0.75}>
       <section className={s["section"]}>
         <div className="wrapper">
           <Scrollytelling.Parallax
