@@ -200,21 +200,19 @@ export const Hero = () => {
                       tween={[
                         {
                           start: 0,
-                          end: 0,
-                          to: {
-                            attr: {
-                              width: toVw(143, 1920, 143),
-                            },
-                          },
-                        },
-                        {
-                          start: 0,
                           end: 40,
-                          to: {
-                            attr: {
-                              width: toVw(300, 1920, 490),
+                          fromTo: [
+                            {
+                              attr: {
+                                width: toVw(143, 1920, 143),
+                              },
                             },
-                          },
+                            {
+                              attr: {
+                                width: toVw(300, 1920, 490),
+                              },
+                            },
+                          ],
                         },
                         {
                           start: 40,
