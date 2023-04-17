@@ -53,8 +53,6 @@ export const FallingCaps = () => {
     [splittedText]
   );
 
-  console.log(perWordTimeline)
-
   return (
     <Scrollytelling.Root end="bottom bottom">
       <section className={s["spacer"]}>
