@@ -4,9 +4,10 @@ module.exports = {
     "turbo",
     "prettier",
     "plugin:@typescript-eslint/recommended",
+    "plugin:import/typescript",
   ],
   parser: "@typescript-eslint/parser",
-  plugins: ["@typescript-eslint", "import"],
+  plugins: ["@typescript-eslint"],
   rules: {
     "@next/next/no-html-link-for-pages": "off",
     "react/jsx-key": "off",
@@ -18,6 +19,7 @@ module.exports = {
     ],
     curly: ["error", "multi-line"],
     "react/jsx-no-target-blank": [2, { allowReferrer: true }],
+    "react/display-name": 0,
     "@typescript-eslint/explicit-function-return-type": 0,
     "@typescript-eslint/explicit-module-boundary-types": 0,
     "@typescript-eslint/explicit-member-accessibility": 0,
@@ -35,7 +37,6 @@ module.exports = {
     "import/resolver": {
       typescript: {
         alwaysTryTypes: true,
-        project: ["examples/*/tsconfig.json", "packages/*/tsconfig.json"],
       },
     },
     react: {

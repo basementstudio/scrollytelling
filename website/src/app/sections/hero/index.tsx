@@ -1,22 +1,14 @@
-"use client";
-
-import * as Scrollytelling from "@bsmnt/scrollytelling";
-import { gsap } from "gsap";
+import * as Scrollytelling from "~/lib/scrollytelling-client";
 
 import s from "./hero.module.scss";
-import { useRef } from "react";
 import Link from "next/link";
 import { LogoBasement } from "../../logos/logo";
-import { Canvas } from "@react-three/fiber";
-import { MacModel } from "./mac-model";
-import { toVw } from "../../../lib/utils";
+import { CanvasWithMacModel } from "./mac-model";
+import { toVw } from "~/lib/utils";
 
 export const Hero = () => {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const modelContainerRef = useRef<HTMLDivElement>(null);
-
   return (
-    <Scrollytelling.Root end="bottom bottom" defaults={{ ease: "linear" }}>
+    <Scrollytelling.Root defaults={{ ease: "linear" }}>
       <Scrollytelling.Pin
         childHeight={"100vh"}
         pinSpacerHeight={"300vh"}
@@ -110,25 +102,9 @@ export const Hero = () => {
           <p>I got the whole band set up in the basement & we are jamming.</p>
         </header>
 
-        <section className={s["section"]} ref={containerRef}>
-          <div className={s["model-container"]} ref={modelContainerRef}>
-            <Canvas
-              camera={{ position: [0, 0, 10], fov: 35 }}
-              onCreated={() => {
-                gsap.to(modelContainerRef.current, {
-                  opacity: 1,
-                  scale: 1,
-                  duration: 0.15,
-                });
-              }}
-              gl={{
-                alpha: true,
-                antialias: true,
-                powerPreference: "high-performance",
-              }}
-            >
-              <MacModel />
-            </Canvas>
+        <section className={s["section"]}>
+          <div className={s["model-container"]}>
+            <CanvasWithMacModel />
           </div>
 
           <div className="wrapper">

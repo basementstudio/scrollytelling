@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import bsmtTeamImg from "../../../../public/footer/basement-team-footer.jpg";
-import * as Scrollytelling from "@bsmnt/scrollytelling";
+import * as Scrollytelling from "~/lib/scrollytelling-client";
 import QRImg from "../../../../public/footer/QR.svg";
 
 import s from "./footer.module.scss";
@@ -20,7 +20,7 @@ export const Footer = () => {
   const isDesktopSm = useMedia("(min-width: 1024px)");
 
   return (
-    <Scrollytelling.Root start="top 80%" end="bottom bottom">
+    <Scrollytelling.Root start="top 80%">
       <footer className={s.footer}>
         <PreFooter />
         <div className={s["imgs-container"]}>
@@ -61,7 +61,7 @@ export const Footer = () => {
                 <li key={idx}>
                   {idx !== 0 && <span>&nbsp;—&nbsp;</span>}
                   <Link
-                    className={s.link}
+                    className="link"
                     href={social.url}
                     target="_blank"
                     rel="noreferrer"
@@ -75,7 +75,7 @@ export const Footer = () => {
           <div>
             <span>get in touch</span>
             <Link
-              className={s.link}
+              className="link"
               href="mailto:sayhi@basement.studio"
               target="_blank"
               rel="noreferrer"
@@ -102,7 +102,7 @@ const PreFooter = () => {
         </p>
         <Terminal />
         <a
-          className={s["gh-link"]}
+          className={clsx(s["gh-link"], "link")}
           href={ghHref}
           target="_blank"
           rel="noreferrer"
