@@ -14,15 +14,15 @@
   top: 0;
 
   .canvas-container {
-    --offset-y: 20%;
+    --offset-y: 40%;
 
     z-index: 1;
     position: absolute;
-    top: 0;
+    top: 50%;
     left: 0;
     width: 100%;
     height: calc(100% + var(--offset-y));
-    transform: translateY(calc(-1 * (var(--offset-y) / 2)));
+    transform: translateY(-50%);
     overflow: hidden;
   }
   
