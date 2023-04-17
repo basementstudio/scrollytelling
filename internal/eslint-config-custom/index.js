@@ -19,6 +19,7 @@ module.exports = {
     ],
     curly: ["error", "multi-line"],
     "react/jsx-no-target-blank": [2, { allowReferrer: true }],
+    "react/display-name": 0,
     "@typescript-eslint/explicit-function-return-type": 0,
     "@typescript-eslint/explicit-module-boundary-types": 0,
     "@typescript-eslint/explicit-member-accessibility": 0,
@@ -36,7 +37,6 @@ module.exports = {
     "import/resolver": {
       typescript: {
         alwaysTryTypes: true,
-        project: ["website/tsconfig.json", "scrollytelling/tsconfig.json"],
       },
     },
     react: {

@@ -1,5 +1,3 @@
-"use client";
-
 import * as Scrollytelling from "~/lib/scrollytelling-client";
 import Image from "next/image";
 
