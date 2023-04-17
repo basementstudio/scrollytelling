@@ -4,6 +4,7 @@ import { Float, useGLTF } from "@react-three/drei";
 import { GLTF } from "three-stdlib";
 import { Euler, Vector3 } from "three";
 import { useThree } from "@react-three/fiber";
+import { getTimeline } from "../../../lib/utils";
 
 type GLTFResult = GLTF & {
   nodes: {
@@ -87,39 +88,58 @@ export const CapsModel = () => {
   const halfViewportWidth = responsiveVPWidth / 2;
   const fadeInYoffset = 0.1
 
+  const capsTimeline = useMemo(() => {
+    return getTimeline({
+      start: 48,
+      end: 100,
+      chunks: clonedMaterials.length,
+      overlap: 0.65,
+    })
+  }, [clonedMaterials])
+
   return (
     <>
-      <Scrollytelling.Animation
-        tween={{
-          start: 50,
-          end: 100,
-          target: capProps,
-          to: {
-            progress: 1,
-            ease: "power2.inOut",
-            stagger: 50 / capProps.length,
-            onUpdate: () => {
-              clonedMaterials.forEach((m, idx) => {
-                const currCapProps = capProps[idx]
-                const currObj = innerRef.current?.children[idx] as THREE.Object3D
-                
-                
-                if (!currObj || !currCapProps) return;
-                
-                const isEven = idx % 2 === 0;
-                const currObjPosition = currCapProps.position.clone().multiplyScalar(halfViewportWidth)
-                const invProgress = 1 - currCapProps.progress
-                
-                m["m_Cap-v2"].opacity = currCapProps.progress
-                m["m_Outline"].opacity = currCapProps.progress
+      {
+        capProps.map((p, idx) => {
+          const currCapAnimation = capsTimeline[idx]
 
-                currObj.rotation.y = currCapProps.rotation.y + (isEven ? 1 : -1) * (currCapProps.progress * Math.PI * 2);
-                currObj.position.y = currObjPosition.y - (invProgress * fadeInYoffset);
-              })
-            }
-          }
-        }}
-      />
+          if(!currCapAnimation) return
+          
+          return (
+            <Scrollytelling.Animation
+              tween={{
+                start: currCapAnimation.start,
+                end: currCapAnimation.end,
+                target: [capProps[idx]],
+                to: {
+                  progress: 1,
+                  ease: "power2.inOut",
+                  onUpdate: () => {
+                    const currMaterials = clonedMaterials[idx]
+
+                    if (!currMaterials) return;
+
+                    const currCapProps = capProps[idx]
+                    const currObj = innerRef.current?.children[idx] as THREE.Object3D
+                    
+                    if (!currObj || !currCapProps) return;
+                    
+                    const isEven = idx % 2 === 0;
+                    const currObjPosition = currCapProps.position.clone().multiplyScalar(halfViewportWidth)
+                    const invProgress = 1 - currCapProps.progress
+                    
+                    currMaterials["m_Cap-v2"].opacity = currCapProps.progress
+                    currMaterials["m_Outline"].opacity = currCapProps.progress
+
+                    currObj.rotation.y = currCapProps.rotation.y + (isEven ? 1 : -1) * (currCapProps.progress * Math.PI * 2);
+                    currObj.position.y = currObjPosition.y - (invProgress * fadeInYoffset);
+                  }
+                }
+              }}
+            />
+          )
+        })
+      }
 
       <group ref={innerRef}>
           {capProps.map(({ position, rotation }, idx) => {
@@ -128,6 +148,7 @@ export const CapsModel = () => {
                 scale={responsiveVPWidth / 9}
                 position={position.clone().multiplyScalar(halfViewportWidth)}
                 rotation={rotation.clone()}
+                key={idx}
               >
                 <Float>
                   <mesh
