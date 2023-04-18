@@ -1,3 +1,5 @@
+"use client"
+
 import * as Scrollytelling from "~/lib/scrollytelling-client";
 
 import s from "./hero.module.scss";
@@ -5,8 +7,11 @@ import Link from "next/link";
 import { LogoBasement } from "../../logos/logo";
 import { CanvasWithMacModel } from "./mac-model";
 import { toVw } from "~/lib/utils";
+import { useMedia } from "~/hooks/use-media";
 
 export const Hero = () => {
+  const isMobileSize = useMedia("(max-width: 768px)");
+  
   return (
     <Scrollytelling.Root defaults={{ ease: "linear" }}>
       <Scrollytelling.Pin
@@ -125,7 +130,7 @@ export const Hero = () => {
                         attr: {
                           viewBox: "0 0 1856 183",
                         },
-                        width: toVw(1856),
+                        width: isMobileSize ? '100%' : toVw(1856),
                       },
                     ],
                   }}
@@ -156,7 +161,7 @@ export const Hero = () => {
                           },
                           {
                             attr: {
-                              width: toVw(300, 1920, 490),
+                              width: isMobileSize ? toVw(400, 800, 400) : toVw(300, 1920, 490),
                             },
                           },
                         ],
@@ -182,7 +187,7 @@ export const Hero = () => {
                           },
                           {
                             attr: {
-                              width: toVw(300, 1920, 490),
+                              width: isMobileSize ? toVw(400, 800, 400) : toVw(300, 1920, 490),
                             },
                           },
                         ],
@@ -209,7 +214,7 @@ export const Hero = () => {
                             },
                             {
                               attr: {
-                                width: toVw(300, 1920, 490),
+                                width: isMobileSize ? toVw(400, 800, 400) : toVw(300, 1920, 490),
                               },
                             },
                           ],

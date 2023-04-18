@@ -15,6 +15,7 @@
   @media screen and (max-width: 800px) {
     display: flex;
     justify-content: center;
+    padding: tovw(24px, "tablet", 24px) tovw(32px, "desktop-large", 16px);
   }
 
   a {
@@ -22,13 +23,13 @@
   }
 
   p {
-    margin-right: 0;
-    margin-left: auto;
-    max-width: tovw(537px);
-    text-align: right;
-    line-height: 1.2;
     font-size: tovw(24px, "desktop-large", 16px);
     font-weight: 800;
+    line-height: 1.2;
+    max-width: tovw(537px);
+    margin-right: 0;
+    margin-left: auto;
+    text-align: right;
 
     @media screen and (max-width: 800px) {
       display: none;
@@ -52,17 +53,17 @@
 
 .section {
   position: relative;
-  padding-top: tovw(28px);
   overflow-x: hidden;
+  padding-top: tovw(28px, "desktop-large", 24px);
 }
 
 .model-container {
-  width: tovw(500px, "desktop-large", 200px);
-  height: tovw(500px, "desktop-large", 200px);
   position: absolute;
   z-index: 100;
   top: 50%;
   right: 0;
+  width: tovw(500px, "desktop-large", 200px);
+  height: tovw(500px, "desktop-large", 200px);
   transform: translateY(-50%);
 
   @media screen and (max-width: 800px) {
@@ -82,8 +83,8 @@
 }
 
 .svg__container {
-  display: flex;
   position: relative;
+  display: flex;
   align-items: flex-start;
   width: 100%;
   height: tovw(183px);
@@ -95,6 +96,7 @@
   .svg-we {
     top: 0;
     left: 0;
+
     width: tovw(543px);
     height: tovw(183px);
   }
@@ -102,10 +104,14 @@
   .svg-make {
     right: 0;
     bottom: 0;
-    transform-origin: center bottom;
     width: tovw(924px);
     height: tovw(183px);
     transform: translateX(-35%);
+    transform-origin: center bottom;
+
+    @media screen and (max-width: 800px) {
+      transform: translateX(-25%);
+    }
   }
 
   .svg-coolshit {
@@ -115,18 +121,18 @@
 
   .svg-performs {
     position: relative;
-    transform: scaleY(1.016);
-    transform-origin: left bottom;
     width: tovw(1118px);
     height: tovw(115px);
+    transform: scaleY(1.016);
+    transform-origin: left bottom;
   }
 
   .svg-that {
     position: relative;
-    transform-origin: left center;
-    margin-right: tovw(70px);
     width: tovw(415px);
     height: tovw(115px);
+    margin-right: tovw(70px);
+    transform-origin: left center;
   }
 }
 
@@ -139,7 +145,10 @@
   @media screen and (max-width: 800px) {
     display: flex;
     flex-direction: column;
-    gap: tovw(20px, "desktop", 16px);
+
+    margin-top: tovw(24px, "tablet", 24px);
+
+    gap: tovw(24px, "desktop", 24px);
   }
 
   p {
@@ -158,6 +167,7 @@
   svg {
     width: tovw(24px);
     height: tovw(12px);
+
     grid-area: 1 / 7 / 2 / 8;
 
     @media screen and (max-width: 800px) {
