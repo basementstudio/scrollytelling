@@ -5,6 +5,10 @@
   z-index: 1;
   padding: tovw(32px) 0;
   overflow: hidden;
+
+  @media screen and (max-width: 800px) {
+    padding: tovw(32px, "mobile") 0;
+  }
 }
 
 .pretitle {
@@ -16,6 +20,11 @@
   svg {
     width: tovw(5px);
     height: tovw(9px);
+
+    @media screen and (max-width: 800px) {
+      width: tovw(5px, "mobile");
+      height: tovw(9px, "mobile");
+    }
   }
 
   span {
@@ -27,6 +36,10 @@
     border: 1px solid white;
     display: inline-flex;
     align-items: center;
+
+    @media screen and (max-width: 800px) {
+      font-size: tovw(12px, "mobile");
+    }
   }
 }
 
@@ -35,6 +48,13 @@
   width: tovw(732px);
   height: tovw(301px);
   left: tovw(815px);
+
+  @media screen and (max-width: 800px) {
+    width: tovw(532px, "mobile");
+    height: tovw(101px, "mobile");
+    left: 0;
+    top: tovw(52px, "mobile");
+  }
 }
 
 .title {
@@ -47,6 +67,14 @@
   margin-top: tovw(52px);
   margin-left: auto;
   margin-right: auto;
+
+  @media screen and (max-width: 800px) {
+    font-size: tovw(30px, "mobile");
+    margin: 0;
+    margin-top: tovw(32px, "mobile");
+    padding: 0 tovw(16px, "mobile");
+    max-width: unset;
+  }
 }
 
 .subtitle {
@@ -57,6 +85,14 @@
   margin-left: tovw(972px);
   position: relative;
 
+  @media screen and (max-width: 800px) {
+    font-size: tovw(12px, "mobile");
+    max-width: tovw(500px, "mobile");
+    margin-left: tovw(90px, "mobile");
+    padding-right: tovw(16px, "mobile");
+    padding-top: tovw(12px, "mobile");
+  }
+
   .arrowDown {
     position: absolute;
     top: 50%;
@@ -64,21 +100,27 @@
     left: tovw(-465px);
     height: tovw(168.3px);
     width: tovw(10.8px);
+
+    @media screen and (max-width: 800px) {
+      left: tovw(-30px, "mobile");
+      height: 100%;
+      width: auto;
+      padding-top: tovw(12px, "mobile");
+    }
   }
 }
 
 .marquees {
-  //   position: absolute;
   display: flex;
   align-items: center;
   width: 100%;
   height: tovw(300px);
   margin-top: tovw(80px);
-  //   bottom: tovw(100px);
 
   .marquee1 {
     position: absolute;
-    transform: rotate(-7.37deg);
+    transform: rotate(-7.37deg) translateX(-2%);
+    width: 105%;
   }
 
   .marquee2 {
@@ -103,6 +145,12 @@
   line-height: 1;
   position: relative;
   background: black;
+
+  @media screen and (max-width: 800px) {
+    font-size: tovw(18px, "mobile");
+    height: tovw(28px, "mobile");
+    margin-top: tovw(32px, "mobile");
+  }
 }
 
 .marqueeAnimationContainer {
