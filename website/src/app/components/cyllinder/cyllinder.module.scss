@@ -21,7 +21,7 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
-    perspective: 700px;
+    perspective: 90vh;
 
     .item {
       position: absolute;
@@ -80,13 +80,17 @@
 
       .image {
         border-radius: tovw(10px, "desktop", 6px);
-        border: 1px solid rgba(255, 255, 255, 0.4);
-        max-width: 70vw;
+        border: tovw(1px, 'desktop', 1px) solid rgba(255, 255, 255, 0.4);
+
+        width: 100%;
       }
 
       .info {
         --scale: 1.8;
 
+        min-width: 350px;
+        max-width: 50vw;
+        width: 100%;
         opacity: 0;
         position: absolute;
         top: 50%;

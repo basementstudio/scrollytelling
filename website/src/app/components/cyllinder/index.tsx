@@ -9,6 +9,7 @@ import { defaultConfig, useMapToCylinder } from "./helpers";
 import { Experiment } from "../../../lib/types";
 import { useMedia } from "../../../hooks/use-media";
 import Link from "next/link";
+import { useViewportSize } from "~/hooks/use-viewport";
 
 const progress = { value: 0 };
 
@@ -21,6 +22,7 @@ const itemsInViewAtOnce = 7;
 const itemsPadding = 4;
 
 export const Cyllinder: React.FC<CyllinderProps> = ({ experiments }) => {
+  const { height, aspect } = useViewportSize();
   const isMobileSize = useMedia("(max-width: 768px)");
   const pinSpacerHeight = `calc(3 * ${itemHeight} * ${
     Math.max(itemsInViewAtOnce, experiments.length) + itemsPadding
@@ -38,9 +40,8 @@ export const Cyllinder: React.FC<CyllinderProps> = ({ experiments }) => {
       });
     },
     config: {
-      availableRadians: isMobileSize
-        ? defaultConfig.availableRadians / 2
-        : defaultConfig.availableRadians,
+      cylinderRadius: height / 3.6,
+      availableRadians: ((Math.PI / 7)) * experiments.length
     },
   });
 

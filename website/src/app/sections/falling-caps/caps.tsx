@@ -84,7 +84,7 @@ export const CapsModel = () => {
     })
   }, [materials])
 
-  const responsiveVPWidth = Math.max(width, 4.5);
+  const responsiveVPWidth = Math.max(width, 4);
   const halfViewportWidth = responsiveVPWidth / 2;
   const fadeInYoffset = 0.1
 
