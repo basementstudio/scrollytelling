@@ -24,7 +24,7 @@ const basementGrotesque = localFont({
 
 export const metadata: Metadata = {
   title: "BSMNT @ React Miami Conf",
-  description: "BSMNT @ React Miami Conf",
+  description: "A demo website made exclusively for the React Miami Conference, to showcase a couple of cool animations powered by our new library, @bsmnt/scrollytelling.",
   viewport: {
     height: "device-height",
     initialScale: 1,
