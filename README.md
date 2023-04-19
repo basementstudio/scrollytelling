@@ -62,3 +62,4 @@ For our talk at React Miami Conf, we did a small demo to showcase this library i
 - Simple tweening: [https://stackblitz.com/edit/react-ts-8rqm8k?file=App.tsx](https://stackblitz.com/edit/react-ts-8rqm8k?file=App.tsx)
 - With Lenis Smooth Scroll: [https://stackblitz.com/edit/react-ts-uuwfed?file=App.tsx](https://stackblitz.com/edit/react-ts-uuwfed?file=App.tsx)
 - Layered pinning: [https://stackblitz.com/edit/react-ts-4dtlww?file=App.tsx](https://stackblitz.com/edit/react-ts-4dtlww?file=App.tsx)
+- Three.js Tube: [https://codesandbox.io/s/978cns?file=/src/App.js:0-4442](https://codesandbox.io/s/978cns?file=/src/App.js:0-4442)
