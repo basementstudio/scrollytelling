@@ -52,4 +52,6 @@ A simple example of how this works:
 
 ## Examples
 
-- 
+- Simple tweening: [https://stackblitz.com/edit/react-ts-8rqm8k?file=App.tsx](https://stackblitz.com/edit/react-ts-8rqm8k?file=App.tsx)
+- With Lenis Smooth Scroll: [https://stackblitz.com/edit/react-ts-uuwfed?file=App.tsx](https://stackblitz.com/edit/react-ts-uuwfed?file=App.tsx)
+- Layered pinning: [https://stackblitz.com/edit/react-ts-4dtlww?file=App.tsx](https://stackblitz.com/edit/react-ts-4dtlww?file=App.tsx)
