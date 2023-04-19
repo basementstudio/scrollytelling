@@ -52,12 +52,13 @@ A simple example of how this works:
 
 ## Demo
 
-[https://scrollytelling.basement.studio/](https://scrollytelling.basement.studio/)
+For our talk at React Miami Conf, we did a small demo to showcase this library in action. This is the best place to see how the library works in a real world scenario. Check it out:
+
+- Site URL: [https://scrollytelling.basement.studio/](https://scrollytelling.basement.studio/)
+- Code: [https://github.com/basementstudio/scrollytelling/blob/main/website/README.md](https://github.com/basementstudio/scrollytelling/blob/main/website/README.md)
 
 ## Examples
 
-- Full demo: [https://scrollytelling.basement.studio/](https://scrollytelling.basement.studio/).
-- 
 - Simple tweening: [https://stackblitz.com/edit/react-ts-8rqm8k?file=App.tsx](https://stackblitz.com/edit/react-ts-8rqm8k?file=App.tsx)
 - With Lenis Smooth Scroll: [https://stackblitz.com/edit/react-ts-uuwfed?file=App.tsx](https://stackblitz.com/edit/react-ts-uuwfed?file=App.tsx)
 - Layered pinning: [https://stackblitz.com/edit/react-ts-4dtlww?file=App.tsx](https://stackblitz.com/edit/react-ts-4dtlww?file=App.tsx)
