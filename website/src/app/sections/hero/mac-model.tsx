@@ -27,7 +27,6 @@ const MacModel = () => {
     "/models/Mac128k-light.glb"
   ) as GLTFResult;
   const innerRef = useRef<THREE.Group>(null);
-
   const width = useThree((state) => state.viewport.width);
 
   useFrame(() => {
