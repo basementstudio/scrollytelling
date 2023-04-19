@@ -6,6 +6,10 @@
   position: relative;
   z-index: 1;
 
+  @media screen and (max-width: 800px) {
+    margin-top: -34vh;
+  }
+
   h2 {
     font-size: tovw(102px, "desktop-large", 40px);
     font-weight: 800;
