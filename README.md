@@ -2,6 +2,8 @@
 
 BSMNT Scrollytelling is a library for creating Scrollytelling animations. It's powered by GSAP ScrollTrigger, but abstracts away some things to make it work better with React.
 
+![Frame 7](https://user-images.githubusercontent.com/40034115/233121992-12eb2448-4f62-4cba-b9a3-c0d3e9233aa7.jpg)
+
 ## Installation
 
 To get started, we'll need the `@bsmnt/scrollytelling` package, as well as the required peer dependency: [GSAP](https://greensock.com/docs/).
@@ -35,32 +37,7 @@ As an added benefit, going "component-based" allowed us to:
 
 A simple example of how this works:
 
-```tsx
-import * as Scrollytelling from '@bsmnt/scrollytelling';
-
-const Component = () => {
-  return (
-    <Scrollytelling.Root>
-      <div className="container">
-        <Scrollytelling.Animation
-          tween={{ start: 0, end: 30, from: { opacity: 0, scale: 0.9 } }}
-        >
-          <h1 className="title">Hello Miami</h1>
-        </Scrollytelling.Animation>
-        <Scrollytelling.Animation
-          tween={[
-            { start: 30, end: 80, to: { rotate: 360 } },
-            { start: 80, end: 100, to: { y: 100 } },
-          ]}
-        >
-          <div className="box" />
-        </Scrollytelling.Animation>
-      </div>
-    </Scrollytelling.Root>
-  );
-};
-
-```
+![117 (1)](https://user-images.githubusercontent.com/40034115/233122199-a201e5a0-20d0-4538-a681-a7e9d6f539bb.png)
 
 ## Exports
 
@@ -72,3 +49,7 @@ const Component = () => {
 - `ImageSequenceCanvas`: Helper to create a simple image sequence animation.
 - `useScrollytelling`: Context consumer.
 - `useScrollToLabel`: Scrolls to the label you pass.
+
+## Examples
+
+- 
