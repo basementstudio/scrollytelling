@@ -186,7 +186,11 @@ const Terminal = () => {
         </div>
         <DottedDiv className={s.content}>
           <p ref={contentRef}>yarn add @bsmnt/scrollytelling</p>
-          <button className={s["copy-button"]} onClick={copyTextContent}>
+          <button
+            title="copy text"
+            className={s["copy-button"]}
+            onClick={copyTextContent}
+          >
             <CopyIconSVG />
           </button>
         </DottedDiv>

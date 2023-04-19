@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import * as Scrollytelling from "~/lib/scrollytelling-client";
 
@@ -11,7 +11,7 @@ import { useMedia } from "~/hooks/use-media";
 
 export const Hero = () => {
   const isMobileSize = useMedia("(max-width: 768px)");
-  
+
   return (
     <Scrollytelling.Root defaults={{ ease: "linear" }}>
       <Scrollytelling.Pin
@@ -20,7 +20,7 @@ export const Hero = () => {
         pinSpacerClassName={s["pin-spacer"]}
       >
         <header className={s["header"]}>
-          <Link href="/">
+          <Link title="basement scrollytelling" href="/">
             <LogoBasement className={s["logo"]} />
           </Link>
 
@@ -130,7 +130,7 @@ export const Hero = () => {
                         attr: {
                           viewBox: "0 0 1856 183",
                         },
-                        width: isMobileSize ? '100%' : toVw(1856),
+                        width: isMobileSize ? "100%" : toVw(1856),
                       },
                     ],
                   }}
@@ -161,7 +161,9 @@ export const Hero = () => {
                           },
                           {
                             attr: {
-                              width: isMobileSize ? toVw(400, 800, 400) : toVw(300, 1920, 490),
+                              width: isMobileSize
+                                ? toVw(400, 800, 400)
+                                : toVw(300, 1920, 490),
                             },
                           },
                         ],
@@ -187,7 +189,9 @@ export const Hero = () => {
                           },
                           {
                             attr: {
-                              width: isMobileSize ? toVw(400, 800, 400) : toVw(300, 1920, 490),
+                              width: isMobileSize
+                                ? toVw(400, 800, 400)
+                                : toVw(300, 1920, 490),
                             },
                           },
                         ],
@@ -214,7 +218,9 @@ export const Hero = () => {
                             },
                             {
                               attr: {
-                                width: isMobileSize ? toVw(400, 800, 400) : toVw(300, 1920, 490),
+                                width: isMobileSize
+                                  ? toVw(400, 800, 400)
+                                  : toVw(300, 1920, 490),
                               },
                             },
                           ],
