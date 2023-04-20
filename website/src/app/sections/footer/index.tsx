@@ -160,6 +160,14 @@ const Terminal = () => {
         spread: 100,
         gravity: 0.6,
         origin: { y: 0.42 },
+        colors: [
+          "#ff4d00",
+          "#ff5e00",
+          "#ff8000",
+          "#ffa200",
+          "#b23500",
+          "#d84000",
+        ],
       });
     });
 
