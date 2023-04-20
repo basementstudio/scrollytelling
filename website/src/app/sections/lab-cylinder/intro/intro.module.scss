@@ -86,7 +86,7 @@
   position: relative;
 
   @media screen and (max-width: 800px) {
-    font-size: tovw(12px, "mobile");
+    font-size: tovw(11.5px, "mobile");
     max-width: tovw(500px, "mobile");
     margin-left: tovw(90px, "mobile");
     padding-right: tovw(16px, "mobile");

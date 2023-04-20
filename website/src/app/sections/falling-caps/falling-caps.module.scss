@@ -1,4 +1,4 @@
-@import '../../css/helpers';
+@import "../../css/helpers";
 
 .spacer {
   position: relative;
@@ -26,14 +26,18 @@
     transform: translateY(-50%);
     overflow: hidden;
   }
-  
+
   .paragraph {
-    font-size: tovw(56px, 'desktop', 20px);
+    font-size: tovw(56px, "desktop", 20px);
     font-weight: 900;
     max-width: max-content;
     margin: 0 auto;
     text-transform: capitalize;
     line-height: calc(86 / 72);
+
+    @media screen and (max-width: 800px) {
+      font-size: tovw(17px, "mobile");
+    }
 
     .highlight {
       color: var(--color-orange);
