@@ -17,7 +17,7 @@ type GLTFResult = GLTF & {
   };
 };
 
-const capProps: { position: Vector3; rotation: Euler, progress: number }[] = [
+const capProps: { position: Vector3; rotation: Euler; progress: number }[] = [
   {
     position: new Vector3(-0.08, -0.1, 0.1),
     rotation: new Euler(0.4, -0.6, 0.4, "XZY"),
@@ -65,28 +65,33 @@ export const CapsModel = () => {
   const { width } = useThree((state) => state.viewport);
   const { nodes, materials } = useGLTF("/models/Cap.glb") as GLTFResult;
 
-  const clonedMaterials: ({"m_Cap-v2": THREE.MeshStandardMaterial; m_Outline: THREE.MeshStandardMaterial;})[] = useMemo(() => {
+  const clonedMaterials: {
+    "m_Cap-v2": THREE.MeshStandardMaterial;
+    m_Outline: THREE.MeshStandardMaterial;
+  }[] = useMemo(() => {
     materials["m_Cap-v2"].transparent = true;
     materials["m_Cap-v2"].opacity = 0;
     materials["m_Outline"].transparent = true;
     materials["m_Outline"].opacity = 0;
 
-    return Array(capProps.length).fill(0).map((_, idx) => {
-      const clonedMaterials = {
-        ["m_Cap-v2"]: materials["m_Cap-v2"].clone(),
-        ["m_Outline"]: materials["m_Outline"].clone(),
-      }
+    return Array(capProps.length)
+      .fill(0)
+      .map((_, idx) => {
+        const clonedMaterials = {
+          ["m_Cap-v2"]: materials["m_Cap-v2"].clone(),
+          ["m_Outline"]: materials["m_Outline"].clone(),
+        };
 
-      clonedMaterials["m_Cap-v2"].userData.idx = idx
-      clonedMaterials["m_Outline"].userData.idx = idx
+        clonedMaterials["m_Cap-v2"].userData.idx = idx;
+        clonedMaterials["m_Outline"].userData.idx = idx;
 
-      return clonedMaterials
-    })
-  }, [materials])
+        return clonedMaterials;
+      });
+  }, [materials]);
 
   const responsiveVPWidth = Math.max(width, 4);
   const halfViewportWidth = responsiveVPWidth / 2;
-  const fadeInYoffset = 0.1
+  const fadeInYoffset = 0.1;
 
   const capsTimeline = useMemo(() => {
     return getTimeline({
@@ -94,76 +99,82 @@ export const CapsModel = () => {
       end: 100,
       chunks: clonedMaterials.length,
       overlap: 0.65,
-    })
-  }, [clonedMaterials])
+    });
+  }, [clonedMaterials]);
 
   return (
     <>
-      {
-        capProps.map((p, idx) => {
-          const currCapAnimation = capsTimeline[idx]
+      {capProps.map((p, idx) => {
+        const currCapAnimation = capsTimeline[idx];
 
-          if(!currCapAnimation) return
-          
-          return (
-            <Scrollytelling.Animation
-              tween={{
-                start: currCapAnimation.start,
-                end: currCapAnimation.end,
-                target: [capProps[idx]],
-                to: {
-                  progress: 1,
-                  ease: "power2.inOut",
-                  onUpdate: () => {
-                    const currMaterials = clonedMaterials[idx]
+        if (!currCapAnimation) return;
 
-                    if (!currMaterials) return;
+        return (
+          <Scrollytelling.Animation
+            key={idx}
+            tween={{
+              start: currCapAnimation.start,
+              end: currCapAnimation.end,
+              target: [capProps[idx]],
+              to: {
+                progress: 1,
+                ease: "power2.inOut",
+                onUpdate: () => {
+                  const currMaterials = clonedMaterials[idx];
 
-                    const currCapProps = capProps[idx]
-                    const currObj = innerRef.current?.children[idx] as THREE.Object3D
-                    
-                    if (!currObj || !currCapProps) return;
-                    
-                    const isEven = idx % 2 === 0;
-                    const currObjPosition = currCapProps.position.clone().multiplyScalar(halfViewportWidth)
-                    const invProgress = 1 - currCapProps.progress
-                    
-                    currMaterials["m_Cap-v2"].opacity = currCapProps.progress
-                    currMaterials["m_Outline"].opacity = currCapProps.progress
+                  if (!currMaterials) return;
 
-                    currObj.rotation.y = currCapProps.rotation.y + (isEven ? 1 : -1) * (currCapProps.progress * Math.PI * 2);
-                    currObj.position.y = currObjPosition.y - (invProgress * fadeInYoffset);
-                  }
-                }
-              }}
-            />
-          )
-        })
-      }
+                  const currCapProps = capProps[idx];
+                  const currObj = innerRef.current?.children[
+                    idx
+                  ] as THREE.Object3D;
+
+                  if (!currObj || !currCapProps) return;
+
+                  const isEven = idx % 2 === 0;
+                  const currObjPosition = currCapProps.position
+                    .clone()
+                    .multiplyScalar(halfViewportWidth);
+                  const invProgress = 1 - currCapProps.progress;
+
+                  currMaterials["m_Cap-v2"].opacity = currCapProps.progress;
+                  currMaterials["m_Outline"].opacity = currCapProps.progress;
+
+                  currObj.rotation.y =
+                    currCapProps.rotation.y +
+                    (isEven ? 1 : -1) * (currCapProps.progress * Math.PI * 2);
+                  currObj.position.y =
+                    currObjPosition.y - invProgress * fadeInYoffset;
+                },
+              },
+            }}
+          />
+        );
+      })}
 
       <group ref={innerRef}>
-          {capProps.map(({ position, rotation }, idx) => {
-            return (
-              <group
-                scale={responsiveVPWidth / 9}
-                position={position.clone().multiplyScalar(halfViewportWidth)}
-                rotation={rotation.clone()}
-                key={idx}
-              >
-                <Float>
-                  <mesh
-                    geometry={nodes.Sphere007.geometry}
-                    material={clonedMaterials[idx]?.["m_Cap-v2"]}
-                  />
-                  <mesh
-                    geometry={nodes.Sphere007_1.geometry}
-                    material={clonedMaterials[idx]?.["m_Outline"]}
-                  />
-                </Float>
-              </group>
-            );
-          })}
-        </group>
+        {capProps.map(({ position, rotation }, idx) => {
+          return (
+            <group
+              scale={responsiveVPWidth / 9}
+              position={position.clone().multiplyScalar(halfViewportWidth)}
+              rotation={rotation.clone()}
+              key={idx}
+            >
+              <Float>
+                <mesh
+                  geometry={nodes.Sphere007.geometry}
+                  material={clonedMaterials[idx]?.["m_Cap-v2"]}
+                />
+                <mesh
+                  geometry={nodes.Sphere007_1.geometry}
+                  material={clonedMaterials[idx]?.["m_Outline"]}
+                />
+              </Float>
+            </group>
+          );
+        })}
+      </group>
     </>
   );
 };
