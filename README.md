@@ -43,7 +43,7 @@ A simple example of how this works:
 
 - `Root`: Creates timeline and scrollTrigger, provides React Context.
 - `Animation`: Appends an animation to the timeline. Receives a `tween` prop that will control how the animation behaves.
-- `Waypoint`: Runs a callback or tween at a specific point in the timeline. Can also receive a `label` prop, thqt will create a GSAP label at that position. 
+- `Waypoint`: Runs a callback or tween at a specific point in the timeline. Can also receive a `label` prop, that will create a GSAP label at that position. 
 - `RegisterGsapPlugins`: Registers custom GSAP plugins, if you need them for a specific use case.
 - `Parallax`: Helper to create a simple parallax.
 - `ImageSequenceCanvas`: Helper to create a simple image sequence animation.
