@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 import { JetBrains_Mono } from "next/font/google";
 import { siteOrigin } from "~/lib/constants";
-
+import { Analytics } from "@vercel/analytics/react";
 const jetBrainsMono = JetBrains_Mono({
   weight: "400",
   subsets: ["latin"],
@@ -24,7 +24,8 @@ const basementGrotesque = localFont({
 
 export const metadata: Metadata = {
   title: "BSMNT @ React Miami Conf",
-  description: "A demo website made exclusively for the React Miami Conference, to showcase a couple of cool animations powered by our new library, @bsmnt/scrollytelling.",
+  description:
+    "A demo website made exclusively for the React Miami Conference, to showcase a couple of cool animations powered by our new library, @bsmnt/scrollytelling.",
   viewport: {
     height: "device-height",
     initialScale: 1,
@@ -68,6 +69,8 @@ export default function RootLayout({
       }}
     >
       <body>{children}</body>
+
+      <Analytics />
     </html>
   );
 }
