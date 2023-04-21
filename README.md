@@ -18,7 +18,7 @@ At [basement](https://basement.studio/), we've built a bunch of websites that us
 
 **Challenges we faced**
 
-- Needed a deep understanding of how GSAP works.
+- Needed a deep understanding of how GSAP works with ScrollTrigger.
 - Needed to be careful about running animations inside `useEffect` and then cleaning them up.
 - Couldn’t think of scroll animations in terms of a `start` and an `end`, so it was hard to fire up animations at the exact scroll progress we needed to.
 
