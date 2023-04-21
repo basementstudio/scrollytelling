@@ -41,8 +41,8 @@ export const LastParallax = () => {
             }}
           >
             <h2>
-              LAST BUT <br />
-              NOT LEAST
+              THAT&apos;S ALL, <br />
+              FOLKS
             </h2>
           </Scrollytelling.Animation>
           <Scrollytelling.Parallax
