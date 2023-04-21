@@ -102,6 +102,34 @@ export const CapsModel = () => {
     });
   }, [clonedMaterials]);
 
+  const handleUpdate = React.useCallback(
+    (idx: number) => {
+      const currMaterials = clonedMaterials[idx];
+
+      if (!currMaterials) return;
+
+      const currCapProps = capProps[idx];
+      const currObj = innerRef.current?.children[idx] as THREE.Object3D;
+
+      if (!currObj || !currCapProps) return;
+
+      const isEven = idx % 2 === 0;
+      const currObjPosition = currCapProps.position
+        .clone()
+        .multiplyScalar(halfViewportWidth);
+      const invProgress = 1 - currCapProps.progress;
+
+      currMaterials["m_Cap-v2"].opacity = currCapProps.progress;
+      currMaterials["m_Outline"].opacity = currCapProps.progress;
+
+      currObj.rotation.y =
+        currCapProps.rotation.y +
+        (isEven ? 1 : -1) * (currCapProps.progress * Math.PI * 2);
+      currObj.position.y = currObjPosition.y - invProgress * fadeInYoffset;
+    },
+    [clonedMaterials, halfViewportWidth]
+  );
+
   return (
     <>
       {capProps.map((p, idx) => {
@@ -120,37 +148,28 @@ export const CapsModel = () => {
                 progress: 1,
                 ease: "power2.inOut",
                 onUpdate: () => {
-                  const currMaterials = clonedMaterials[idx];
-
-                  if (!currMaterials) return;
-
-                  const currCapProps = capProps[idx];
-                  const currObj = innerRef.current?.children[
-                    idx
-                  ] as THREE.Object3D;
-
-                  if (!currObj || !currCapProps) return;
-
-                  const isEven = idx % 2 === 0;
-                  const currObjPosition = currCapProps.position
-                    .clone()
-                    .multiplyScalar(halfViewportWidth);
-                  const invProgress = 1 - currCapProps.progress;
-
-                  currMaterials["m_Cap-v2"].opacity = currCapProps.progress;
-                  currMaterials["m_Outline"].opacity = currCapProps.progress;
-
-                  currObj.rotation.y =
-                    currCapProps.rotation.y +
-                    (isEven ? 1 : -1) * (currCapProps.progress * Math.PI * 2);
-                  currObj.position.y =
-                    currObjPosition.y - invProgress * fadeInYoffset;
+                  handleUpdate(idx);
                 },
               },
             }}
           />
         );
       })}
+
+      {/* clean this up when the scrollytelling leaves, as when scrolling really fast,
+          GSAP is not being able to do so */}
+      <Scrollytelling.Waypoint
+        // at the very start of the scrollTrigger
+        at={0}
+        // when user scrolls back to the top
+        onReverseCall={() => {
+          // reset all caps
+          capProps.forEach((capProp, idx) => {
+            capProp.progress = 0;
+            handleUpdate(idx);
+          });
+        }}
+      />
 
       <group ref={innerRef}>
         {capProps.map(({ position, rotation }, idx) => {
