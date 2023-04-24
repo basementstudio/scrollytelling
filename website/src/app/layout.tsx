@@ -4,9 +4,11 @@ import localFont from "next/font/local";
 import { JetBrains_Mono } from "next/font/google";
 import { siteOrigin } from "~/lib/constants";
 import { Analytics } from "@vercel/analytics/react";
+
 const jetBrainsMono = JetBrains_Mono({
   weight: "400",
   subsets: ["latin"],
+  fallback: ["var(--font-system)"],
 });
 
 const basementGrotesque = localFont({
