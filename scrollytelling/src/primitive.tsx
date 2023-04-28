@@ -111,7 +111,7 @@ const Scrollytelling = ({
         start: start ?? "top top",
         end: end ?? "bottom bottom",
         trigger: ref.current,
-        toggleActions: toggleActions ?? "play none none none",
+        toggleActions,
         ...callbacks,
       },
       paused: true,
