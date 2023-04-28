@@ -1,5 +1,11 @@
 # @bsmnt/scrollytelling
 
+## 0.1.3
+
+### Patch Changes
+
+- 8919206: Expose toggleActions prop
+
 ## 0.1.2
 
 ### Patch Changes
