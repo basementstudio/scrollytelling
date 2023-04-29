@@ -63,3 +63,7 @@ For our talk at React Miami Conf, we did a small demo to showcase this library i
 - With Lenis Smooth Scroll: [https://stackblitz.com/edit/react-ts-uuwfed?file=App.tsx](https://stackblitz.com/edit/react-ts-uuwfed?file=App.tsx)
 - Layered pinning: [https://stackblitz.com/edit/react-ts-4dtlww?file=App.tsx](https://stackblitz.com/edit/react-ts-4dtlww?file=App.tsx)
 - Three.js Tube: [https://codesandbox.io/s/978cns?file=/src/App.js](https://codesandbox.io/s/978cns?file=/src/App.js)
+
+***
+
+GSAP files are subject to GreenSock's standard license which can be found at [https://greensock.com/standard-license/](https://greensock.com/standard-license/)
