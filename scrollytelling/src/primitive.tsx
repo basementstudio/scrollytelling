@@ -514,8 +514,8 @@ function Parallax({
  * -----------------------------------------------------------------------------------------------*/
 
 interface PinProps {
-  childHeight: string | number;
-  pinSpacerHeight: string | number;
+  childHeight: string | number; // The height of the pinned element in the pin.
+  pinSpacerHeight: string | number; // The height of the spacer reserved for the pinned element in the pin.
   childClassName?: string; // Optional: Custom CSS class name for the child element
   children?: React.ReactNode; // Optional: Content to be rendered inside the pinned element
   pinSpacerClassName?: string; // Optional: Custom CSS class name for the pin spacer element
