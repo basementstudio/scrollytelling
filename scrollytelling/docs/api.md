@@ -5,6 +5,7 @@ BSMNT Scrollytelling is a library for creating Scrollytelling animations. It's p
 ## Components
 
 ### `<Pin>`
+
 Pin component enables pinning an element in its initial position while the remaining content scrolls. It ensures that the pinned element stays fixed at its starting position within the active duration of Scrollytelling.
 
 #### Render Props
@@ -20,25 +21,26 @@ Pin component enables pinning an element in its initial position while the remai
 >
   {children}
 </Scrollytelling.Pin>
-``` 
+```
 
 #### Usage
 
 ```jsx
-import * as Scrollytelling from '@bsmnt/scrollytelling';
+import * as Scrollytelling from "@bsmnt/scrollytelling";
 
 export const HomePage = () => (
   <Scrollytelling.Root>
-    <Scrollytelling.Pin childHeight={0} pinSpacerHeight={'100vh'} top={0}>
-        <section className="section">
+    <Scrollytelling.Pin childHeight={0} pinSpacerHeight={"100vh"} top={0}>
+      <section className="section">
         <div className="wrapper">
-            <h1>Layered pinning 1</h1>
+          <h1>Layered pinning 1</h1>
         </div>
-        </section>
+      </section>
     </Scrollytelling.Pin>
   </Scrollytelling.Root>
-)
+);
 ```
 
 #### Example
+
 https://stackblitz.com/edit/react-ts-wkxnja
