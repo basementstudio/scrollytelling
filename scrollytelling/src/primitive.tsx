@@ -485,10 +485,13 @@ interface ParallaxProps {
  * @link https://github.com/basementstudio/scrollytelling/blob/main/docs/api.md#parallax
  */
 
-const Parallax: React.FC<ParallaxProps> = ({
-  children,
-  tween,
-}: ParallaxProps): JSX.Element => {
+const Parallax: React.FC<ParallaxProps> = ({ children, tween }) => {
+  if (!tween.movementY && !tween.movementX) {
+    throw new Error(
+      "At least one of movementY and movementX is required in Parallax component."
+    );
+  }
+
   return (
     <Animation
       tween={{

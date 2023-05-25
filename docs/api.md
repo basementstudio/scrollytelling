@@ -4,6 +4,48 @@ BSMNT Scrollytelling is a library for creating Scrollytelling animations. It's p
 
 ## Components
 
+### `<Parallax>`
+
+Parallax component applies a parallax effect to its children using GSAP animations.
+
+#### Render Props
+
+```tsx
+<Scrollytelling.Parallax
+  tween: Omit<TweenBaseDef, "to" | "from" | "fromTo"> & {
+    target?: TweenTarget; // Optional: The target element or elements to apply the animation to.
+    movementX?: UnitValue; // Optional: The amount of movement on the X-axis.
+    movementY?: UnitValue; // Optional: The amount of movement on the Y-axis.
+  }
+>
+  {children}
+</Scrollytelling.Parallax>
+```
+
+#### Usage
+
+```jsx
+import * as Scrollytelling from "@bsmnt/scrollytelling";
+
+export const HomePage = () => (
+  <Scrollytelling.Root>
+    <Scrollytelling.Parallax
+      tween={{
+        start: 0,
+        end: 100,
+        movementY: { value: 40, unit: "px" },
+      }}
+    >
+      <p>This text will move on scroll</p>
+    </Scrollytelling.Parallax>
+  </Scrollytelling.Root>
+);
+```
+
+#### Example
+
+https://stackblitz.com/edit/react-ts-wkxnja
+
 ### `<Pin>`
 
 Pin component enables pinning an element in its initial position while the remaining content scrolls. It ensures that the pinned element stays fixed at its starting position within the active duration of Scrollytelling.
@@ -43,4 +85,4 @@ export const HomePage = () => (
 
 #### Example
 
-https://stackblitz.com/edit/react-ts-wkxnja
+https://stackblitz.com/edit/react-ts-kittrj
