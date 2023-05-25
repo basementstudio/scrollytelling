@@ -468,17 +468,27 @@ function getValidAt(at: number) {
  * Parallax
  * -----------------------------------------------------------------------------------------------*/
 
-function Parallax({
+interface ParallaxProps {
+  tween: Omit<TweenBaseDef, "to" | "from" | "fromTo"> & {
+    target?: TweenTarget; // Optional: The target element or elements to apply the animation to.
+    movementX?: UnitValue; // Optional: The amount of movement on the X-axis.
+    movementY?: UnitValue; // Optional: The amount of movement on the Y-axis.
+  };
+  children?: React.ReactNode; // Optional: Content to be rendered inside the Parallax component.
+}
+
+/**
+ * Parallax component applies a parallax effect to its children using GSAP animations.
+ *
+ * @param {ParallaxProps} props - Parallax component props
+ * @returns {JSX.Element} Parallax component
+ * @link https://github.com/basementstudio/scrollytelling/blob/main/docs/api.md#parallax
+ */
+
+const Parallax: React.FC<ParallaxProps> = ({
   children,
   tween,
-}: {
-  children?: React.ReactNode;
-  tween: Omit<TweenBaseDef, "to" | "from" | "fromTo"> & {
-    target?: TweenTarget;
-    movementX?: UnitValue;
-    movementY?: UnitValue;
-  };
-}) {
+}: ParallaxProps): JSX.Element => {
   return (
     <Animation
       tween={{
@@ -507,7 +517,7 @@ function Parallax({
       {children}
     </Animation>
   );
-}
+};
 
 /* -------------------------------------------------------------------------------------------------
  * Pin
