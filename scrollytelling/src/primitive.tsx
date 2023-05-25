@@ -528,20 +528,25 @@ interface PinProps {
  *
  * @param {PinProps} props - Pin component props
  * @returns {JSX.Element} Pin component
- * @link https://github.com/basementstudio/scrollytelling
+ * @link https://github.com/basementstudio/scrollytelling/blob/main/docs/api.md#pin
  */
 
 const Pin = React.forwardRef<HTMLDivElement, PinProps>(
-  ({
-    childClassName,
-    childHeight,
-    children,
-    pinSpacerClassName,
-    pinSpacerHeight,
-    top = 0,
-  }: PinProps, ref) => {
+  (
+    {
+      childClassName,
+      childHeight,
+      children,
+      pinSpacerClassName,
+      pinSpacerHeight,
+      top = 0,
+    }: PinProps,
+    ref
+  ) => {
     if (!childHeight || !pinSpacerHeight) {
-      throw new Error("childHeight and pinSpacerHeight are required in Pin component.");
+      throw new Error(
+        "childHeight and pinSpacerHeight are required in Pin component."
+      );
     }
 
     return (
