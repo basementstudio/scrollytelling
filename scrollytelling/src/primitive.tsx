@@ -513,39 +513,51 @@ function Parallax({
  * Pin
  * -----------------------------------------------------------------------------------------------*/
 
-const Pin = React.forwardRef<
-  HTMLDivElement,
-  {
-    children?: React.ReactNode;
-    // start?: number;
-    // end?: number;
-    top?: string | number;
-    childHeight: string | number;
-    pinSpacerHeight: string | number;
-    childClassName?: string;
-    pinSpacerClassName?: string;
-  }
->(
+interface PinProps {
+  childHeight: string | number; // The height of the pinned element in the pin.
+  pinSpacerHeight: string | number; // The height of the spacer reserved for the pinned element in the pin.
+  childClassName?: string; // Optional: Custom CSS class name for the child element
+  children?: React.ReactNode; // Optional: Content to be rendered inside the pinned element
+  pinSpacerClassName?: string; // Optional: Custom CSS class name for the pin spacer element
+  top?: string | number; // Optional: Custom top position for the pinned element
+}
+
+/**
+ * Pin component enables pinning an element in its initial position while the remaining content scrolls.
+ * It ensures that the pinned element stays fixed at its starting position within the active duration of Scrollytelling.
+ *
+ * @param {PinProps} props - Pin component props
+ * @returns {JSX.Element} Pin component
+ * @link https://github.com/basementstudio/scrollytelling/blob/main/docs/api.md#pin
+ */
+
+const Pin = React.forwardRef<HTMLDivElement, PinProps>(
   (
     {
-      children,
-      top = 0,
-      childHeight,
-      pinSpacerHeight,
-      pinSpacerClassName,
       childClassName,
-    },
+      childHeight,
+      children,
+      pinSpacerClassName,
+      pinSpacerHeight,
+      top = 0,
+    }: PinProps,
     ref
   ) => {
+    if (!childHeight || !pinSpacerHeight) {
+      throw new Error(
+        "childHeight and pinSpacerHeight are required in Pin component."
+      );
+    }
+
     return (
       <div
-        style={{ height: pinSpacerHeight }}
-        ref={ref}
         className={pinSpacerClassName}
+        ref={ref}
+        style={{ height: pinSpacerHeight }}
       >
         <div
-          style={{ position: "sticky", top, height: childHeight }}
           className={childClassName}
+          style={{ height: childHeight, position: "sticky", top }}
         >
           {children}
         </div>
