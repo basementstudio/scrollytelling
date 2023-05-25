@@ -252,23 +252,29 @@ type TweenOp =
 type Time = number; // do we need this?: | UnitValue<"vh" | "px" | "%" | "vw">;
 
 type TweenBaseDef = {
-  start: Time;
-  end: Time;
+  start: Time; // The start time of the animation in milliseconds.
+  end: Time; // The end time of the animation in milliseconds.
 } & TweenOp;
 
 type TweenTarget = gsap.TweenTarget | React.RefObject<HTMLElement>;
 
 type TweenWithTargetDef = TweenBaseDef & {
-  target: TweenTarget;
+  target: TweenTarget; // The target element or elements to apply the animation to.
 };
 
 type TweenWithChildrenDef = TweenBaseDef;
 
 type AnimationProps = {
-  tween: DataOrDataArray<TweenWithChildrenDef | TweenWithTargetDef>;
-  children?: React.ReactNode;
+  tween: DataOrDataArray<TweenWithChildrenDef | TweenWithTargetDef>; // The animation configuration.
+  children?: React.ReactNode; // Optional: The content to be rendered within the Animation component.
 };
 
+/**
+ * Animation component allows you to create declarative animations based on the provided tween configuration.
+ *
+ * @param {AnimationProps} props - The props for the Animation component.
+ * @returns {React.ReactElement | null} The Animation component.
+ */
 function Animation(props: { tween: DataOrDataArray<TweenWithTargetDef> }): null;
 function Animation(props: {
   children: React.ReactNode;
@@ -314,6 +320,9 @@ function Animation(props: AnimationProps): React.ReactElement | null {
 
     if (Array.isArray(props.tween)) {
       const cleanupTweens = props.tween.map((tween) => {
+        if (!tween.start || !tween.end ) {
+          throw new Error("Invalid tween configuration. Missing required properties.");
+        }
         const cleanup = addTweenToTimeline(tween);
         return cleanup;
       });
@@ -321,6 +330,9 @@ function Animation(props: AnimationProps): React.ReactElement | null {
         cleanupTweens.forEach((cleanup) => cleanup());
       };
     } else {
+      if (!props.tween.start || !props.tween.end) {
+        throw new Error("Invalid tween configuration. Missing required properties.");
+      }
       const cleanup = addTweenToTimeline(props.tween);
       return () => {
         cleanup();
@@ -468,17 +480,30 @@ function getValidAt(at: number) {
  * Parallax
  * -----------------------------------------------------------------------------------------------*/
 
-function Parallax({
-  children,
-  tween,
-}: {
-  children?: React.ReactNode;
+/**
+ * Parallax component creates a parallax effect by animating the movement of its children based on specified tween configurations.
+ *
+ * @param {Object} props - Parallax component props
+ * @param {React.ReactNode} props.children - The content to be rendered within the Parallax component
+ * @param {Object} props.tween - Tween configuration object specifying the movement and animation properties
+ * @param {TweenTarget} [props.tween.target] - The target element or elements to apply the parallax effect to
+ * @param {UnitValue} [props.tween.movementX] - The horizontal movement value for the parallax effect
+ * @param {UnitValue} [props.tween.movementY] - The vertical movement value for the parallax effect
+ * @param {Omit<TweenBaseDef, 'to' | 'from' | 'fromTo'>} props.tween - Additional tween properties to customize the animation
+ * @returns {JSX.Element} Parallax component
+ * @link https://github.com/basementstudio/scrollytelling
+ */
+
+interface ParallaxProps {
+  children?: React.ReactNode; // Optional: The content to be rendered within the Parallax component.
   tween: Omit<TweenBaseDef, "to" | "from" | "fromTo"> & {
-    target?: TweenTarget;
-    movementX?: UnitValue;
-    movementY?: UnitValue;
+    target?: TweenTarget; // Optional: The target element or elements to apply the parallax effect to.
+    movementX?: UnitValue; // Optional: The horizontal movement value for the parallax effect.
+    movementY?: UnitValue; // Optional: The vertical movement value for the parallax effect.
   };
-}) {
+}
+
+const Parallax = ({ children, tween }: ParallaxProps) => {
   return (
     <Animation
       tween={{
@@ -507,7 +532,7 @@ function Parallax({
       {children}
     </Animation>
   );
-}
+}; 
 
 /* -------------------------------------------------------------------------------------------------
  * Pin
