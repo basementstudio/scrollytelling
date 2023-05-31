@@ -12,7 +12,9 @@ Parallax component applies a [parallax effect](https://en.wikipedia.org/wiki/Par
 
 ```tsx
 <Scrollytelling.Parallax
-  tween: Omit<TweenBaseDef, "to" | "from" | "fromTo"> & {
+  tween: {
+    start: number; // The time where the movement starts relative to the scroll progress
+    end: number; // The time where the movement ends relative to the scroll progress
     target?: TweenTarget; // Optional: The target element or elements to apply the animation to.
     movementX?: UnitValue; // Optional: The amount of movement on the X-axis.
     movementY?: UnitValue; // Optional: The amount of movement on the Y-axis.
@@ -21,6 +23,9 @@ Parallax component applies a [parallax effect](https://en.wikipedia.org/wiki/Par
   {children}
 </Scrollytelling.Parallax>
 ```
+
+> **Keep in mind that either `movementX` or `movementY` are required for the Parallax to work**
+
 
 #### Usage
 
@@ -45,6 +50,8 @@ export const HomePage = () => (
 #### Example
 
 https://stackblitz.com/edit/react-ts-wkxnja
+
+---
 
 ### `<Pin>`
 
