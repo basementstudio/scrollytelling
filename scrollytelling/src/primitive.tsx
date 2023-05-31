@@ -10,6 +10,14 @@ import { useIsoLayoutEffect } from "./hooks/use-iso-layout-effect";
  * Root
  * -----------------------------------------------------------------------------------------------*/
 
+// ---- Utils
+
+type RequireAtLeastOne<T, Keys extends keyof T = keyof T> =
+    Pick<T, Exclude<keyof T, Keys>> 
+    & {
+        [K in Keys]-?: Required<Pick<T, K>> & Partial<Pick<T, Exclude<Keys, K>>>
+    }[Keys]
+
 // ---- Contexts
 
 type ScrollytellingContextType = {
@@ -471,18 +479,18 @@ function getValidAt(at: number) {
 interface ParallaxProps {
   tween: Omit<TweenBaseDef, "to" | "from" | "fromTo"> & {
     target?: TweenTarget; // Optional: The target element or elements to apply the animation to.
-    movementX?: UnitValue; // Optional: The amount of movement on the X-axis.
-    movementY?: UnitValue; // Optional: The amount of movement on the Y-axis.
-  };
+  } & RequireAtLeastOne<{
+    movementX?: UnitValue; // The amount of movement on the X-axis.
+    movementY?: UnitValue; // The amount of movement on the Y-axis.
+  }>;
   children?: React.ReactNode; // Optional: Content to be rendered inside the Parallax component.
 }
 
 /**
- * Parallax component applies a parallax effect to its children using GSAP animations.
- *
- * @param {ParallaxProps} props - Parallax component props
- * @returns {JSX.Element} Parallax component
- * @link https://github.com/basementstudio/scrollytelling/blob/main/docs/api.md#parallax
+ * Applies a parallax effect to its children using GSAP animations.
+ * 
+ * @returns {JSX.Element} `Animation` component with parallax effect applied. _(Expects `children`)_
+ * @link [[@bsmnt/scrollytelling] API Docs: Parallax](https://github.com/basementstudio/scrollytelling/blob/main/docs/api.md#parallax)
  */
 
 const Parallax: React.FC<ParallaxProps> = ({ children, tween }) => {
