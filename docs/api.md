@@ -6,7 +6,7 @@ BSMNT Scrollytelling is a library for creating Scrollytelling animations. It's p
 
 ### `<Parallax>`
 
-Parallax component applies a parallax effect to its children using GSAP animations.
+Parallax component applies a [parallax effect](https://en.wikipedia.org/wiki/Parallax) to its children using GSAP animations.
 
 #### Render Props
 
