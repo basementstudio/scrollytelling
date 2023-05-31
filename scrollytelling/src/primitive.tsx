@@ -262,15 +262,15 @@ type Time = number; // do we need this?: | UnitValue<"vh" | "px" | "%" | "vw">;
 type TweenBaseDef = {
   start: Time;
   end: Time;
-} & TweenOp;
+}
 
 type TweenTarget = gsap.TweenTarget | React.RefObject<HTMLElement>;
 
-type TweenWithTargetDef = TweenBaseDef & {
+type TweenWithTargetDef = TweenBaseDef & TweenOp & {
   target: TweenTarget;
 };
 
-type TweenWithChildrenDef = TweenBaseDef;
+type TweenWithChildrenDef = TweenBaseDef & TweenOp;
 
 type AnimationProps = {
   tween: DataOrDataArray<TweenWithChildrenDef | TweenWithTargetDef>;
@@ -477,7 +477,7 @@ function getValidAt(at: number) {
  * -----------------------------------------------------------------------------------------------*/
 
 interface ParallaxProps {
-  tween: Omit<TweenBaseDef, "to" | "from" | "fromTo"> & {
+  tween: TweenBaseDef & {
     target?: TweenTarget; // Optional: The target element or elements to apply the animation to.
   } & RequireAtLeastOne<{
     movementX?: UnitValue; // The amount of movement on the X-axis.
