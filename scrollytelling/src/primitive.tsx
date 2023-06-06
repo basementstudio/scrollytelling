@@ -10,6 +10,14 @@ import { useIsoLayoutEffect } from "./hooks/use-iso-layout-effect";
  * Root
  * -----------------------------------------------------------------------------------------------*/
 
+// ---- Utils
+
+type RequireAtLeastOne<T, Keys extends keyof T = keyof T> =
+    Pick<T, Exclude<keyof T, Keys>> 
+    & {
+        [K in Keys]-?: Required<Pick<T, K>> & Partial<Pick<T, Exclude<Keys, K>>>
+    }[Keys]
+
 // ---- Contexts
 
 type ScrollytellingContextType = {
@@ -254,15 +262,15 @@ type Time = number; // do we need this?: | UnitValue<"vh" | "px" | "%" | "vw">;
 type TweenBaseDef = {
   start: Time;
   end: Time;
-} & TweenOp;
+}
 
 type TweenTarget = gsap.TweenTarget | React.RefObject<HTMLElement>;
 
-type TweenWithTargetDef = TweenBaseDef & {
+type TweenWithTargetDef = TweenBaseDef & TweenOp & {
   target: TweenTarget;
 };
 
-type TweenWithChildrenDef = TweenBaseDef;
+type TweenWithChildrenDef = TweenBaseDef & TweenOp;
 
 type AnimationProps = {
   tween: DataOrDataArray<TweenWithChildrenDef | TweenWithTargetDef>;
@@ -468,17 +476,30 @@ function getValidAt(at: number) {
  * Parallax
  * -----------------------------------------------------------------------------------------------*/
 
-function Parallax({
-  children,
-  tween,
-}: {
-  children?: React.ReactNode;
-  tween: Omit<TweenBaseDef, "to" | "from" | "fromTo"> & {
-    target?: TweenTarget;
-    movementX?: UnitValue;
-    movementY?: UnitValue;
-  };
-}) {
+interface ParallaxProps {
+  tween: TweenBaseDef & {
+    target?: TweenTarget; // Optional: The target element or elements to apply the animation to.
+  } & RequireAtLeastOne<{
+    movementX?: UnitValue; // The amount of movement on the X-axis.
+    movementY?: UnitValue; // The amount of movement on the Y-axis.
+  }>;
+  children?: React.ReactNode; // Optional: Content to be rendered inside the Parallax component.
+}
+
+/**
+ * Applies a parallax effect to its children using GSAP animations.
+ * 
+ * @returns {JSX.Element} `Animation` component with parallax effect applied. _(Expects `children`)_
+ * @link [[@bsmnt/scrollytelling] API Docs: Parallax](https://github.com/basementstudio/scrollytelling/blob/main/docs/api.md#parallax)
+ */
+
+const Parallax: React.FC<ParallaxProps> = ({ children, tween }) => {
+  if (!tween.movementY && !tween.movementX) {
+    throw new Error(
+      "At least one of movementY and movementX is required in Parallax component."
+    );
+  }
+
   return (
     <Animation
       tween={{
@@ -507,7 +528,7 @@ function Parallax({
       {children}
     </Animation>
   );
-}
+};
 
 /* -------------------------------------------------------------------------------------------------
  * Pin
