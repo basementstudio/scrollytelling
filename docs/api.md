@@ -93,3 +93,9 @@ export const HomePage = () => (
 #### Example
 
 https://stackblitz.com/edit/react-ts-kittrj
+
+---
+
+## Next Steps
+
+💡 [Core concepts](/docs/core-concepts.md)

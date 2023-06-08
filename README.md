@@ -4,6 +4,14 @@ BSMNT Scrollytelling is a library for creating Scrollytelling animations. It's p
 
 ![Frame 7](https://user-images.githubusercontent.com/40034115/233121992-12eb2448-4f62-4cba-b9a3-c0d3e9233aa7.jpg)
 
+---
+### 👇 New documentation here! 👇
+
+- 💡 [Core Concepts](/docs/core-concepts.md)
+- 📕 [API Reference](/docs/api.md)
+
+---
+
 ## Installation
 
 To get started, we'll need the `@bsmnt/scrollytelling` package, as well as the required peer dependency: [GSAP](https://greensock.com/docs/).

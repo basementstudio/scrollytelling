@@ -18,3 +18,8 @@ From [gsap docs](https://greensock.com/docs/v3/GSAP/Tween):
 In this library we took this tween definition and use it with a few tweaks[^1] for our `Animation` component and its variants (`Pin`, `Parallax`, etc.)
 
 [^1]: For example we remove the duration and use `start` and `end` props based on the scrolling progress inside the `<Pin />` component to set the correct duration for each animation (_tween_).
+
+---
+## Next Steps
+
+📕 [API Reference](/docs/api.md)
