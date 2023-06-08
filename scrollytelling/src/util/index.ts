@@ -1,4 +1,5 @@
 import { TweenOp, TweenTarget } from "../types";
+import { gsap } from "gsap";
 
 export function getTweenTarget({
   targetContainer,

@@ -1,7 +1,7 @@
 import * as React from "react";
 
 export type ScrollytellingContextType = {
-  timeline: gsap.core.Timeline | undefined;
+  timeline: GSAPTimeline | undefined;
   rootRef: React.RefObject<HTMLDivElement>;
 };
 
