@@ -2,6 +2,7 @@
  * Waypoint
  * -----------------------------------------------------------------------------------------------*/
 
+import { gsap } from "gsap";
 import { Slot } from "@radix-ui/react-slot";
 import {
   AnimationProps,
@@ -44,7 +45,7 @@ export function Waypoint(
     if (!timeline) return;
 
     let cleanupTween: undefined | (() => void) = undefined;
-    let generatedTween: undefined | gsap.core.Tween = undefined;
+    let generatedTween: undefined | GSAPTween = undefined;
     if (props.tween) {
       const { duration, ...op } = props.tween;
       const tweenTarget = getTweenTarget({ targetContainer: props.tween, ref });

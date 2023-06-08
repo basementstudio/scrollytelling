@@ -1,3 +1,5 @@
+import { gsap } from "gsap";
+
 export type DataOrDataArray<T> = T | Array<T>;
 export type UnitValue<Unit = string> = { value: number; unit: Unit };
 

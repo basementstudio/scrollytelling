@@ -1,3 +1,4 @@
+import { gsap } from "gsap";
 // ---- Hooks ----
 import { useIsoLayoutEffect } from "../../hooks/use-iso-layout-effect";
 
