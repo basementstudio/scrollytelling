@@ -1,4 +1,4 @@
-import { TweenOp, TweenTarget } from "../types";
+import { FromToOptions, TweenTarget } from "../types";
 import { gsap } from "gsap";
 
 export function getTweenTarget({
@@ -33,7 +33,7 @@ export function buildDeclarativeTween({
   paused,
   ...timelineAndPosition
 }: {
-  op: TweenOp;
+  op: FromToOptions;
   id: string;
   target: TweenTarget;
   duration: number;

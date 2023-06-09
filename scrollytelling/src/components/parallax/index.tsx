@@ -6,10 +6,10 @@ import { Animation } from "../animation";
  * Parallax
  * -----------------------------------------------------------------------------------------------*/
 
-import { RequireAtLeastOne, TweenBaseDef, TweenTarget, UnitValue } from "../../types";
+import { RequireAtLeastOne, StartEndOptions, TweenTarget, UnitValue } from "../../types";
 
 interface ParallaxProps {
-  tween: TweenBaseDef & {
+  tween: StartEndOptions & {
     target?: TweenTarget; // Optional: The target element or elements to apply the animation to.
   } & RequireAtLeastOne<{
     movementX?: UnitValue; // The amount of movement on the X-axis.
@@ -25,7 +25,7 @@ interface ParallaxProps {
  * @link [[@bsmnt/scrollytelling] API Docs: Parallax](https://github.com/basementstudio/scrollytelling/blob/main/docs/api.md#parallax)
  */
 
-export const Parallax: React.FC<ParallaxProps> = ({ children, tween }) => {
+export const Parallax: React.FC<ParallaxProps> = ({ children, tween }): JSX.Element => {
   if (!tween.movementY && !tween.movementX) {
     throw new Error(
       "At least one of movementY and movementX is required in Parallax component."
