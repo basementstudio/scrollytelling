@@ -44,7 +44,8 @@ export type WaypointBaseDef = {
   label?: string;
 };
 
-export type LaxTweenDef = FromToOptions & { duration: number; forwards?: boolean };
+// FIXME: This name is not clear, why SimpleTween doesn't consume TweenBaseDef?
+export type SimpleTween = FromToOptions & { duration: number; forwards?: boolean };
 
 // ---- Aliases
 export type TweenVars = gsap.TweenVars; 
