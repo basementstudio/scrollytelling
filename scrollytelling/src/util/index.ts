@@ -1,12 +1,29 @@
+import { FromToOptions, TweenTarget } from "../types";
 import { gsap } from "gsap";
-import { TweenTarget } from "./get-tween-target";
 
-type TweenVars = gsap.TweenVars;
-
-export type TweenOp =
-  | { to: TweenVars; from?: never; fromTo?: never }
-  | { from: TweenVars; to?: never; fromTo?: never }
-  | { fromTo: [TweenVars, TweenVars]; to?: never; from?: never };
+export function getTweenTarget({
+  targetContainer,
+  ref,
+}: {
+  targetContainer: { target?: TweenTarget };
+  ref: React.RefObject<HTMLElement>;
+}) {
+  if (targetContainer.target) {
+    if (
+      targetContainer.target &&
+      typeof targetContainer.target === "object" &&
+      "current" in targetContainer.target
+    ) {
+      return targetContainer.target.current;
+    } else {
+      return targetContainer.target;
+    }
+  } else if (ref) {
+    return ref.current;
+  } else {
+    return null;
+  }
+}
 
 export function buildDeclarativeTween({
   op,
@@ -16,7 +33,7 @@ export function buildDeclarativeTween({
   paused,
   ...timelineAndPosition
 }: {
-  op: TweenOp;
+  op: FromToOptions;
   id: string;
   target: TweenTarget;
   duration: number;
@@ -65,4 +82,24 @@ export function buildDeclarativeTween({
   return () => {
     gsap.getById(id)?.revert();
   };
+}
+
+export function getValidAt(at: number) {
+  if (at < 0) {
+    throw new Error("at must be a positive number");
+  }
+
+  if (at > 100) {
+    throw new Error("at must be less than 100");
+  }
+
+  if (at === 0) {
+    // gsap won't call "reverse" if the time is 0, so we change it slightly.
+    return 0.000001;
+  }
+  if (at === 100) {
+    // same sitiuation with 100.
+    return 99.999999;
+  }
+  return at;
 }
