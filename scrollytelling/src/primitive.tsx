@@ -2,7 +2,7 @@ import { gsap } from "gsap";
 import { Slot } from "@radix-ui/react-slot";
 import * as Portal from "@radix-ui/react-portal";
 import * as React from "react";
-import ScrollTrigger from "gsap/dist/ScrollTrigger";
+import ScrollTrigger from "gsap/ScrollTrigger";
 
 // ---- Components ----
 import { Animation } from "./components/animation";
