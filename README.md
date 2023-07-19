@@ -72,6 +72,22 @@ For our talk at React Miami Conf, we did a small demo to showcase this library i
 - Layered pinning: [https://stackblitz.com/edit/react-ts-4dtlww?file=App.tsx](https://stackblitz.com/edit/react-ts-4dtlww?file=App.tsx)
 - Three.js Tube: [https://codesandbox.io/s/978cns?file=/src/App.js](https://codesandbox.io/s/978cns?file=/src/App.js)
 
+## Troubleshooting
+
+<details>
+<summary>
+<b>"My simple animation is not doing anything on scroll"</b>
+</summary>
+
+Please check your `start` and `end` values for your `Root` component. A typical issue comes when:
+
+1. your animation _"starts when the start of the scroller hits the start of the viewport"_,
+2. your animation _"ends when the bottom of the scroller hits the bottom of the viewport"_,
+3. the element your `Root` wraps around is only `100vh` tall, so the animation's duration is 0.
+
+To fix this, either add more height to the element your `Root` wraps, or tweak the `end` value to be something like `bottom start`, which would mean "when the bottom of the scroller hits the start of the viewport".
+</details>
+
 ***
 
 GSAP files are subject to GreenSock's standard license which can be found at [https://greensock.com/standard-license/](https://greensock.com/standard-license/)
