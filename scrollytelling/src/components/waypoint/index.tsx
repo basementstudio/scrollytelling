@@ -42,7 +42,7 @@ export function Waypoint(
   const { timeline } = useScrollytelling();
 
   React.useEffect(() => {
-    if (!timeline) return;
+    if (!timeline || props.disabled) return;
 
     let cleanupTween: undefined | (() => void) = undefined;
     let generatedTween: undefined | GSAPTween = undefined;

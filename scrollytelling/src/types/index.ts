@@ -35,6 +35,7 @@ export type TweenWithChildrenDef = TweenBaseDef;
 export interface AnimationProps {
   tween: DataOrDataArray<TweenBaseDef | TweenWithTargetDef>;
   children?: React.ReactNode;
+  disabled?: boolean;
 }
 
 export type WaypointBaseDef = {
@@ -42,6 +43,7 @@ export type WaypointBaseDef = {
   onCall?: () => void;
   onReverseCall?: () => void;
   label?: string;
+  disabled?: boolean;
 };
 
 // FIXME: This name is not clear, why SimpleTween doesn't consume TweenBaseDef?

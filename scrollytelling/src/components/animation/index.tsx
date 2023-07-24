@@ -1,8 +1,6 @@
 import * as React from "react";
 import { Slot } from "@radix-ui/react-slot";
 
- 
-
 // ---- Types ----
 import {
   AnimationProps,
@@ -29,11 +27,13 @@ import { useDispatcher, useScrollytelling } from "../../context";
 
 export function Animation(props: {
   tween: DataOrDataArray<TweenWithTargetDef>;
+  disabled?: boolean;
 }): null;
 
 export function Animation(props: {
   children: React.ReactNode;
   tween: DataOrDataArray<TweenWithChildrenDef>;
+  disabled?: boolean;
 }): React.ReactElement;
 
 export function Animation(props: AnimationProps): React.ReactElement | null {
@@ -44,7 +44,7 @@ export function Animation(props: AnimationProps): React.ReactElement | null {
   const { getTimelineSpace } = useDispatcher();
 
   React.useEffect(() => {
-    if (!timeline || !props.tween) return;
+    if (!timeline || !props.tween || props.disabled) return;
 
     const addTweenToTimeline = (
       tween: TweenWithChildrenDef | TweenWithTargetDef
@@ -88,7 +88,7 @@ export function Animation(props: AnimationProps): React.ReactElement | null {
         cleanup();
       };
     }
-  }, [getTimelineSpace, id, props.tween, timeline]);
+  }, [getTimelineSpace, id, props.tween, timeline, props.disabled]);
 
   if (props.children) {
     return <Slot ref={ref}>{props.children}</Slot>;
