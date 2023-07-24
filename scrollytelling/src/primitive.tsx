@@ -75,7 +75,13 @@ const Scrollytelling = ({
 
   // initialize timeline
   React.useEffect(() => {
-    if (!ref.current || disabled) return;
+    if (!ref.current) return;
+
+    if (disabled) {
+      setTimeline(undefined);
+      return;
+    }
+
     gsap.registerPlugin(ScrollTrigger);
 
     const tl = gsap.timeline({
@@ -121,6 +127,7 @@ const Scrollytelling = ({
   const getTimelineSpace: ScrollytellingDispatchersContextType["getTimelineSpace"] =
     React.useCallback(
       ({ start, end }) => {
+        if (disabled) return null;
         if (!timeline) throw new Error("timeline not initialized");
         const duration = end - start;
         if (start < 0) {
@@ -143,7 +150,7 @@ const Scrollytelling = ({
           },
         };
       },
-      [addRestToTimeline, timeline]
+      [addRestToTimeline, timeline, disabled]
     );
 
   return (

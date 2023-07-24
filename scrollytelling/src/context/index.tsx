@@ -24,7 +24,7 @@ export type ScrollytellingDispatchersContextType = {
     duration: number;
     position: number;
     cleanup: () => void;
-  };
+  } | null;
   scopedQuerySelector: gsap.utils.SelectorFunc | undefined;
 };
 

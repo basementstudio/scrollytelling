@@ -58,6 +58,7 @@ export function Animation(props: AnimationProps): React.ReactElement | null {
           start: tween.start,
           end: tween.end,
         });
+        if (!timelineSpace) return; // root is probably disabled.
         const cleanup = buildDeclarativeTween({
           id,
           timeline,
@@ -80,12 +81,12 @@ export function Animation(props: AnimationProps): React.ReactElement | null {
         return cleanup;
       });
       return () => {
-        cleanupTweens.forEach((cleanup) => cleanup());
+        cleanupTweens.forEach((cleanup) => cleanup?.());
       };
     } else {
       const cleanup = addTweenToTimeline(props.tween);
       return () => {
-        cleanup();
+        cleanup?.();
       };
     }
   }, [getTimelineSpace, id, props.tween, timeline, props.disabled]);
