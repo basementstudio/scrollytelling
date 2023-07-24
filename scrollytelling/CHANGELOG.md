@@ -1,5 +1,11 @@
 # @bsmnt/scrollytelling
 
+## 0.2.2
+
+### Patch Changes
+
+- 26488f1: add disabled option
+
 ## 0.2.1
 
 ### Patch Changes
