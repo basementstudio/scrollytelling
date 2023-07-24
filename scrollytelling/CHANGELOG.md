@@ -1,5 +1,12 @@
 # @bsmnt/scrollytelling
 
+## 0.2.3
+
+### Patch Changes
+
+- 254227d: make sure disabled state from root cascades
+- 61c816b: add disabled prop to Root
+
 ## 0.2.2
 
 ### Patch Changes
