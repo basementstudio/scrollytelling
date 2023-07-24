@@ -1,5 +1,11 @@
 # @bsmnt/scrollytelling
 
+## 0.2.1
+
+### Patch Changes
+
+- 1ced4f9: change gsap import for cjs
+
 ## 0.2.0
 
 ### Minor Changes
