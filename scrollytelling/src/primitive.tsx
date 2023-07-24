@@ -35,6 +35,7 @@ const Scrollytelling = ({
   scrub,
   defaults,
   toggleActions,
+  disabled,
 }: {
   children?: React.ReactNode;
   debug?: boolean;
@@ -63,6 +64,7 @@ const Scrollytelling = ({
   scrub?: boolean | number;
   defaults?: gsap.TweenVars | undefined;
   toggleActions?: ScrollTrigger.Vars["toggleActions"];
+  disabled?: boolean;
 }) => {
   const ref = React.useRef<HTMLDivElement>(null);
   const scopedQuerySelector = gsap.utils.selector(ref);
@@ -73,7 +75,7 @@ const Scrollytelling = ({
 
   // initialize timeline
   React.useEffect(() => {
-    if (!ref.current) return;
+    if (!ref.current || disabled) return;
     gsap.registerPlugin(ScrollTrigger);
 
     const tl = gsap.timeline({
@@ -95,7 +97,7 @@ const Scrollytelling = ({
     return () => {
       tl.revert();
     };
-  }, [end, debug, start, callbacks, scrub, defaults, toggleActions]);
+  }, [end, debug, start, callbacks, scrub, defaults, toggleActions, disabled]);
 
   // rest tween to ensure timeline is always 100 long
   const addRestToTimeline = React.useCallback(
