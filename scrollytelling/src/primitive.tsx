@@ -35,7 +35,7 @@ const Scrollytelling = ({
   scrub,
   defaults,
   toggleActions,
-  disabled,
+  disabled = false,
 }: {
   children?: React.ReactNode;
   debug?: boolean;

@@ -36,7 +36,11 @@ export function Animation(props: {
   disabled?: boolean;
 }): React.ReactElement;
 
-export function Animation(props: AnimationProps): React.ReactElement | null {
+export function Animation({
+  tween,
+  children,
+  disabled = false,
+}: AnimationProps): React.ReactElement | null {
   const ref = React.useRef<HTMLElement>(null);
   const id = React.useId();
 
@@ -44,7 +48,7 @@ export function Animation(props: AnimationProps): React.ReactElement | null {
   const { getTimelineSpace } = useDispatcher();
 
   React.useEffect(() => {
-    if (!timeline || !props.tween || props.disabled) return;
+    if (!timeline || !tween || disabled) return;
 
     const addTweenToTimeline = (
       tween: TweenWithChildrenDef | TweenWithTargetDef
@@ -75,8 +79,8 @@ export function Animation(props: AnimationProps): React.ReactElement | null {
       } else return () => undefined;
     };
 
-    if (Array.isArray(props.tween)) {
-      const cleanupTweens = props.tween.map((tween) => {
+    if (Array.isArray(tween)) {
+      const cleanupTweens = tween.map((tween) => {
         const cleanup = addTweenToTimeline(tween);
         return cleanup;
       });
@@ -84,15 +88,15 @@ export function Animation(props: AnimationProps): React.ReactElement | null {
         cleanupTweens.forEach((cleanup) => cleanup?.());
       };
     } else {
-      const cleanup = addTweenToTimeline(props.tween);
+      const cleanup = addTweenToTimeline(tween);
       return () => {
         cleanup?.();
       };
     }
-  }, [getTimelineSpace, id, props.tween, timeline, props.disabled]);
+  }, [getTimelineSpace, id, tween, timeline, disabled]);
 
-  if (props.children) {
-    return <Slot ref={ref}>{props.children}</Slot>;
+  if (children) {
+    return <Slot ref={ref}>{children}</Slot>;
   }
   return null;
 }

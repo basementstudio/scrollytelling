@@ -1,7 +1,7 @@
 {
   "name": "website",
   "private": true,
-  "version": "0.1.0",
+  "version": "0.1.1",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
@@ -10,7 +10,7 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@bsmnt/scrollytelling": "*",
+    "@bsmnt/scrollytelling": "0.2.4",
     "@react-three/drei": "^9.65.3",
     "@react-three/fiber": "^8.12.0",
     "@types/three": "^0.150.1",
