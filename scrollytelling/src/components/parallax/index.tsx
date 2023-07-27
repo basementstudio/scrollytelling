@@ -34,7 +34,7 @@ interface ParallaxProps {
 export const Parallax: React.FC<ParallaxProps> = ({
   children,
   tween,
-  disabled,
+  disabled = false,
 }): JSX.Element => {
   if (!tween.movementY && !tween.movementX) {
     throw new Error(
