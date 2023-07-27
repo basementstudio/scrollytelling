@@ -1,5 +1,11 @@
 # @bsmnt/scrollytelling
 
+## 0.2.4-next.0
+
+### Patch Changes
+
+- Default disabled value to false
+
 ## 0.2.3
 
 ### Patch Changes

@@ -1,0 +1,13 @@
+{
+  "mode": "pre",
+  "tag": "next",
+  "initialVersions": {
+    "eslint-config-custom": "1.0.0",
+    "tsconfig": "1.0.0",
+    "@bsmnt/scrollytelling": "0.2.3",
+    "website": "0.1.0"
+  },
+  "changesets": [
+    "two-cheetahs-jam"
+  ]
+}
