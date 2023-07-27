@@ -1,5 +1,12 @@
 # @bsmnt/scrollytelling
 
+## 0.2.4
+
+### Patch Changes
+
+- 56586af: Default disabled value to false
+- abe6bb9: Tweak disabled
+
 ## 0.2.4-next.1
 
 ### Patch Changes
