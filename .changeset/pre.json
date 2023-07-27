@@ -8,6 +8,7 @@
     "website": "0.1.0"
   },
   "changesets": [
-    "two-cheetahs-jam"
+    "two-cheetahs-jam",
+    "wicked-zebras-visit"
   ]
 }

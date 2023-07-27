@@ -1,5 +1,11 @@
 # @bsmnt/scrollytelling
 
+## 0.2.4-next.1
+
+### Patch Changes
+
+- Tweak disabled
+
 ## 0.2.4-next.0
 
 ### Patch Changes
