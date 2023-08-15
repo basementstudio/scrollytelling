@@ -27,12 +27,18 @@ export function Waypoint(
   }
 ): React.ReactElement;
 
-export function Waypoint(
-  props: WaypointBaseDef & {
-    children?: AnimationProps["children"];
-    tween?: SimpleTween & { target?: TweenTarget };
-  }
-): React.ReactElement | null {
+export function Waypoint({
+  tween,
+  children,
+  at,
+  label,
+  onCall,
+  onReverseCall,
+  disabled = true,
+}: WaypointBaseDef & {
+  children?: AnimationProps["children"];
+  tween?: SimpleTween & { target?: TweenTarget };
+}): React.ReactElement | null {
   const ref = React.useRef<HTMLElement>(null);
   const id = React.useId();
   const lastStateRef = React.useRef<"idle" | "complete" | "reverse-complete">(
@@ -42,13 +48,13 @@ export function Waypoint(
   const { timeline } = useScrollytelling();
 
   React.useEffect(() => {
-    if (!timeline || props.disabled) return;
+    if (!timeline || disabled) return;
 
     let cleanupTween: undefined | (() => void) = undefined;
     let generatedTween: undefined | GSAPTween = undefined;
-    if (props.tween) {
-      const { duration, ...op } = props.tween;
-      const tweenTarget = getTweenTarget({ targetContainer: props.tween, ref });
+    if (tween) {
+      const { duration, ...op } = tween;
+      const tweenTarget = getTweenTarget({ targetContainer: tween, ref });
       cleanupTween = buildDeclarativeTween({
         id: id + "-tween",
         op,
@@ -59,7 +65,7 @@ export function Waypoint(
       generatedTween = gsap.getById<gsap.core.Tween>(id + "-tween");
     }
 
-    const validAt = getValidAt(props.at);
+    const validAt = getValidAt(at);
 
     // create a new paused set
     const newSet = gsap.set({}, { id, paused: true });
@@ -78,13 +84,13 @@ export function Waypoint(
     // set the callbacks
     newSet.vars.onComplete = () => {
       lastStateRef.current = "complete";
-      props.onCall?.();
+      onCall?.();
       generatedTween?.play();
     };
     newSet.vars.onReverseComplete = () => {
       lastStateRef.current = "reverse-complete";
-      props.onReverseCall?.();
-      if (!props.tween?.forwards) {
+      onReverseCall?.();
+      if (!tween?.forwards) {
         generatedTween?.reverse();
       }
     };
@@ -95,19 +101,19 @@ export function Waypoint(
     // this won't actually play it. it will enable it so that the timeline can play it whenever it needs to
     newSet.play();
 
-    if (props.label) {
-      timeline.addLabel(props.label, validAt);
+    if (label) {
+      timeline.addLabel(label, validAt);
     }
 
     return () => {
       gsap.getById(id)?.revert();
       cleanupTween?.();
-      if (props.label) timeline.removeLabel(props.label);
+      if (label) timeline.removeLabel(label);
     };
-  }, [id, timeline, props]);
+  }, [at, disabled, id, label, onCall, onReverseCall, timeline, tween]);
 
-  if (props.children) {
-    return <Slot ref={ref}>{props.children}</Slot>;
+  if (children) {
+    return <Slot ref={ref}>{children}</Slot>;
   }
   return null;
 }
