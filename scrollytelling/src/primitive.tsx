@@ -36,6 +36,7 @@ const Scrollytelling = ({
   defaults,
   toggleActions,
   disabled = false,
+  trigger,
 }: {
   children?: React.ReactNode;
   debug?: boolean;
@@ -61,17 +62,21 @@ const Scrollytelling = ({
     | "onUpdate"
     | "onRefresh"
   >;
+  trigger?: ScrollTrigger.Vars["trigger"];
   scrub?: boolean | number;
   defaults?: gsap.TweenVars | undefined;
   toggleActions?: ScrollTrigger.Vars["toggleActions"];
   disabled?: boolean;
 }) => {
+  const explicitTriggerMode = trigger !== undefined;
+
   const ref = React.useRef<HTMLDivElement>(null);
   const scopedQuerySelector = gsap.utils.selector(ref);
   const id = React.useId();
   const restTweenId = `rest-${id}`;
 
   const [timeline, setTimeline] = React.useState<gsap.core.Timeline>();
+  const [version, setVersion] = React.useState(0);
 
   // initialize timeline
   React.useEffect(() => {
@@ -90,7 +95,7 @@ const Scrollytelling = ({
         scrub: scrub ?? true,
         start: start ?? "top top",
         end: end ?? "bottom bottom",
-        trigger: ref.current,
+        trigger: explicitTriggerMode ? trigger : ref.current,
         toggleActions,
         ...callbacks,
       },
@@ -103,7 +108,18 @@ const Scrollytelling = ({
     return () => {
       tl.revert();
     };
-  }, [end, debug, start, callbacks, scrub, defaults, toggleActions, disabled]);
+  }, [
+    explicitTriggerMode,
+    end,
+    debug,
+    start,
+    callbacks,
+    scrub,
+    defaults,
+    toggleActions,
+    disabled,
+    trigger,
+  ]);
 
   // rest tween to ensure timeline is always 100 long
   const addRestToTimeline = React.useCallback(
@@ -115,6 +131,7 @@ const Scrollytelling = ({
       const duration = 100 - lastEnd;
       const position = 100 - duration;
       timeline.to({}, { id: restTweenId, duration: duration }, position);
+      setVersion((v) => v + 1);
 
       // cleanup
       return () => {
@@ -154,11 +171,11 @@ const Scrollytelling = ({
     );
 
   return (
-    <ScrollytellingContext.Provider value={{ timeline, rootRef: ref }}>
+    <ScrollytellingContext.Provider value={{ timeline, rootRef: ref, version }}>
       <ScrollytellingDispatchersContext.Provider
         value={{ getTimelineSpace, scopedQuerySelector }}
       >
-        <Slot ref={ref}>{children}</Slot>
+        {explicitTriggerMode ? children : <Slot ref={ref}>{children}</Slot>}
         {debug && (
           <Portal.Root container={ref.current} asChild>
             <div

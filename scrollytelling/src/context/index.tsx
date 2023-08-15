@@ -3,6 +3,7 @@ import * as React from "react";
 export type ScrollytellingContextType = {
   timeline: GSAPTimeline | undefined;
   rootRef: React.RefObject<HTMLDivElement>;
+  version: number;
 };
 
 export const ScrollytellingContext = React.createContext<
