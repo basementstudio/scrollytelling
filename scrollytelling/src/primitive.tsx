@@ -37,6 +37,7 @@ const Scrollytelling = ({
   toggleActions,
   disabled = false,
   trigger,
+  onTimelineUpdate,
 }: {
   children?: React.ReactNode;
   debug?: boolean;
@@ -67,6 +68,7 @@ const Scrollytelling = ({
   defaults?: gsap.TweenVars | undefined;
   toggleActions?: ScrollTrigger.Vars["toggleActions"];
   disabled?: boolean;
+  onTimelineUpdate?: (timeline: gsap.core.Timeline) => void;
 }) => {
   const explicitTriggerMode = trigger !== undefined;
 
@@ -76,11 +78,10 @@ const Scrollytelling = ({
   const restTweenId = `rest-${id}`;
 
   const [timeline, setTimeline] = React.useState<gsap.core.Timeline>();
-  const [version, setVersion] = React.useState(0);
 
   // initialize timeline
   React.useEffect(() => {
-    if (!ref.current) return;
+    if (!explicitTriggerMode && !ref.current) return;
 
     if (disabled) {
       setTimeline(undefined);
@@ -131,7 +132,6 @@ const Scrollytelling = ({
       const duration = 100 - lastEnd;
       const position = 100 - duration;
       timeline.to({}, { id: restTweenId, duration: duration }, position);
-      setVersion((v) => v + 1);
 
       // cleanup
       return () => {
@@ -158,6 +158,7 @@ const Scrollytelling = ({
         }
 
         const cleanup = addRestToTimeline(end, timeline);
+        onTimelineUpdate?.(timeline);
 
         return {
           duration,
@@ -167,11 +168,11 @@ const Scrollytelling = ({
           },
         };
       },
-      [addRestToTimeline, timeline, disabled]
+      [disabled, timeline, addRestToTimeline, onTimelineUpdate]
     );
 
   return (
-    <ScrollytellingContext.Provider value={{ timeline, rootRef: ref, version }}>
+    <ScrollytellingContext.Provider value={{ timeline, rootRef: ref }}>
       <ScrollytellingDispatchersContext.Provider
         value={{ getTimelineSpace, scopedQuerySelector }}
       >

@@ -41,7 +41,7 @@ export const Cyllinder: React.FC<CyllinderProps> = ({ experiments }) => {
     },
     config: {
       cylinderRadius: height / 3.6,
-      availableRadians: ((Math.PI / 7)) * experiments.length
+      availableRadians: (Math.PI / 7) * experiments.length,
     },
   });
 
