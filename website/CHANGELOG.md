@@ -1,5 +1,12 @@
 # website
 
+## 0.1.2
+
+### Patch Changes
+
+- Updated dependencies [707dc31]
+  - @bsmnt/scrollytelling@0.2.5
+
 ## 0.1.1
 
 ### Patch Changes

@@ -1,5 +1,11 @@
 # @bsmnt/scrollytelling
 
+## 0.2.5
+
+### Patch Changes
+
+- 707dc31: Expose explicit trigger for Root; expose onTimelineUpdate.
+
 ## 0.2.4
 
 ### Patch Changes
