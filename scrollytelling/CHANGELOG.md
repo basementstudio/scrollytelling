@@ -1,5 +1,11 @@
 # @bsmnt/scrollytelling
 
+## 0.2.6
+
+### Patch Changes
+
+- 0cf2e50: add internal event emitter
+
 ## 0.2.5
 
 ### Patch Changes
