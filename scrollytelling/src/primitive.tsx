@@ -20,6 +20,7 @@ import {
   useScrollytelling,
 } from "./context";
 import { useScrollToLabel } from "./hooks/use-scroll-to-label";
+import { internalEventEmmiter } from "./util/internal-event-emmiter";
 
 /* -------------------------------------------------------------------------------------------------
  * Root
@@ -37,7 +38,6 @@ const Scrollytelling = ({
   toggleActions,
   disabled = false,
   trigger,
-  onTimelineUpdate,
 }: {
   children?: React.ReactNode;
   debug?: boolean;
@@ -68,7 +68,6 @@ const Scrollytelling = ({
   defaults?: gsap.TweenVars | undefined;
   toggleActions?: ScrollTrigger.Vars["toggleActions"];
   disabled?: boolean;
-  onTimelineUpdate?: (timeline: gsap.core.Timeline) => void;
 }) => {
   const explicitTriggerMode = trigger !== undefined;
 
@@ -158,7 +157,7 @@ const Scrollytelling = ({
         }
 
         const cleanup = addRestToTimeline(end, timeline);
-        onTimelineUpdate?.(timeline);
+        internalEventEmmiter.emit("timeline-update", timeline);
 
         return {
           duration,
@@ -168,11 +167,13 @@ const Scrollytelling = ({
           },
         };
       },
-      [disabled, timeline, addRestToTimeline, onTimelineUpdate]
+      [disabled, timeline, addRestToTimeline]
     );
 
   return (
-    <ScrollytellingContext.Provider value={{ timeline, rootRef: ref }}>
+    <ScrollytellingContext.Provider
+      value={{ timeline, rootRef: ref, events: internalEventEmmiter }}
+    >
       <ScrollytellingDispatchersContext.Provider
         value={{ getTimelineSpace, scopedQuerySelector }}
       >
@@ -180,7 +181,12 @@ const Scrollytelling = ({
         {debug && (
           <Portal.Root container={ref.current} asChild>
             <div
-              style={{ position: "absolute", top: 0, right: 0, height: "100%" }}
+              style={{
+                position: "absolute",
+                top: 0,
+                right: 0,
+                height: "100%",
+              }}
             >
               <div style={{ position: "sticky", top: 0 }}>
                 <Debugger />

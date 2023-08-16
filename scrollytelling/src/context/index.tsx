@@ -1,8 +1,10 @@
 import * as React from "react";
+import { Emitter } from "../util/emmiter";
 
 export type ScrollytellingContextType = {
   timeline: GSAPTimeline | undefined;
   rootRef: React.RefObject<HTMLDivElement>;
+  events: Emitter;
 };
 
 export const ScrollytellingContext = React.createContext<
