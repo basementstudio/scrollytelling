@@ -1,5 +1,11 @@
 # @bsmnt/scrollytelling
 
+## 0.2.7
+
+### Patch Changes
+
+- 08a0b48: adding events
+
 ## 0.2.6
 
 ### Patch Changes
