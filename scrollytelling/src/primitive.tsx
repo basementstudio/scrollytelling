@@ -103,6 +103,10 @@ const Scrollytelling = ({
       defaults: { ...defaults, duration: 1 },
     });
 
+    tl.eventCallback("onUpdate", () => {
+      internalEventEmmiter.emit("timeline:update", tl);
+    });
+
     setTimeline(tl);
 
     return () => {
@@ -157,7 +161,7 @@ const Scrollytelling = ({
         }
 
         const cleanup = addRestToTimeline(end, timeline);
-        internalEventEmmiter.emit("timeline-update", timeline);
+        internalEventEmmiter.emit("timeline:refresh", timeline);
 
         return {
           duration,
