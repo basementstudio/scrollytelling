@@ -1,12 +1,10 @@
 import { gsap } from "gsap";
 import { Slot } from "@radix-ui/react-slot";
-import * as Portal from "@radix-ui/react-portal";
 import * as React from "react";
 import ScrollTrigger from "gsap/ScrollTrigger";
 
 // ---- Components ----
 import { Animation } from "./components/animation";
-import { Debugger } from "./components/debugger";
 import { Parallax } from "./components/parallax";
 import { Pin } from "./components/pin";
 import { RegisterGsapPlugins } from "./components/register-plugins";
@@ -21,6 +19,8 @@ import {
 } from "./context";
 import { useScrollToLabel } from "./hooks/use-scroll-to-label";
 import { internalEventEmmiter } from "./util/internal-event-emmiter";
+
+const Debugger = React.lazy(() => import("./components/debugger"));
 
 /* -------------------------------------------------------------------------------------------------
  * Root
@@ -183,20 +183,9 @@ const Scrollytelling = ({
       >
         {explicitTriggerMode ? children : <Slot ref={ref}>{children}</Slot>}
         {debug && (
-          <Portal.Root container={ref.current} asChild>
-            <div
-              style={{
-                position: "absolute",
-                top: 0,
-                right: 0,
-                height: "100%",
-              }}
-            >
-              <div style={{ position: "sticky", top: 0 }}>
-                <Debugger />
-              </div>
-            </div>
-          </Portal.Root>
+          <React.Suspense fallback={null}>
+            <Debugger />
+          </React.Suspense>
         )}
       </ScrollytellingDispatchersContext.Provider>
     </ScrollytellingContext.Provider>

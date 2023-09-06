@@ -9,7 +9,7 @@
   "sideEffects": false,
   "scripts": {
     "dev": "yarn build --watch",
-    "build": "tsup ./src/index.ts --format esm,cjs --dts"
+    "build": "tsup --config tsup.config.ts"
   },
   "peerDependencies": {
     "gsap": ">=3",
@@ -23,6 +23,7 @@
   "devDependencies": {
     "@types/react": "^18.0.17",
     "@types/react-dom": "^18.0.6",
+    "esbuild-scss-modules-plugin": "^1.1.1",
     "gsap": "^3.11.5",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",

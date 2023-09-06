@@ -13,7 +13,7 @@ export const Hero = () => {
   const isMobileSize = useMedia("(max-width: 768px)");
 
   return (
-    <Scrollytelling.Root defaults={{ ease: "linear" }}>
+    <Scrollytelling.Root defaults={{ ease: "linear" }} debug>
       <Scrollytelling.Pin
         childHeight={"100vh"}
         pinSpacerHeight={"300vh"}

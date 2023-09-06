@@ -1,0 +1,142 @@
+.root {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: auto;
+  position: fixed;
+  z-index: 9999;
+  background: #2b2d37;
+  top: 0;
+
+  .header {
+    background: #14151a;
+    text-align: center;
+    padding: 4px 16px;
+    font-size: 14px;
+
+    :hover {
+      cursor: grab;
+    }
+
+    :active {
+      cursor: grabbing;
+    }
+  }
+
+  .main {
+    padding: 16px 16px 16px;
+    flex: 1;
+
+    .timeline {
+      margin-top: 32px;
+      position: relative;
+      height: 100%;
+      width: 100%;
+
+      .guides {
+        position: absolute;
+        height: 100%;
+        bottom: 0;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        padding: 0 8px;
+
+        .guide {
+          position: absolute;
+          height: 100%;
+          width: 1px;
+          border-right: 1px dashed #ffffff88;
+          font-size: 12px;
+
+          .percent {
+            padding-bottom: 4px;
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateY(-100%) translateX(-50%);
+            color: #ffffff88;
+          }
+        }
+      }
+
+      .progress {
+        position: absolute;
+        height: 100%;
+        top: 0;
+        bottom: 0;
+        width: 2px;
+        background: #ec5b29;
+        box-sizing: content-box;
+
+        .thumb {
+          top: 0;
+          transform: translateX(-50%) translateY(-100%);
+          left: 50%;
+          position: absolute;
+          width: 12px;
+          height: 16px;
+          background: #ec5b29;
+
+          &::after {
+            content: "";
+            position: absolute;
+            aspect-ratio: 1;
+            width: 100%;
+            bottom: 0;
+            transform: translateY(50%) rotate(-45deg) scale(0.7);
+            background: #ec5b29;
+          }
+        }
+      }
+
+      .tweens {
+        position: relative;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+
+        .tween-row {
+          padding: 4px 0;
+
+          &:nth-child(odd) {
+            background: #14151a60;
+          }
+
+          &:nth-child(even) {
+            background: #14151a90;
+          }
+        }
+      }
+    }
+  }
+
+  .footer {
+    background: #14151a;
+    text-align: center;
+    padding: 4px 16px;
+    font-size: 12px;
+  }
+}
+
+.tween {
+  cursor: default;
+  font-size: 12px;
+  color: black;
+  position: relative;
+  min-height: 12px;
+  background: white;
+  padding-left: 8px;
+  font-weight: 500;
+  border-radius: 2px;
+
+  &.active {
+    box-shadow: 0 0 0 2px white;
+  }
+}
+
+.highlight {
+  background: #ec5b29aa;
+  z-index: 999;
+}
