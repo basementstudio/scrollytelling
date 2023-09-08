@@ -28,6 +28,9 @@ export function Stagger({
   tween: TweenWithChildrenDef | TweenWithTargetDef;
 }) {
 
+  const isTweenWithTarget = 'target' in tween;
+  const targetLength = isTweenWithTarget && Array.isArray(tween.target) ? tween.target.length : children?.length;
+
   const timeline = React.useMemo(() => {
     if(tween?.start === undefined || tween?.end === undefined) {
       throw new Error('Stagger must have start and end');
@@ -37,11 +40,11 @@ export function Stagger({
       {
         start: tween?.start,
         end: tween?.end,
-        chunks: children?.length,
+        chunks: targetLength,
         overlap: overlap,
       }
     )
-  }, [children?.length, overlap, tween?.end, tween?.start]);
+  }, [targetLength, overlap, tween?.end, tween?.start]);
 
   if (children) {
     return children.map(
@@ -66,6 +69,75 @@ export function Stagger({
         );
       }
     );
+  } else if (isTweenWithTarget) {
+    const target = tween.target;
+
+    if (Array.isArray(target)) {
+      
+      return target.map(
+        (target, i) => {
+          const currTween = timeline[i];
+
+          if (!currTween) {
+            return null;
+          }
+
+          if(tween.to) {
+            return (
+              <Animation
+                key={i}
+                tween={{
+                  ...tween,
+                  target: target,
+                  start: currTween.start,
+                  end: currTween.end,
+                  to: {
+                    ...tween.to,
+                    onUpdateParams: [i]
+                  }
+                }}
+              />
+            );
+          } else if (tween.from) {
+            return (
+              <Animation
+                key={i}
+                tween={{
+                  ...tween,
+                  target: target,
+                  start: currTween.start,
+                  end: currTween.end,
+                  from: { ...tween.from, onUpdateParams: [i] }
+                }}
+              />
+            )
+          } else if (tween.fromTo) {
+            return (
+              <Animation
+                key={i}
+                tween={{
+                  ...tween,
+                  target: target,
+                  start: currTween.start,
+                  end: currTween.end,
+                  fromTo: [
+                    {
+                      ...tween.fromTo[0],
+                    },
+                    {
+                      ...tween.fromTo[1],
+                      onUpdateParams: [i],
+                    }
+                  ]
+                }}
+              />
+            )
+          }
+        }
+      );
+    } else {
+      throw new Error('Stagger target must be an array');
+    }
   }
 
   return <></>;

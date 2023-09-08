@@ -93,14 +93,6 @@ export const CapsModel = () => {
   const halfViewportWidth = responsiveVPWidth / 2;
   const fadeInYoffset = 0.1;
 
-  const capsTimeline = useMemo(() => {
-    return getTimeline({
-      start: 48,
-      end: 100,
-      chunks: clonedMaterials.length,
-      overlap: 0.65,
-    });
-  }, [clonedMaterials]);
 
   const handleUpdate = React.useCallback(
     (idx: number) => {
@@ -132,29 +124,23 @@ export const CapsModel = () => {
 
   return (
     <>
-      {capProps.map((p, idx) => {
-        const currCapAnimation = capsTimeline[idx];
-
-        if (!currCapAnimation) return;
-
-        return (
-          <Scrollytelling.Animation
-            key={idx}
-            tween={{
-              start: currCapAnimation.start,
-              end: currCapAnimation.end,
-              target: [capProps[idx]],
-              to: {
-                progress: 1,
-                ease: "power2.inOut",
-                onUpdate: () => {
-                  handleUpdate(idx);
-                },
+      <Scrollytelling.Stagger
+        overlap={0.65}
+        tween={
+          {
+            start: 48,
+            end: 100,
+            target: capProps,
+            to: {
+              progress: 1,
+              ease: "power2.inOut",
+              onUpdate: (idx) => {
+                handleUpdate(idx);
               },
-            }}
-          />
-        );
-      })}
+            },
+          }
+        }
+      />
 
       {/* clean this up when the scrollytelling leaves, as when scrolling really fast,
           GSAP is not being able to do so */}
