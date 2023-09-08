@@ -46,6 +46,10 @@ export type WaypointBaseDef = {
   disabled?: boolean;
 };
 
+export type StaggerBaseDef = {
+  overlap: number;
+}
+
 // FIXME: This name is not clear, why SimpleTween doesn't consume TweenBaseDef?
 export type SimpleTween = FromToOptions & { duration: number; forwards?: boolean };
 

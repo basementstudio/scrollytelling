@@ -11,6 +11,7 @@ import { Parallax } from "./components/parallax";
 import { Pin } from "./components/pin";
 import { RegisterGsapPlugins } from "./components/register-plugins";
 import { Waypoint } from "./components/waypoint";
+import { Stagger } from './components/stagger'
 
 // ---- Context ----
 import {
@@ -214,6 +215,7 @@ export {
   Pin,
   RegisterGsapPlugins,
   Waypoint,
+  Stagger,
   //
   useScrollytelling,
   useScrollToLabel,
