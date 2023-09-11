@@ -3,7 +3,8 @@ export type DataAttribute = {
   isScrollytellingTween: boolean;
 } & (
   | { type: "root"; debug: boolean; label: string }
-  | { type: "animation" | "rest" | "waypoint"; rootId: string }
+  | { type: "animation" | "rest"; rootId: string }
+  | { type: "waypoint"; rootId: string; label: string }
 );
 
 export type VisualizerItem = Omit<GSAPTween | GSAPTimeline, "data"> & {

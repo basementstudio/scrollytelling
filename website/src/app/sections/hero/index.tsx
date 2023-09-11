@@ -29,6 +29,8 @@ export const Hero = () => {
             <LogoBasement className={s["logo"]} />
           </Link>
 
+          <Scrollytelling.Waypoint at={50} />
+
           <svg
             className={s["star"]}
             fill="none"
