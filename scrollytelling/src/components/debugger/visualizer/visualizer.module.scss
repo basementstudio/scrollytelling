@@ -13,13 +13,26 @@
     text-align: center;
     padding: 4px 16px;
     font-size: 14px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 
-    :hover {
+    &:hover {
       cursor: grab;
     }
 
-    :active {
+    &:active {
       cursor: grabbing;
+    }
+
+    select {
+      cursor: pointer;
+    }
+
+    .actions-container {
+      display: flex;
+      gap: 8px;
+      align-items: center;
     }
   }
 

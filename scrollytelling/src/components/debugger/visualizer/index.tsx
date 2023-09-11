@@ -1,9 +1,13 @@
-"use client";
-
 import { useEffect, useRef, useState } from "react";
-import { useScrollytelling } from "../../../context";
+import { gsap } from "gsap";
+import type {
+  VisualizerRoot,
+  VisualizerItem,
+  DataAttribute,
+} from "./shared-types";
 
 import s from "./visualizer.module.scss";
+import { internalEventEmmiter } from "../../../util/internal-event-emmiter";
 
 const colors = [
   "#00FFFF",
@@ -45,13 +49,15 @@ const setHighlight = (target: SVGElement | HTMLElement) => {
   };
 };
 
-type EnhancedTween = (GSAPTween | GSAPTimeline) & {
-  _start: number;
-  _dur: number;
-};
-
-const Tween = ({ tween, idx }: { tween: EnhancedTween; idx: number }) => {
-  const { timeline, events } = useScrollytelling();
+const Tween = ({
+  tween,
+  root,
+  idx,
+}: {
+  tween: VisualizerItem;
+  root: VisualizerRoot;
+  idx: number;
+}) => {
   const [isHovering, setIsHovering] = useState(false);
   const [active, setActive] = useState(false);
 
@@ -75,7 +81,7 @@ const Tween = ({ tween, idx }: { tween: EnhancedTween; idx: number }) => {
 
   useEffect(() => {
     const handleUpdate = () => {
-      const progress = timeline?.progress();
+      const progress = root.tween?.progress();
 
       if (!progress) return;
 
@@ -89,8 +95,8 @@ const Tween = ({ tween, idx }: { tween: EnhancedTween; idx: number }) => {
       }
     };
 
-    return events.on("timeline:update", handleUpdate);
-  }, [events, timeline, tween._dur, tween._start]);
+    return internalEventEmmiter.on("timeline:update", handleUpdate);
+  }, [root.tween, tween._dur, tween._start]);
 
   const targetString = tween
     .targets()
@@ -124,41 +130,43 @@ const Tween = ({ tween, idx }: { tween: EnhancedTween; idx: number }) => {
   );
 };
 
-const ProgressStatus = () => {
+const ProgressStatus = ({ root }: { root: VisualizerRoot | undefined }) => {
   const [progress, setProgress] = useState(0);
-  const { timeline, events } = useScrollytelling();
 
   useEffect(() => {
-    if (!timeline) return;
-
     const handleUpdate = () => {
-      setProgress(timeline.progress());
+      const progress = root?.tween?.progress();
+      setProgress(progress ?? 0);
     };
 
-    return events.on("timeline:update", handleUpdate);
-  }, [events, timeline]);
+    return internalEventEmmiter.on("timeline:update", handleUpdate);
+  }, [root?.tween]);
 
   return <>{(progress * 100).toFixed(2)}%</>;
 };
 
 export const Visualizer = () => {
-  const [tweens, setTweens] = useState<EnhancedTween[]>([]);
   const panelRef = useRef<HTMLDivElement>(null);
   const panelHeaderRef = useRef<HTMLElement>(null);
   const progressRef = useRef(null);
-  const { timeline, events } = useScrollytelling();
+
+  const [roots, setRoots] = useState<VisualizerRoot[]>([]);
+  const [selectedRoot, setSelectedRoot] = useState<string>();
+  const [dismiss, setDismiss] = useState(false);
+  const [minimize, setMinimize] = useState(false);
+
+  const root = roots.find((r) => r.id === selectedRoot) ?? roots[0];
 
   useEffect(() => {
-    if (!timeline) return;
-
     const handleUpdate = () => {
+      const progress = root?.tween?.progress();
       if (!progressRef.current) return;
       // @ts-ignore
-      progressRef.current.style.left = `${timeline.progress() * 100}%`;
+      progressRef.current.style.left = `${progress * 100}%`;
     };
 
-    return events.on("timeline:update", handleUpdate);
-  }, [events, timeline]);
+    return internalEventEmmiter.on("timeline:update", handleUpdate);
+  }, [root?.tween]);
 
   useEffect(() => {
     const panel = panelRef.current;
@@ -173,6 +181,14 @@ export const Visualizer = () => {
 
     const dragMouseDown = (e: MouseEvent) => {
       e = e || window.event;
+      const target = e.target;
+      if (target instanceof HTMLElement) {
+        const hasInteractableClosest =
+          target.closest("button") ||
+          target.closest("select") ||
+          target.closest("input");
+        if (hasInteractableClosest) return; // do nothing.
+      }
       e.preventDefault();
       // get the mouse cursor position at startup:
       pos3 = e.clientX;
@@ -212,57 +228,133 @@ export const Visualizer = () => {
   }, []);
 
   useEffect(() => {
-    return events.on("timeline:refresh", () => {
-      const filteredTweens = timeline?.getChildren().filter((t) => {
-        /*
-          Do not include the rest tween that the Root adds
-          to ensure the timeline lasts 100.
-        */
-        return !t.vars.id?.toString().startsWith("rest-");
-      });
-      setTweens((filteredTweens || []) as EnhancedTween[]);
-    });
-  }, [events, timeline]);
+    return internalEventEmmiter.on("timeline:refresh", () => {
+      const roots: VisualizerRoot[] = [];
 
+      gsap.globalTimeline.getChildren().forEach((t) => {
+        if (!t.data?.isScrollytellingTween) return; // not a scrollytelling tween
+        const data = t.data as DataAttribute;
+        switch (data.type) {
+          case "root": {
+            const existingRootItem = roots.find((r) => r.id === data.id);
+            if (!existingRootItem) {
+              roots.push({
+                id: data.id,
+                debug: data.debug,
+                label: data.label,
+                children: [],
+                tween: t as any,
+              });
+            } else {
+              existingRootItem.debug = data.debug;
+              existingRootItem.tween = t as any;
+              existingRootItem.label = data.label;
+            }
+            break;
+          }
+          case "rest":
+          case "waypoint":
+          case "animation": {
+            const existingRootItem = roots.find((r) => r.id === data.rootId);
+            if (!existingRootItem) {
+              roots.push({
+                id: data.rootId,
+                debug: false,
+                label: data.rootId,
+                children: [t as any],
+                tween: undefined,
+              });
+            } else {
+              existingRootItem.children.push(t as any);
+            }
+
+            break;
+          }
+
+          default:
+            break;
+        }
+      });
+
+      setRoots(roots.filter((r) => r.debug));
+    });
+  }, []);
+
+  if (dismiss) return <></>;
   return (
     <div className={s["root"]} ref={panelRef}>
       <header className={s["header"]} ref={panelHeaderRef}>
-        <h1>Visualizer</h1>
-      </header>
-      <main className={s["main"]}>
-        <div className={s["timeline"]}>
-          <div className={s["guides"]}>
-            <div className={s["guide"]} style={{ left: "0%" }}>
-              <span className={s["percent"]}>0%</span>
-            </div>
-            <div className={s["guide"]} style={{ left: "25%" }}>
-              <span className={s["percent"]}>25%</span>
-            </div>
-            <div className={s["guide"]} style={{ left: "50%" }}>
-              <span className={s["percent"]}>50%</span>
-            </div>
-            <div className={s["guide"]} style={{ left: "75%" }}>
-              <span className={s["percent"]}>75%</span>
-            </div>
-            <div className={s["guide"]} style={{ left: "100%" }}>
-              <span className={s["percent"]}>100%</span>
-            </div>
-          </div>
-          <div className={s["tweens"]}>
-            {tweens?.map((t, idx) => (
-              <div className={s["tween-row"]} key={idx}>
-                <Tween tween={t} idx={idx} />
-              </div>
-            ))}
-          </div>
-          <div className={s["progress"]} ref={progressRef}>
-            <span className={s["thumb"]} />
-          </div>
+        <div className={s["actions-container"]}>
+          <select
+            value={selectedRoot}
+            onChange={(e) => setSelectedRoot(e.currentTarget.value)}
+            onPointerDown={(e) => e.stopPropagation()}
+          >
+            {roots.map((r) => {
+              return (
+                <option key={r.id} value={r.id}>
+                  {r.label}
+                </option>
+              );
+            })}
+          </select>
+          <button
+            onClick={() => {
+              const triggerElement = root?.tween?.scrollTrigger?.trigger;
+              if (triggerElement) {
+                triggerElement.scrollIntoView({ behavior: "smooth" });
+              }
+            }}
+          >
+            Scroll to Root
+          </button>
         </div>
-      </main>
-      <footer className={s["footer"]}>
-        <ProgressStatus />
-      </footer>
+        <h1>Visualizer</h1>
+        <div className={s["actions-container"]}>
+          <button onClick={() => setMinimize((p) => !p)}>
+            {minimize ? "Exp" : "Min"}
+          </button>
+          <button onClick={() => setDismiss(true)}>X</button>
+        </div>
+      </header>
+      {!minimize && (
+        <>
+          <main className={s["main"]}>
+            <div className={s["timeline"]}>
+              <div className={s["guides"]}>
+                <div className={s["guide"]} style={{ left: "0%" }}>
+                  <span className={s["percent"]}>0%</span>
+                </div>
+                <div className={s["guide"]} style={{ left: "25%" }}>
+                  <span className={s["percent"]}>25%</span>
+                </div>
+                <div className={s["guide"]} style={{ left: "50%" }}>
+                  <span className={s["percent"]}>50%</span>
+                </div>
+                <div className={s["guide"]} style={{ left: "75%" }}>
+                  <span className={s["percent"]}>75%</span>
+                </div>
+                <div className={s["guide"]} style={{ left: "100%" }}>
+                  <span className={s["percent"]}>100%</span>
+                </div>
+              </div>
+              <div className={s["tweens"]}>
+                {root?.children.map((t, idx) => (
+                  <div className={s["tween-row"]} key={idx}>
+                    <Tween tween={t} root={root} idx={idx} />
+                  </div>
+                ))}
+              </div>
+              <div className={s["progress"]} ref={progressRef}>
+                <span className={s["thumb"]} />
+              </div>
+            </div>
+          </main>
+          <footer className={s["footer"]}>
+            <ProgressStatus root={root} />
+          </footer>
+        </>
+      )}
     </div>
   );
 };

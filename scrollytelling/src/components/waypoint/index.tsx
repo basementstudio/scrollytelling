@@ -34,7 +34,7 @@ export function Waypoint({
   label,
   onCall,
   onReverseCall,
-  disabled = true,
+  disabled = false,
 }: WaypointBaseDef & {
   children?: AnimationProps["children"];
   tween?: SimpleTween & { target?: TweenTarget };

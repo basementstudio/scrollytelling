@@ -1,3 +1,4 @@
+import type { DataAttribute } from "../components/debugger/visualizer/shared-types";
 import { FromToOptions, TweenTarget } from "../types";
 import { gsap } from "gsap";
 
@@ -42,11 +43,24 @@ export function buildDeclarativeTween({
   | { timeline?: never; position?: never }
   | { timeline: gsap.core.Timeline; position: number }
 )) {
+  const data: DataAttribute = {
+    id,
+    type: "animation",
+    rootId: timelineAndPosition.timeline?.data.id,
+    isScrollytellingTween: true,
+  };
+
   if ("to" in op) {
     if (timelineAndPosition.timeline) {
       timelineAndPosition.timeline.to(
         target,
-        { ...op.to, id, duration, paused },
+        {
+          ...op.to,
+          id,
+          duration,
+          paused,
+          data,
+        },
         timelineAndPosition.position
       );
     } else {
@@ -56,7 +70,7 @@ export function buildDeclarativeTween({
     if (timelineAndPosition.timeline) {
       timelineAndPosition.timeline.from(
         target,
-        { ...op.from, id, duration, paused },
+        { ...op.from, id, duration, paused, data },
         timelineAndPosition.position
       );
     } else {
@@ -67,7 +81,7 @@ export function buildDeclarativeTween({
       timelineAndPosition.timeline.fromTo(
         target,
         { ...op.fromTo[0] },
-        { ...op.fromTo[1], id, duration, paused },
+        { ...op.fromTo[1], id, duration, paused, data },
         timelineAndPosition.position
       );
     } else {

@@ -51,6 +51,9 @@ export const Cyllinder: React.FC<CyllinderProps> = ({ experiments }) => {
       callbacks={{
         onRefresh: () => update(progress.value),
       }}
+      debug={{
+        label: "cylinder",
+      }}
     >
       <div
         className={s["section"]}

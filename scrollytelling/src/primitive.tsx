@@ -19,6 +19,7 @@ import {
 } from "./context";
 import { useScrollToLabel } from "./hooks/use-scroll-to-label";
 import { internalEventEmmiter } from "./util/internal-event-emmiter";
+import type { DataAttribute } from "./components/debugger/visualizer/shared-types";
 
 const Debugger = React.lazy(() => import("./components/debugger"));
 
@@ -40,7 +41,13 @@ const Scrollytelling = ({
   trigger,
 }: {
   children?: React.ReactNode;
-  debug?: boolean;
+  debug?:
+    | false
+    | {
+        label: string;
+        visualizer?: boolean;
+        markers?: boolean;
+      };
   /**
    * The start position of the timeline. This can be a string like "top top" or a number.
    * See https://greensock.com/docs/v3/Plugins/ScrollTrigger/start
@@ -74,9 +81,14 @@ const Scrollytelling = ({
   const ref = React.useRef<HTMLDivElement>(null);
   const scopedQuerySelector = gsap.utils.selector(ref);
   const id = React.useId();
-  const restTweenId = `rest-${id}`;
 
   const [timeline, setTimeline] = React.useState<gsap.core.Timeline>();
+
+  const debugMarkers = debug ? debug.markers : false;
+  const debugVisualizer = debug
+    ? debug.visualizer ?? true // default to true if undefined
+    : false;
+  const debugLabel = debug ? debug.label : undefined;
 
   // initialize timeline
   React.useEffect(() => {
@@ -91,7 +103,7 @@ const Scrollytelling = ({
 
     const tl = gsap.timeline({
       scrollTrigger: {
-        markers: debug,
+        markers: debugMarkers,
         scrub: scrub ?? true,
         start: start ?? "top top",
         end: end ?? "bottom bottom",
@@ -101,6 +113,13 @@ const Scrollytelling = ({
       },
       paused: true,
       defaults: { ...defaults, duration: 1 },
+      data: {
+        id,
+        type: "root",
+        label: debugLabel ?? id,
+        debug: debugVisualizer,
+        isScrollytellingTween: true,
+      } satisfies DataAttribute,
     });
 
     tl.eventCallback("onUpdate", () => {
@@ -113,9 +132,9 @@ const Scrollytelling = ({
       tl.revert();
     };
   }, [
+    debugLabel,
     explicitTriggerMode,
     end,
-    debug,
     start,
     callbacks,
     scrub,
@@ -123,25 +142,37 @@ const Scrollytelling = ({
     toggleActions,
     disabled,
     trigger,
+    id,
+    debugMarkers,
+    debugVisualizer,
   ]);
 
   // rest tween to ensure timeline is always 100 long
   const addRestToTimeline = React.useCallback(
     (lastEnd: number, timeline: gsap.core.Timeline) => {
+      const restTweenId = `rest-${id}`;
       // clear previous rest tween, if any
       gsap.getById(restTweenId)?.revert();
 
       // set new rest tween
       const duration = 100 - lastEnd;
       const position = 100 - duration;
-      timeline.to({}, { id: restTweenId, duration: duration }, position);
+      timeline.to(
+        {},
+        {
+          id: restTweenId,
+          duration: duration,
+          data: { type: "rest", id: restTweenId, rootId: id },
+        },
+        position
+      );
 
       // cleanup
       return () => {
         gsap.getById(restTweenId)?.revert();
       };
     },
-    [restTweenId]
+    [id]
   );
 
   const getTimelineSpace: ScrollytellingDispatchersContextType["getTimelineSpace"] =

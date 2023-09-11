@@ -5,7 +5,12 @@ import s from "./intro.module.scss";
 
 export const LabIntro = () => {
   return (
-    <Scrollytelling.Root start="top bottom" end="bottom top" scrub={1.1}>
+    <Scrollytelling.Root
+      start="top bottom"
+      end="bottom top"
+      scrub={1.1}
+      debug={{ label: "lab intro" }}
+    >
       <div className={s.container}>
         <Scrollytelling.Parallax
           tween={{

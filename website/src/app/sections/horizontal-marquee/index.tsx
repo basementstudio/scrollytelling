@@ -9,7 +9,10 @@ const charsLength = splitted.length;
 
 export const HorizontalMarquee = () => {
   return (
-    <Scrollytelling.Root start="top top+=300px">
+    <Scrollytelling.Root
+      start="top top+=300px"
+      debug={{ label: "horizontal marquee" }}
+    >
       <section className={s.section}>
         <div className={s.pinned}>
           <Scrollytelling.Animation

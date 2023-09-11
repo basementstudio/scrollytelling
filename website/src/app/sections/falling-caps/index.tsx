@@ -29,17 +29,21 @@ const splitText = (text: string, wordClass?: string) => {
 const lines = ["We want to help", "make the internet", "everything it can be."];
 
 export const FallingCaps = () => {
-  const splittedText = useMemo(() => 
-    lines.map((line, lineIdx) => {
-      const isLast = lineIdx === lines.length - 1;
-      const wordElements = splitText(
-        line + "\n",
-        isLast ? s["highlight"] : undefined
-      );
+  const splittedText = useMemo(
+    () =>
+      lines
+        .map((line, lineIdx) => {
+          const isLast = lineIdx === lines.length - 1;
+          const wordElements = splitText(
+            line + "\n",
+            isLast ? s["highlight"] : undefined
+          );
 
-      return wordElements;
-    }).flat()
-  , []);
+          return wordElements;
+        })
+        .flat(),
+    []
+  );
 
   const perWordTimeline = useMemo(
     () =>
@@ -54,7 +58,7 @@ export const FallingCaps = () => {
   );
 
   return (
-    <Scrollytelling.Root end="bottom bottom">
+    <Scrollytelling.Root end="bottom bottom" debug={{ label: "falling caps" }}>
       <section className={s["spacer"]}>
         <div className={s["pin"]}>
           <div className={s["canvas-container"]}>
@@ -97,7 +101,7 @@ export const FallingCaps = () => {
                 >
                   {word}
                 </Scrollytelling.Animation>
-              ) 
+              );
             })}
           </p>
         </div>
