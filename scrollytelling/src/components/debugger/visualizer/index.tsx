@@ -295,6 +295,19 @@ export const Visualizer = () => {
         }
       });
 
+      // sort by trigger's top distance to top of the document
+      roots.sort((a, b) => {
+        const aTriggerEl = a.tween?.scrollTrigger?.trigger;
+        const bTriggerEl = b.tween?.scrollTrigger?.trigger;
+
+        if (!aTriggerEl || !bTriggerEl) return 0;
+
+        const aTop = aTriggerEl.getBoundingClientRect().top;
+        const bTop = bTriggerEl.getBoundingClientRect().top;
+
+        return aTop - bTop;
+      });
+
       setRoots(roots.filter((r) => r.debug));
     });
   }, []);
