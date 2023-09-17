@@ -10,21 +10,15 @@ import s from "./visualizer.module.scss";
 import { internalEventEmmiter } from "../../../util/internal-event-emmiter";
 
 const colors = [
-  "#00FFFF",
-  "#FF00FF",
-  "#00BFFF",
-  "#FF69B4",
-  "#C0FF3E",
-  "#FFA500",
-  "#FFD700",
-  "#7FFF00",
-  "#00FFFF",
-  "#FFD460",
-  "#00FF00",
-  "#BF40FF",
-  "#00F5FF",
-  "#FF6A6A",
-  "#CCFF00",
+  ["#F87171", "#991B1B"],
+  ["#FACC15", "#854D0E"],
+  ["#4ADE80", "#166534"],
+  ["#2DD4BF", "#115E59"],
+  ["#38BDF8", "#075985"],
+  ["#818CF8", "#3730A3"],
+  ["#C084FC", "#6B21A8"],
+  ["#E879F9", "#86198F"],
+  ["rgba(244, 114, 182, 0.40)", "#9D174D"]
 ];
 
 const setHighlight = (target: SVGElement | HTMLElement) => {
@@ -119,12 +113,13 @@ const Tween = ({
     // @ts-ignore
     <div
       className={`${s["tween"]}${active ? ` ${[s["active"]]}` : ""}`}
-      style={{
+      style={{ 
         width: tween._dur + "%",
         left: tween._start + "%",
-        background: colors[idx % colors.length],
+        background: "linear-gradient(90deg, transparent 0%, " + colors[idx % colors.length]?.[0] + " 100%)",
+        outlineColor: colors[idx % colors.length]?.[1],
         minWidth: 16,
-      }}
+      }} 
       onMouseEnter={() => setIsHovering(true)}
       onMouseLeave={() => setIsHovering(false)}
       onClick={() => {
@@ -157,11 +152,11 @@ const ProgressStatus = ({ root }: { root: VisualizerRoot | undefined }) => {
       const progress = root?.tween?.progress();
       setProgress(progress ?? 0);
     };
-
+ 
     return internalEventEmmiter.on("timeline:update", handleUpdate);
   }, [root?.tween]);
 
-  return <>{(progress * 100).toFixed(2)}%</>;
+  return <>{(progress * 100).toFixed(0)}%</>;
 };
 
 export const Visualizer = () => {
@@ -316,7 +311,7 @@ export const Visualizer = () => {
   return (
     <div className={s["root"]} ref={panelRef}>
       <header className={s["header"]} ref={panelHeaderRef}>
-        <div className={s["actions-container"]}>
+        <div className={s["actions"]}>
           <select
             value={selectedRoot}
             onChange={(e) => setSelectedRoot(e.currentTarget.value)}
@@ -341,12 +336,43 @@ export const Visualizer = () => {
             Scroll to Root
           </button>
         </div>
-        <h1>Visualizer</h1>
-        <div className={s["actions-container"]}>
-          <button onClick={() => setMinimize((p) => !p)}>
-            {minimize ? "Exp" : "Min"}
+
+        <div className={s["actions"]}>
+          <button
+            className={s["button"]}
+            onClick={() => setMinimize((p) => !p)}
+          >
+            {minimize ? (
+              "Exp"
+            ) : (
+              <svg
+                viewBox="0 0 16 16"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  fill-rule="evenodd"
+                  clip-rule="evenodd"
+                  d="M2.43359 8C2.43359 7.72386 2.65745 7.5 2.93359 7.5H13.0669C13.3431 7.5 13.5669 7.72386 13.5669 8C13.5669 8.27614 13.3431 8.5 13.0669 8.5H2.93359C2.65745 8.5 2.43359 8.27614 2.43359 8Z"
+                  fill="white"
+                />
+              </svg>
+            )}
           </button>
-          <button onClick={() => setDismiss(true)}>X</button>
+          <button className={s["button"]} onClick={() => setDismiss(true)}>
+            <svg
+              viewBox="0 0 16 16"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                fill-rule="evenodd"
+                clip-rule="evenodd"
+                d="M12.5402 4.27333C12.7648 4.04878 12.7648 3.68471 12.5402 3.46016C12.3157 3.23561 11.9516 3.23561 11.7271 3.46016L8.00033 7.18691L4.27358 3.46016C4.04903 3.23561 3.68496 3.23561 3.46041 3.46016C3.23585 3.68471 3.23585 4.04878 3.46041 4.27333L7.18715 8.00008L3.46041 11.7268C3.23585 11.9514 3.23585 12.3154 3.46041 12.54C3.68496 12.7646 4.04903 12.7646 4.27358 12.54L8.00033 8.81325L11.7271 12.54C11.9516 12.7646 12.3157 12.7646 12.5402 12.54C12.7648 12.3154 12.7648 11.9514 12.5402 11.7268L8.8135 8.00008L12.5402 4.27333Z"
+                fill="white"
+              />
+            </svg>
+          </button>
         </div>
       </header>
       {!minimize && (
@@ -372,18 +398,53 @@ export const Visualizer = () => {
               </div>
               <div className={s["tweens"]}>
                 {root?.children.map((t, idx) => (
-                  <div className={s["tween-row"]} key={idx}>
+                  <div className={s["row"]} key={idx}>
                     <Tween tween={t} root={root} idx={idx} />
                   </div>
                 ))}
-              </div>
+              </div>  
               <div className={s["progress"]} ref={progressRef}>
-                <span className={s["thumb"]} />
+                <span className={s["thumb"]}>
+                  <span className={s['percent']}> 
+                    <ProgressStatus root={root} />  
+                  </span> 
+                  <svg 
+                    width="8"
+                    height="11"
+                    viewBox="0 0 8 11"
+                    fill="none" 
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <mask id="path-1-inside-1_2793_1632" fill="white">
+                      <path
+                        fill-rule="evenodd"
+                        clip-rule="evenodd"
+                        d="M8 0H0V8L4 11L8 8V0Z"
+                      />
+                    </mask>
+                    <path
+                      fill-rule="evenodd"
+                      clip-rule="evenodd"
+                      d="M8 0H0V8L4 11L8 8V0Z"
+                      fill="white"
+                    />
+                    <path
+                      d="M0 0V-1H-1V0H0ZM8 0H9V-1H8V0ZM0 8H-1V8.5L-0.6 8.8L0 8ZM4 11L3.4 11.8L4 12.25L4.6 11.8L4 11ZM8 8L8.6 8.8L9 8.5V8H8ZM0 1H8V-1H0V1ZM1 8V0H-1V8H1ZM4.6 10.2L0.6 7.2L-0.6 8.8L3.4 11.8L4.6 10.2ZM7.4 7.2L3.4 10.2L4.6 11.8L8.6 8.8L7.4 7.2ZM7 0V8H9V0H7Z"
+                      fill="white"
+                      mask="url(#path-1-inside-1_2793_1632)"
+                    />
+                  </svg>
+                </span>
               </div>
             </div>
-          </main>
+          </main> 
           <footer className={s["footer"]}>
-            <ProgressStatus root={root} />
+            <span>
+              Visualizer - <span className={s["version"]}>v.01.240</span>
+            </span>
+            <span>
+              made with 🖤 by <a href="https://basement.studio" className={s["bsmnt"]}>bsmnt</a>.
+            </span>
           </footer>
         </>
       )}
