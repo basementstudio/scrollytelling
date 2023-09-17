@@ -5,6 +5,7 @@
 import * as React from "react";
 import { StaggerBaseDef, TweenWithChildrenDef, TweenWithTargetDef } from "../../types";
 import { Animation } from "../animation";
+import { isDev } from "../../util";
 
 export function Stagger(
   props: StaggerBaseDef & {
@@ -33,7 +34,11 @@ export function Stagger({
 
   const timeline = React.useMemo(() => {
     if(tween?.start === undefined || tween?.end === undefined) {
-      throw new Error('Stagger must have start and end');
+      if (isDev) {
+        console.warn('Stagger needs a start and end value');
+      }
+
+      return [];
     }
 
     return getStaggeredTimeline(
@@ -135,8 +140,8 @@ export function Stagger({
           }
         }
       );
-    } else {
-      throw new Error('Stagger target must be an array');
+    } else if (isDev) {
+      console.warn('Stagger target must be an array');
     }
   }
 
