@@ -19,6 +19,7 @@
   border-radius: 8px;
   overflow: hidden;
   top: 0;
+  line-height: 1;
 
   .header {
     background: var(--color-gray-dark);
@@ -42,6 +43,13 @@
 
     select {
       cursor: pointer;
+      background: var(--color-gray);
+      border: 1px solid var(--color-gray-light);
+      height: 24px;
+      border-radius: 4px;
+      width: max-content;
+      min-width: 110px;
+      padding: 0 8px;
     }
 
     .actions {
@@ -60,6 +68,10 @@
         svg {
           width: 100%;
         }
+      }
+
+      .scrollToRoot {
+        padding: 0 8px;
       }
     }
   }
@@ -181,7 +193,10 @@
   font-size: 12px;
   color: var(--color-white);
   position: relative;
+  display: flex;
+  align-items: center;
   min-height: 12px;
+  height: 18px;
   background: white;
   padding-left: 8px;
   font-weight: 500;

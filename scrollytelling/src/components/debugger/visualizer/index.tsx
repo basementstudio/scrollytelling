@@ -315,17 +315,18 @@ export const Visualizer = () => {
           <select
             value={selectedRoot}
             onChange={(e) => setSelectedRoot(e.currentTarget.value)}
-            onPointerDown={(e) => e.stopPropagation()}
+            onPointerDown={(e) => e.stopPropagation()} 
           >
-            {roots.map((r) => {
-              return (
+            {roots.map((r) => { 
+              return ( 
                 <option key={r.id} value={r.id}>
-                  {r.label}
-                </option>
-              );
+                  {r.label} 
+                </option> 
+              ); 
             })}
           </select>
           <button
+            className={s['scrollToRoot']}
             onClick={() => {
               const triggerElement = root?.tween?.scrollTrigger?.trigger;
               if (triggerElement) {
@@ -443,7 +444,7 @@ export const Visualizer = () => {
               Visualizer - <span className={s["version"]}>v.01.240</span>
             </span>
             <span>
-              made with 🖤 by <a href="https://basement.studio" className={s["bsmnt"]}>bsmnt</a>.
+              made with 🖤 by <a href="https://basement.studio" target="_blank" className={s["bsmnt"]} rel="noopener">bsmnt</a>.
             </span>
           </footer>
         </>
