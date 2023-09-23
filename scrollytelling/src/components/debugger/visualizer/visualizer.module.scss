@@ -31,7 +31,6 @@
     justify-content: space-between;
     align-items: center;
     text-transform: uppercase;
-    border-bottom: 1px solid var(--color-gray-light);
 
     &:hover {
       cursor: grab;
@@ -77,6 +76,8 @@
   }
 
   .main {
+    border-top: 1px solid var(--color-gray-light);
+    border-bottom: 1px solid var(--color-gray-light);
     background: var(--color-black);
     padding: 24px 32px 24px;
     flex: 1;
@@ -191,7 +192,6 @@
   }
 
   .footer {
-    border-top: 1px solid var(--color-gray-light);
     background: var(--color-gray-dark);
     text-transform: uppercase;
     text-align: center;

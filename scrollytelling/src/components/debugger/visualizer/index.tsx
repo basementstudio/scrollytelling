@@ -179,10 +179,10 @@ export const Visualizer = () => {
     const handleUpdate = () => {
       const progress = root?.tween?.progress();
 
-      if (!markerRef.current || !trailRef.current || progress === undefined) return;
+      if (!markerRef.current || !trailRef.current || progress === undefined) return
 
       markerRef.current.style.left = `${progress * 100}%`;
-      trailRef.current.style.left =  `${progress * 100}%`;
+      trailRef.current.style.left = `${progress * 100}%`;
     };
 
     return internalEventEmmiter.on("timeline:update", handleUpdate);
@@ -330,7 +330,7 @@ export const Visualizer = () => {
                 </option>
               );
             })}
-          </select>
+          </select> 
           <button
             className={s["scrollToRoot"]}
             onClick={() => {
@@ -339,7 +339,7 @@ export const Visualizer = () => {
                 triggerElement.scrollIntoView({ behavior: "smooth" });
               }
             }}
-          > 
+          >
             Scroll to Root
           </button>
         </div>
@@ -350,7 +350,24 @@ export const Visualizer = () => {
             onClick={() => setMinimize((p) => !p)}
           >
             {minimize ? (
-              "Exp"
+              <svg
+                viewBox="0 0 16 16"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  fill-rule="evenodd"
+                  clip-rule="evenodd"
+                  d="M2.43359 8C2.43359 7.72386 2.65745 7.5 2.93359 7.5H13.0669C13.3431 7.5 13.5669 7.72386 13.5669 8C13.5669 8.27614 13.3431 8.5 13.0669 8.5H2.93359C2.65745 8.5 2.43359 8.27614 2.43359 8Z"
+                  fill="white"
+                />
+                <path
+                  fill-rule="evenodd"
+                  clip-rule="evenodd"
+                  d="M8 2.43311C8.27614 2.43311 8.5 2.65697 8.5 2.93311L8.5 13.0664C8.5 13.3426 8.27614 13.5664 8 13.5664C7.72386 13.5664 7.5 13.3426 7.5 13.0664L7.5 2.93311C7.5 2.65697 7.72386 2.43311 8 2.43311Z"
+                  fill="white"
+                />
+              </svg>
             ) : (
               <svg
                 viewBox="0 0 16 16"
@@ -409,9 +426,9 @@ export const Visualizer = () => {
                     <div className={s["row"]} key={idx}>
                       <Tween tween={t} root={root} idx={idx} />
                     </div>
-                  ); 
+                  );
                 })}
-              </div> 
+              </div>
               <div className={s["progress"]}>
                 <div className={s["marker"]} ref={markerRef}>
                   <span className={s["thumb"]}>
@@ -446,7 +463,7 @@ export const Visualizer = () => {
                     </svg>
                   </span>
                 </div>
-                <div className={s['trail']}>
+                <div className={s["trail"]}>
                   <div className={s["gradient"]} ref={trailRef} />
                 </div>
               </div>
