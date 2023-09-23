@@ -1,5 +1,11 @@
 # @bsmnt/scrollytelling
 
+## 0.2.8
+
+### Patch Changes
+
+- 1216706: Stagger component
+
 ## 0.2.7
 
 ### Patch Changes

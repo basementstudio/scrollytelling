@@ -1,5 +1,13 @@
 # website
 
+## 0.1.5
+
+### Patch Changes
+
+- 1216706: Stagger component
+- Updated dependencies [1216706]
+  - @bsmnt/scrollytelling@0.2.8
+
 ## 0.1.4
 
 ### Patch Changes
