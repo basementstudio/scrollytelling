@@ -18,7 +18,7 @@ const colors = [
   ["#818CF8", "#3730A3"],
   ["#C084FC", "#6B21A8"],
   ["#E879F9", "#86198F"],
-  ["rgba(244, 114, 182, 0.40)", "#9D174D"]
+  ["rgba(244, 114, 182, 0.40)", "#9D174D"],
 ];
 
 const setHighlight = (target: SVGElement | HTMLElement) => {
@@ -98,11 +98,11 @@ const Tween = ({
     .targets()
     .map((t: any) => {
       if (t instanceof SVGElement) {
-        return `${t.tagName}${t.id ? `#${t.id}` : ""}${
+        return `${t.tagName.toLocaleLowerCase()}${t.id ? `#${t.id}` : ""}${
           t.classList.length ? "." + t.classList[0] : ""
         }`;
       } else if (t instanceof HTMLElement) {
-        return `${t.tagName}${t.id ? `#${t.id}` : ""}${
+        return `${t.tagName.toLocaleLowerCase()}${t.id ? `#${t.id}` : ""}${
           t.classList.length ? "." + t.classList[0] : ""
         }`;
       }
@@ -110,16 +110,19 @@ const Tween = ({
     .join(", ");
 
   return (
-    // @ts-ignore
     <div
       className={`${s["tween"]}${active ? ` ${[s["active"]]}` : ""}`}
-      style={{ 
-        width: tween._dur + "%",
-        left: tween._start + "%",
-        background: "linear-gradient(90deg, transparent 0%, " + colors[idx % colors.length]?.[0] + " 100%)",
+      style={{
+        // @ts-ignore
+        "--duration-percentage": tween._dur + "%",
+        "--start-offset-percentage": tween._start + "%",
+        background:
+          "linear-gradient(90deg, transparent 0%, " +
+          colors[idx % colors.length]?.[0] +
+          " 100%)",
         outlineColor: colors[idx % colors.length]?.[1],
         minWidth: 16,
-      }} 
+      }}
       onMouseEnter={() => setIsHovering(true)}
       onMouseLeave={() => setIsHovering(false)}
       onClick={() => {
@@ -152,7 +155,7 @@ const ProgressStatus = ({ root }: { root: VisualizerRoot | undefined }) => {
       const progress = root?.tween?.progress();
       setProgress(progress ?? 0);
     };
- 
+
     return internalEventEmmiter.on("timeline:update", handleUpdate);
   }, [root?.tween]);
 
@@ -162,7 +165,8 @@ const ProgressStatus = ({ root }: { root: VisualizerRoot | undefined }) => {
 export const Visualizer = () => {
   const panelRef = useRef<HTMLDivElement>(null);
   const panelHeaderRef = useRef<HTMLElement>(null);
-  const progressRef = useRef(null);
+  const markerRef = useRef<HTMLDivElement>(null);
+  const trailRef = useRef<HTMLDivElement>(null);
 
   const [roots, setRoots] = useState<VisualizerRoot[]>([]);
   const [selectedRoot, setSelectedRoot] = useState<string>();
@@ -174,9 +178,11 @@ export const Visualizer = () => {
   useEffect(() => {
     const handleUpdate = () => {
       const progress = root?.tween?.progress();
-      if (!progressRef.current) return;
-      // @ts-ignore
-      progressRef.current.style.left = `${progress * 100}%`;
+
+      if (!markerRef.current || !trailRef.current || progress === undefined) return;
+
+      markerRef.current.style.left = `${progress * 100}%`;
+      trailRef.current.style.left =  `${progress * 100}%`;
     };
 
     return internalEventEmmiter.on("timeline:update", handleUpdate);
@@ -315,25 +321,25 @@ export const Visualizer = () => {
           <select
             value={selectedRoot}
             onChange={(e) => setSelectedRoot(e.currentTarget.value)}
-            onPointerDown={(e) => e.stopPropagation()} 
+            onPointerDown={(e) => e.stopPropagation()}
           >
-            {roots.map((r) => { 
-              return ( 
+            {roots.map((r) => {
+              return (
                 <option key={r.id} value={r.id}>
-                  {r.label} 
-                </option> 
-              ); 
+                  {r.label}
+                </option>
+              );
             })}
           </select>
           <button
-            className={s['scrollToRoot']}
+            className={s["scrollToRoot"]}
             onClick={() => {
               const triggerElement = root?.tween?.scrollTrigger?.trigger;
               if (triggerElement) {
                 triggerElement.scrollIntoView({ behavior: "smooth" });
               }
             }}
-          >
+          > 
             Scroll to Root
           </button>
         </div>
@@ -398,53 +404,69 @@ export const Visualizer = () => {
                 </div>
               </div>
               <div className={s["tweens"]}>
-                {root?.children.map((t, idx) => (
-                  <div className={s["row"]} key={idx}>
-                    <Tween tween={t} root={root} idx={idx} />
-                  </div>
-                ))}
-              </div>  
-              <div className={s["progress"]} ref={progressRef}>
-                <span className={s["thumb"]}>
-                  <span className={s['percent']}> 
-                    <ProgressStatus root={root} />  
-                  </span> 
-                  <svg 
-                    width="8"
-                    height="11"
-                    viewBox="0 0 8 11"
-                    fill="none" 
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <mask id="path-1-inside-1_2793_1632" fill="white">
+                {root?.children.map((t, idx) => {
+                  return (
+                    <div className={s["row"]} key={idx}>
+                      <Tween tween={t} root={root} idx={idx} />
+                    </div>
+                  ); 
+                })}
+              </div> 
+              <div className={s["progress"]}>
+                <div className={s["marker"]} ref={markerRef}>
+                  <span className={s["thumb"]}>
+                    <span className={s["percent"]}>
+                      <ProgressStatus root={root} />
+                    </span>
+                    <svg
+                      width="8"
+                      height="11"
+                      viewBox="0 0 8 11"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <mask id="path-1-inside-1_2793_1632" fill="white">
+                        <path
+                          fill-rule="evenodd"
+                          clip-rule="evenodd"
+                          d="M8 0H0V8L4 11L8 8V0Z"
+                        />
+                      </mask>
                       <path
                         fill-rule="evenodd"
                         clip-rule="evenodd"
                         d="M8 0H0V8L4 11L8 8V0Z"
+                        fill="white"
                       />
-                    </mask>
-                    <path
-                      fill-rule="evenodd"
-                      clip-rule="evenodd"
-                      d="M8 0H0V8L4 11L8 8V0Z"
-                      fill="white"
-                    />
-                    <path
-                      d="M0 0V-1H-1V0H0ZM8 0H9V-1H8V0ZM0 8H-1V8.5L-0.6 8.8L0 8ZM4 11L3.4 11.8L4 12.25L4.6 11.8L4 11ZM8 8L8.6 8.8L9 8.5V8H8ZM0 1H8V-1H0V1ZM1 8V0H-1V8H1ZM4.6 10.2L0.6 7.2L-0.6 8.8L3.4 11.8L4.6 10.2ZM7.4 7.2L3.4 10.2L4.6 11.8L8.6 8.8L7.4 7.2ZM7 0V8H9V0H7Z"
-                      fill="white"
-                      mask="url(#path-1-inside-1_2793_1632)"
-                    />
-                  </svg>
-                </span>
+                      <path
+                        d="M0 0V-1H-1V0H0ZM8 0H9V-1H8V0ZM0 8H-1V8.5L-0.6 8.8L0 8ZM4 11L3.4 11.8L4 12.25L4.6 11.8L4 11ZM8 8L8.6 8.8L9 8.5V8H8ZM0 1H8V-1H0V1ZM1 8V0H-1V8H1ZM4.6 10.2L0.6 7.2L-0.6 8.8L3.4 11.8L4.6 10.2ZM7.4 7.2L3.4 10.2L4.6 11.8L8.6 8.8L7.4 7.2ZM7 0V8H9V0H7Z"
+                        fill="white"
+                        mask="url(#path-1-inside-1_2793_1632)"
+                      />
+                    </svg>
+                  </span>
+                </div>
+                <div className={s['trail']}>
+                  <div className={s["gradient"]} ref={trailRef} />
+                </div>
               </div>
             </div>
-          </main> 
+          </main>
           <footer className={s["footer"]}>
             <span>
               Visualizer - <span className={s["version"]}>v.01.240</span>
             </span>
             <span>
-              made with 🖤 by <a href="https://basement.studio" target="_blank" className={s["bsmnt"]} rel="noopener">bsmnt</a>.
+              made with 🖤 by{" "}
+              <a
+                href="https://basement.studio"
+                target="_blank"
+                className={s["bsmnt"]}
+                rel="noopener"
+              >
+                bsmnt
+              </a>
+              .
             </span>
           </footer>
         </>
