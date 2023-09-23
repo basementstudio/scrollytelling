@@ -3,7 +3,11 @@
  * -----------------------------------------------------------------------------------------------*/
 
 import * as React from "react";
-import { StaggerBaseDef, TweenWithChildrenDef, TweenWithTargetDef } from "../../types";
+import {
+  StaggerBaseDef,
+  TweenWithChildrenDef,
+  TweenWithTargetDef,
+} from "../../types";
 import { Animation } from "../animation";
 import { isDev } from "../../util";
 
@@ -23,125 +27,127 @@ export function Stagger(
 export function Stagger({
   children,
   overlap,
-  tween
+  tween,
+  disabled = false,
 }: StaggerBaseDef & {
   children?: React.ReactNode[];
   tween: TweenWithChildrenDef | TweenWithTargetDef;
 }) {
-
-  const isTweenWithTarget = 'target' in tween;
-  const targetLength = isTweenWithTarget && Array.isArray(tween.target) ? tween.target.length : children?.length;
+  const isTweenWithTarget = "target" in tween;
+  const targetLength =
+    isTweenWithTarget && Array.isArray(tween.target)
+      ? tween.target.length
+      : children?.length;
 
   const timeline = React.useMemo(() => {
-    if(tween?.start === undefined || tween?.end === undefined) {
+    if (tween?.start === undefined || tween?.end === undefined) {
       if (isDev) {
-        console.warn('Stagger needs a start and end value');
+        throw new Error("Stagger needs a start and end value");
+      } else {
+        console.warn("Stagger needs a start and end value");
       }
 
       return [];
     }
 
-    return getStaggeredTimeline(
-      {
-        start: tween?.start,
-        end: tween?.end,
-        chunks: targetLength,
-        overlap: overlap,
-      }
-    )
+    return getStaggeredTimeline({
+      start: tween?.start,
+      end: tween?.end,
+      chunks: targetLength,
+      overlap: overlap,
+    });
   }, [targetLength, overlap, tween?.end, tween?.start]);
 
   if (children) {
-    return children.map(
-      (child, i) => {
+    return children.map((child, i) => {
+      const currTween = timeline[i];
+
+      if (!currTween) {
+        return null;
+      }
+
+      return (
+        <Animation
+          key={i}
+          tween={{
+            ...tween,
+            start: currTween.start,
+            end: currTween.end,
+          }}
+          disabled={disabled}
+        >
+          {child}
+        </Animation>
+      );
+    });
+  } else if (isTweenWithTarget) {
+    const target = tween.target;
+
+    if (Array.isArray(target)) {
+      return target.map((target, i) => {
         const currTween = timeline[i];
 
         if (!currTween) {
           return null;
         }
 
-        return (
-          <Animation
-            key={i}
-            tween={{
-              ...tween,
-              start: currTween.start,
-              end: currTween.end,
-            }}
-          >
-            {child}
-          </Animation>
-        );
-      }
-    );
-  } else if (isTweenWithTarget) {
-    const target = tween.target;
-
-    if (Array.isArray(target)) {
-      
-      return target.map(
-        (target, i) => {
-          const currTween = timeline[i];
-
-          if (!currTween) {
-            return null;
-          }
-
-          if(tween.to) {
-            return (
-              <Animation
-                key={i}
-                tween={{
-                  ...tween,
-                  target: target,
-                  start: currTween.start,
-                  end: currTween.end,
-                  to: {
-                    ...tween.to,
-                    onUpdateParams: [i]
-                  }
-                }}
-              />
-            );
-          } else if (tween.from) {
-            return (
-              <Animation
-                key={i}
-                tween={{
-                  ...tween,
-                  target: target,
-                  start: currTween.start,
-                  end: currTween.end,
-                  from: { ...tween.from, onUpdateParams: [i] }
-                }}
-              />
-            )
-          } else if (tween.fromTo) {
-            return (
-              <Animation
-                key={i}
-                tween={{
-                  ...tween,
-                  target: target,
-                  start: currTween.start,
-                  end: currTween.end,
-                  fromTo: [
-                    {
-                      ...tween.fromTo[0],
-                    },
-                    {
-                      ...tween.fromTo[1],
-                      onUpdateParams: [i],
-                    }
-                  ]
-                }}
-              />
-            )
-          }
+        if (tween.to) {
+          return (
+            <Animation
+              key={i}
+              tween={{
+                ...tween,
+                target: target,
+                start: currTween.start,
+                end: currTween.end,
+                to: {
+                  ...tween.to,
+                  onUpdateParams: [i],
+                },
+              }}
+              disabled={disabled}
+            />
+          );
+        } else if (tween.from) {
+          return (
+            <Animation
+              key={i}
+              tween={{
+                ...tween,
+                target: target,
+                start: currTween.start,
+                end: currTween.end,
+                from: { ...tween.from, onUpdateParams: [i] },
+              }}
+              disabled={disabled}
+            />
+          );
+        } else if (tween.fromTo) {
+          return (
+            <Animation
+              key={i}
+              tween={{
+                ...tween,
+                target: target,
+                start: currTween.start,
+                end: currTween.end,
+                fromTo: [
+                  {
+                    ...tween.fromTo[0],
+                  },
+                  {
+                    ...tween.fromTo[1],
+                    onUpdateParams: [i],
+                  },
+                ],
+              }}
+              disabled={disabled}
+            />
+          );
         }
-      );
+      });
     } else if (isDev) {
-      console.warn('Stagger target must be an array');
+      throw new Error("Stagger target must be an array");
     }
   }
 
@@ -152,12 +158,12 @@ export function Stagger({
 const overlapDurationArrayByFactor = (
   durations: { start: number; end: number }[],
   factor: number
-  ) => {
+) => {
   const first = durations[0];
   const last = durations[durations.length - 1];
-  
-  if(first === undefined || last === undefined) {
-    throw Error('Durations array is empty');
+
+  if (first === undefined || last === undefined) {
+    throw Error("Durations array is empty");
   }
 
   /*
@@ -183,8 +189,14 @@ const overlapDurationArrayByFactor = (
     const newEnd = duration.end - overlapDurationPerDuration * i;
 
     return {
-      start: Math.max(veryStart + (newStart - veryStart) * afterOverlapDurationDiffFactor, 0),
-      end: Math.min(veryStart + (newEnd - veryStart) * afterOverlapDurationDiffFactor, 100),
+      start: Math.max(
+        veryStart + (newStart - veryStart) * afterOverlapDurationDiffFactor,
+        0
+      ),
+      end: Math.min(
+        veryStart + (newEnd - veryStart) * afterOverlapDurationDiffFactor,
+        100
+      ),
     };
   });
 
@@ -199,8 +211,8 @@ export const getStaggeredTimeline = (config: {
 }) => {
   const { start, end, overlap = 0, chunks = 1 } = config;
 
-  if(overlap > 1 || overlap < 0) {
-    throw new Error('Overlap must be between 0 and 1');
+  if (overlap > 1 || overlap < 0) {
+    throw new Error("Overlap must be between 0 and 1");
   }
 
   const duration = end - start;

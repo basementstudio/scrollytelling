@@ -3,11 +3,13 @@ import { gsap } from "gsap";
 // ---- Utils
 export type DataOrDataArray<T> = T | Array<T>;
 export type UnitValue<Unit = string> = { value: number; unit: Unit };
-export type RequireAtLeastOne<T, Keys extends keyof T = keyof T> =
-    Pick<T, Exclude<keyof T, Keys>> 
-    & {
-        [K in Keys]-?: Required<Pick<T, K>> & Partial<Pick<T, Exclude<Keys, K>>>
-    }[Keys]
+export type RequireAtLeastOne<T, Keys extends keyof T = keyof T> = Pick<
+  T,
+  Exclude<keyof T, Keys>
+> &
+  {
+    [K in Keys]-?: Required<Pick<T, K>> & Partial<Pick<T, Exclude<Keys, K>>>;
+  }[Keys];
 
 // ---- Tween Specifics
 export type FromToOptions =
@@ -48,12 +50,16 @@ export type WaypointBaseDef = {
 
 export type StaggerBaseDef = {
   overlap: number;
-}
+  disabled?: boolean;
+};
 
 // FIXME: This name is not clear, why SimpleTween doesn't consume TweenBaseDef?
-export type SimpleTween = FromToOptions & { duration: number; forwards?: boolean };
+export type SimpleTween = FromToOptions & {
+  duration: number;
+  forwards?: boolean;
+};
 
 // ---- Aliases
-export type TweenVars = gsap.TweenVars; 
+export type TweenVars = gsap.TweenVars;
 
 export type Plugin = Parameters<typeof gsap.registerPlugin>[number];
