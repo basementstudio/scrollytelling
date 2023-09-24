@@ -111,6 +111,7 @@ const Tween = ({
 
   return (
     <div
+      title={targetString}
       className={`${s["tween"]}${active ? ` ${[s["active"]]}` : ""}`}
       style={{
         // @ts-ignore
@@ -142,7 +143,42 @@ const Tween = ({
         }
       }}
     >
-      {data.type === "waypoint" ? "F" : targetString}
+      {targetString}
+    </div>
+  );
+};
+
+
+
+const Waypoint = ({tween}: {
+  tween: VisualizerItem;
+  root: VisualizerRoot;
+  idx: number;
+}) => {
+  return (
+    <div style={{
+      // @ts-ignore
+      "--start-offset-percentage": tween._start + "%",
+    }} className={s["waypoint"]}>
+      <svg
+        width="12"
+        height="12"
+        viewBox="0 0 12 12"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M1.5 1.5V2.25V1.5ZM1.5 10.5V7.5V10.5ZM1.5 7.5L2.885 7.1535C3.9272 6.89302 5.0282 7.01398 5.989 7.4945L6.043 7.5215C6.98459 7.9921 8.06137 8.11772 9.086 7.8765L10.643 7.5105C10.4523 5.76591 10.4515 4.00577 10.6405 2.261L9.0855 2.627C8.06097 2.86794 6.98439 2.74215 6.043 2.2715L5.989 2.2445C5.0282 1.76398 3.9272 1.64302 2.885 1.9035L1.5 2.25M1.5 7.5V2.25V7.5Z"
+          fill="white"
+          fill-opacity="0.12"
+        />
+        <path
+          d="M1.5 1.5V2.25M1.5 2.25L2.885 1.9035C3.9272 1.64302 5.0282 1.76398 5.989 2.2445L6.043 2.2715C6.98439 2.74215 8.06097 2.86794 9.0855 2.627L10.6405 2.261C10.4515 4.00577 10.4523 5.76591 10.643 7.5105L9.086 7.8765C8.06137 8.11772 6.98459 7.9921 6.043 7.5215L5.989 7.4945C5.0282 7.01398 3.9272 6.89302 2.885 7.1535L1.5 7.5M1.5 2.25V7.5M1.5 10.5V7.5"
+          stroke="white"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        />
+      </svg>
     </div>
   );
 };
@@ -179,7 +215,7 @@ export const Visualizer = () => {
     const handleUpdate = () => {
       const progress = root?.tween?.progress();
 
-      if (!markerRef.current || !trailRef.current || progress === undefined) return
+      if (!markerRef.current || !trailRef.current || progress === undefined) return;
 
       markerRef.current.style.left = `${progress * 100}%`;
       trailRef.current.style.left = `${progress * 100}%`;
@@ -330,7 +366,7 @@ export const Visualizer = () => {
                 </option>
               );
             })}
-          </select> 
+          </select>
           <button
             className={s["scrollToRoot"]}
             onClick={() => {
@@ -339,7 +375,11 @@ export const Visualizer = () => {
                 triggerElement.scrollIntoView({ behavior: "smooth" });
               }
             }}
-          >
+          > 
+            <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M10.875 6.00004L6.398 1.52254C6.178 1.30304 5.822 1.30304 5.6025 1.52254L1.125 6.00004M9.75 4.87504V9.93754C9.75 10.248 9.498 10.5 9.1875 10.5H7.125V8.06254C7.125 7.75204 6.873 7.50004 6.5625 7.50004H5.4375C5.127 7.50004 4.875 7.75204 4.875 8.06254V10.5H2.8125C2.502 10.5 2.25 10.248 2.25 9.93754V4.87504M7.875 10.5H3.75" stroke="white" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+
             Scroll to Root
           </button>
         </div>
@@ -422,11 +462,25 @@ export const Visualizer = () => {
               </div>
               <div className={s["tweens"]}>
                 {root?.children.map((t, idx) => {
-                  return (
-                    <div className={s["row"]} key={idx}>
-                      <Tween tween={t} root={root} idx={idx} />
-                    </div>
-                  );
+                  const data = t.data as DataAttribute;
+
+                  if (data.type === "animation") {
+                    return (
+                      <div className={s["row"]} key={idx}>
+                        <Tween tween={t} root={root} idx={idx} />
+                      </div>
+                    );
+                  }
+  
+                  if (data.type === "waypoint") {
+                    return (
+                      <div className={s["row"]} key={idx}>
+                        <Waypoint tween={t} root={root} idx={idx} />
+                      </div>
+                    );
+                  }
+
+                  return <></>;
                 })}
               </div>
               <div className={s["progress"]}>

@@ -70,6 +70,8 @@
       }
 
       .scrollToRoot {
+        display: flex;
+        gap: 0 8px;
         padding: 0 8px;
       }
     }
@@ -119,6 +121,7 @@
       }
       
       .progress {
+        pointer-events: none;
         position: absolute;
         inset: 0;
 
@@ -217,7 +220,7 @@
   --duration-percentage: 0;
   --start-offset-percentage: 0;
 
-  left: calc(var(--start-offset-percentage));
+  left: var(--start-offset-percentage);
   /* (1px for outline width + 1px for outline offset) */
   width: calc(var(--duration-percentage) - 3px);
 
@@ -238,6 +241,22 @@
   outline-offset: 1px;
   overflow: hidden;
   white-space: nowrap;
+}
+
+.waypoint {
+  --start-offset-percentage: 0;
+  
+  position: relative;
+  left: var(--start-offset-percentage);
+  width: 22px;
+  height: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--color-gray);
+  border: 1px solid var(--color-gray-light);
+  border-radius: 6px;
+  transform: translateX(-50%);
 }
 
 .highlight {
