@@ -100,11 +100,13 @@ export function Waypoint({
     // set the callbacks
     newSet.vars.onComplete = () => {
       lastStateRef.current = "complete";
+      newSet.data._internalOnCall?.()
       onCall?.();
       generatedTween?.play();
     };
     newSet.vars.onReverseComplete = () => {
       lastStateRef.current = "reverse-complete";
+      newSet.data._internalOnReverseCall?.()
       onReverseCall?.();
       if (!tween?.forwards) {
         generatedTween?.reverse();

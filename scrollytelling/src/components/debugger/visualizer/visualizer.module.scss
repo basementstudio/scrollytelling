@@ -18,8 +18,9 @@
   border: 1px solid var(--color-gray-light);
   border-radius: 8px;
   overflow: hidden;
-  top: 0;
   line-height: 1;
+  top: 16px;
+  left: 16px;
 
   .header {
     background: var(--color-gray-dark);
@@ -257,6 +258,36 @@
   border: 1px solid var(--color-gray-light);
   border-radius: 6px;
   transform: translateX(-50%);
+
+  .onCall,
+  .onReverseCall {
+    opacity: 0;
+    transition-property: transform opacity;
+    transition-duration: 0.2s;
+    transition-timing-function: ease-out;
+  }
+
+  .onCall {
+    position: absolute;
+    right: -8px;
+    transform: translateX(50%);
+
+    &.active {
+      opacity: 1;
+      transform: translateX(100%) scale(1.2);
+    }
+  }
+
+  .onReverseCall {
+    position: absolute;
+    left: -8px;
+    transform: translateX(-50%);
+    
+    &.active {
+      opacity: 1;
+      transform: translateX(-100%) scale(1.2);
+    }
+  }
 }
 
 .highlight {

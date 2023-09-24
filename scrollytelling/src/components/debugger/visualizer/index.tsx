@@ -8,6 +8,7 @@ import type {
 
 import s from "./visualizer.module.scss";
 import { internalEventEmmiter } from "../../../util/internal-event-emmiter";
+import { clsx } from "../../../util";
 
 const colors = [
   ["#F87171", "#991B1B"],
@@ -93,18 +94,25 @@ const Tween = ({
 
     return internalEventEmmiter.on("timeline:update", handleUpdate);
   }, [root.tween, tween._dur, tween._start]);
-
+ 
   const targetString = tween
     .targets()
     .map((t: any) => {
-      if (t instanceof SVGElement) {
+      if (t instanceof SVGElement || t instanceof HTMLElement) {
         return `${t.tagName.toLocaleLowerCase()}${t.id ? `#${t.id}` : ""}${
           t.classList.length ? "." + t.classList[0] : ""
         }`;
-      } else if (t instanceof HTMLElement) {
-        return `${t.tagName.toLocaleLowerCase()}${t.id ? `#${t.id}` : ""}${
-          t.classList.length ? "." + t.classList[0] : ""
-        }`;
+      }
+
+      if(t instanceof Object) {
+        const allKeys = Object.keys(t).filter(k => k != '_gsap');
+        const displayKeys = allKeys.slice(0, 3);
+
+        if(allKeys.length > displayKeys.length) {
+          displayKeys.push('...')
+        }
+
+        return `${t.constructor.name} { ${displayKeys.join(', ')} }`;
       }
     })
     .join(", ");
@@ -148,18 +156,37 @@ const Tween = ({
   );
 };
 
-
-
 const Waypoint = ({tween}: {
   tween: VisualizerItem;
   root: VisualizerRoot;
   idx: number;
 }) => {
+  const [lastState, setLastState] = useState<"complete" | "reverse-complete" | undefined>(undefined);
+
+  useEffect(() => {
+    if(tween.data.type === 'waypoint') {
+      tween.data._internalOnCall = () => {
+        console.log('waypoint complete')
+        setLastState('complete')
+      };
+  
+      tween.data._internalOnReverseCall = () => {
+        console.log('waypoint reverse complete')
+        setLastState('reverse-complete')
+      }
+    }
+  }, [tween.data]);
+
   return (
     <div style={{
       // @ts-ignore
       "--start-offset-percentage": tween._start + "%",
     }} className={s["waypoint"]}>
+      <span className={clsx(s['onReverseCall'], lastState === 'reverse-complete' && s['active'])}>
+        <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M6.375 9.75L2.625 6L6.375 2.25M9.375 9.75L5.625 6L9.375 2.25" stroke="white" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </span>
       <svg
         width="12"
         height="12"
@@ -179,6 +206,11 @@ const Waypoint = ({tween}: {
           stroke-linejoin="round"
         />
       </svg>
+      <span className={clsx(s['onCall'], lastState === 'complete' && s['active'])}>
+        <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M5.625 2.25L9.375 6L5.625 9.75M2.625 2.25L6.375 6L2.625 9.75" stroke="white" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </span>
     </div>
   );
 };
@@ -350,6 +382,7 @@ export const Visualizer = () => {
   }, []);
 
   if (dismiss) return <></>;
+
   return (
     <div className={s["root"]} ref={panelRef}>
       <header className={s["header"]} ref={panelHeaderRef}>
@@ -482,7 +515,7 @@ export const Visualizer = () => {
 
                   return <></>;
                 })}
-              </div>
+              </div> 
               <div className={s["progress"]}>
                 <div className={s["marker"]} ref={markerRef}>
                   <span className={s["thumb"]}>
