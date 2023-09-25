@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono&display=swap');
+
 .root {
   --color-gray-lighter: #A3A3A3;
   --color-gray-light: #383838;
@@ -21,13 +23,19 @@
   line-height: 1;
   top: 16px;
   left: 16px;
+  font-family: 'JetBrains Mono', monospace;
+  visibility: hidden;
+
+  &.initialized {
+    visibility: visible;
+  }
 
   .header {
     background: var(--color-gray-dark);
     text-align: center;
     padding: 4px 16px;
     min-height: 44px;
-    font-size: 14px;
+    font-size: 12px;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -39,17 +47,6 @@
 
     &:active {
       cursor: grabbing;
-    }
-
-    select {
-      cursor: pointer;
-      background: var(--color-gray);
-      border: 1px solid var(--color-gray-light);
-      height: 24px;
-      border-radius: 4px;
-      width: max-content;
-      min-width: 110px;
-      padding: 0 8px;
     }
 
     .actions {
@@ -201,7 +198,7 @@
     text-align: center;
     padding: 4px 16px;
     min-height: 44px;
-    font-size: 12px;
+    font-size: 14px;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -287,6 +284,33 @@
       opacity: 1;
       transform: translateX(-100%) scale(1.2);
     }
+  }
+}
+
+.selectWrapper {
+  position: relative;
+  
+  .select {
+    appearance: none;
+    cursor: pointer;
+    background: var(--color-gray);
+    border: 1px solid var(--color-gray-light);
+    height: 24px;
+    border-radius: 4px;
+    width: max-content;
+    min-width: 110px;
+    padding: 0 8px;
+  }
+
+  .arrow {
+    position: absolute;
+    content: '';
+    right: 8px;
+    top: 50%;
+    width: 12px;
+    height: 12px;
+    z-index: 10;
+    transform: translateY(-50%);
   }
 }
 

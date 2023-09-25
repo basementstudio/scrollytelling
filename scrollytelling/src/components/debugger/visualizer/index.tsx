@@ -5,45 +5,14 @@ import type {
   VisualizerItem,
   DataAttribute,
 } from "./shared-types";
-
+ 
 import s from "./visualizer.module.scss";
 import { internalEventEmmiter } from "../../../util/internal-event-emmiter";
 import { clsx } from "../../../util";
+import libPackage from '../../../../package.json'
 
-const colors = [
-  ["#F87171", "#991B1B"],
-  ["#FACC15", "#854D0E"],
-  ["#4ADE80", "#166534"],
-  ["#2DD4BF", "#115E59"],
-  ["#38BDF8", "#075985"],
-  ["#818CF8", "#3730A3"],
-  ["#C084FC", "#6B21A8"],
-  ["#E879F9", "#86198F"],
-  ["rgba(244, 114, 182, 0.40)", "#9D174D"],
-];
-
-const setHighlight = (target: SVGElement | HTMLElement) => {
-  // Create a div element that has the same dimensions and position as the target
-  const highlight = document.createElement("div");
-
-  highlight.style.position = "fixed";
-  const bounds = target.getBoundingClientRect();
-  highlight.style.top = `${bounds.top}px`;
-  highlight.style.left = `${bounds.left}px`;
-  highlight.style.width = `${bounds.width}px`;
-  highlight.style.height = `${bounds.height}px`;
-
-  highlight.classList.add(s["highlight"] as string);
-
-  // Append to body.
-  document.body.appendChild(highlight);
-
-  // Clear instance
-  return () => {
-    document.body.removeChild(highlight);
-  };
-};
-
+import { colors, highlight } from "./helpers";
+ 
 const Tween = ({
   tween,
   root,
@@ -63,7 +32,7 @@ const Tween = ({
     if (isHovering) {
       const cleanups = tween.targets().map((t: any) => {
         if (t instanceof SVGElement || t instanceof HTMLElement) {
-          return setHighlight(t);
+          return highlight(t);
         }
 
         return undefined;
@@ -166,12 +135,10 @@ const Waypoint = ({tween}: {
   useEffect(() => {
     if(tween.data.type === 'waypoint') {
       tween.data._internalOnCall = () => {
-        console.log('waypoint complete')
         setLastState('complete')
       };
   
       tween.data._internalOnReverseCall = () => {
-        console.log('waypoint reverse complete')
         setLastState('reverse-complete')
       }
     }
@@ -229,6 +196,17 @@ const ProgressStatus = ({ root }: { root: VisualizerRoot | undefined }) => {
 
   return <>{(progress * 100).toFixed(0)}%</>;
 };
+ 
+const Select: React.FC<React.ComponentProps<'select'>> = (props) => {
+  return (
+    <div className={s["selectWrapper"]}>
+      <select {...props} className={clsx(s['select'], props.className)} />
+      <svg className={s['arrow']} width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M9.75 4.125L6 7.875L2.25 4.125" stroke="white" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </div>
+  )
+}
 
 export const Visualizer = () => {
   const panelRef = useRef<HTMLDivElement>(null);
@@ -240,6 +218,7 @@ export const Visualizer = () => {
   const [selectedRoot, setSelectedRoot] = useState<string>();
   const [dismiss, setDismiss] = useState(false);
   const [minimize, setMinimize] = useState(false);
+  const [initialized, setInitialized] = useState(false);
 
   const root = roots.find((r) => r.id === selectedRoot) ?? roots[0];
 
@@ -260,12 +239,22 @@ export const Visualizer = () => {
     const panel = panelRef.current;
     const panelHeader = panelHeaderRef.current;
 
+    /* Get last position from sessionStorage */
+
+    const lastPosition = sessionStorage.getItem("@bmsmnt/scrollytelling-visualizer:position");
+
     if (!panel || !panelHeader) return;
 
     let pos1 = 0,
       pos2 = 0,
       pos3 = 0,
       pos4 = 0;
+
+    if (lastPosition) {
+      const { top, left } = JSON.parse(lastPosition);
+      panel.style.top = top;
+      panel.style.left = left;
+    }
 
     const dragMouseDown = (e: MouseEvent) => {
       e = e || window.event;
@@ -305,9 +294,19 @@ export const Visualizer = () => {
       /* stop moving when mouse button is released */
       document.removeEventListener("mouseup", closeDragElement);
       document.removeEventListener("mousemove", elementDrag);
+      /* Save the last position on the sessionStorage */
+      sessionStorage.setItem(
+        "@bmsmnt/scrollytelling-visualizer:position",
+        JSON.stringify({
+          top: panel?.style.top,
+          left: panel?.style.left,
+        })
+      );
     }
 
     panelHeader.addEventListener("mousedown", dragMouseDown);
+
+    setInitialized(true)
 
     return () => {
       panelHeader.removeEventListener("mousedown", dragMouseDown);
@@ -384,10 +383,10 @@ export const Visualizer = () => {
   if (dismiss) return <></>;
 
   return (
-    <div className={s["root"]} ref={panelRef}>
+    <div className={clsx(s["root"], initialized && s['initialized'])} ref={panelRef}>
       <header className={s["header"]} ref={panelHeaderRef}>
         <div className={s["actions"]}>
-          <select
+          <Select
             value={selectedRoot}
             onChange={(e) => setSelectedRoot(e.currentTarget.value)}
             onPointerDown={(e) => e.stopPropagation()}
@@ -399,7 +398,7 @@ export const Visualizer = () => {
                 </option>
               );
             })}
-          </select>
+          </Select>
           <button
             className={s["scrollToRoot"]}
             onClick={() => {
@@ -413,7 +412,7 @@ export const Visualizer = () => {
               <path d="M10.875 6.00004L6.398 1.52254C6.178 1.30304 5.822 1.30304 5.6025 1.52254L1.125 6.00004M9.75 4.87504V9.93754C9.75 10.248 9.498 10.5 9.1875 10.5H7.125V8.06254C7.125 7.75204 6.873 7.50004 6.5625 7.50004H5.4375C5.127 7.50004 4.875 7.75204 4.875 8.06254V10.5H2.8125C2.502 10.5 2.25 10.248 2.25 9.93754V4.87504M7.875 10.5H3.75" stroke="white" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>
 
-            Scroll to Root
+            SCROLL TO ROOT
           </button>
         </div>
 
@@ -554,17 +553,17 @@ export const Visualizer = () => {
                   <div className={s["gradient"]} ref={trailRef} />
                 </div>
               </div>
-            </div>
+            </div> 
           </main>
           <footer className={s["footer"]}>
             <span>
-              Visualizer - <span className={s["version"]}>v.01.240</span>
+              Visualizer - <span className={s["version"]}>v.{libPackage.version}</span>
             </span>
-            <span>
+            <span>  
               made with 🖤 by{" "}
               <a
                 href="https://basement.studio"
-                target="_blank"
+                target="_blank" 
                 className={s["bsmnt"]}
                 rel="noopener"
               >
