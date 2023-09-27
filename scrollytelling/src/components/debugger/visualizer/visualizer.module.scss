@@ -303,6 +303,7 @@
   }
 
   .arrow {
+    pointer-events: none;
     position: absolute;
     content: '';
     right: 8px;
