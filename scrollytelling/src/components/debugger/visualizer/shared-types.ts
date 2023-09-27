@@ -4,7 +4,13 @@ export type DataAttribute = {
 } & (
   | { type: "root"; debug: boolean; label: string }
   | { type: "animation" | "rest"; rootId: string }
-  | { type: "waypoint"; rootId: string; label: string }
+  | {
+      type: "waypoint";
+      rootId: string;
+      label: string;
+      _internalOnCall?: () => void;
+      _internalOnReverseCall?: () => void;
+    }
 );
 
 export type VisualizerItem = Omit<GSAPTween | GSAPTimeline, "data"> & {
