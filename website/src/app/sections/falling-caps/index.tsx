@@ -58,7 +58,10 @@ export const FallingCaps = () => {
   );
 
   return (
-    <Scrollytelling.Root end="bottom bottom" debug={{ label: "falling caps" }}>
+    <Scrollytelling.Root
+      end="bottom bottom"
+      // debug={{ label: "falling caps" }}
+    >
       <section className={s["spacer"]}>
         <div className={s["pin"]}>
           <div className={s["canvas-container"]}>

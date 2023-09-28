@@ -20,7 +20,10 @@ export const Footer = () => {
   const isDesktopSm = useMedia("(min-width: 1024px)");
 
   return (
-    <Scrollytelling.Root start="top 80%" debug={{ label: "footer" }}>
+    <Scrollytelling.Root
+      start="top 80%"
+      // debug={{ label: "footer" }}
+    >
       <footer className={s.footer}>
         <PreFooter />
         <div className={s["imgs-container"]}>
