@@ -5,14 +5,14 @@ import type {
   VisualizerItem,
   DataAttribute,
 } from "./shared-types";
- 
+
 import s from "./visualizer.module.scss";
 import { internalEventEmmiter } from "../../../util/internal-event-emmiter";
 import { clsx } from "../../../util";
-import libPackage from '../../../../package.json'
+import libPackage from "../../../../package.json";
 
 import { colors, highlight } from "./helpers";
- 
+
 const Tween = ({
   tween,
   root,
@@ -63,7 +63,7 @@ const Tween = ({
 
     return internalEventEmmiter.on("timeline:update", handleUpdate);
   }, [root.tween, tween._dur, tween._start]);
- 
+
   const targetString = tween
     .targets()
     .map((t: any) => {
@@ -73,15 +73,15 @@ const Tween = ({
         }`;
       }
 
-      if(t instanceof Object) {
-        const allKeys = Object.keys(t).filter(k => k != '_gsap');
+      if (t instanceof Object) {
+        const allKeys = Object.keys(t).filter((k) => k != "_gsap");
         const displayKeys = allKeys.slice(0, 3);
 
-        if(allKeys.length > displayKeys.length) {
-          displayKeys.push('...')
+        if (allKeys.length > displayKeys.length) {
+          displayKeys.push("...");
         }
 
-        return `${t.constructor.name} { ${displayKeys.join(', ')} }`;
+        return `${t.constructor.name} { ${displayKeys.join(", ")} }`;
       }
     })
     .join(", ");
@@ -125,33 +125,56 @@ const Tween = ({
   );
 };
 
-const Waypoint = ({tween}: {
+const Waypoint = ({
+  tween,
+}: {
   tween: VisualizerItem;
   root: VisualizerRoot;
   idx: number;
 }) => {
-  const [lastState, setLastState] = useState<"complete" | "reverse-complete" | undefined>(undefined);
+  const [lastState, setLastState] = useState<
+    "complete" | "reverse-complete" | undefined
+  >(undefined);
 
   useEffect(() => {
-    if(tween.data.type === 'waypoint') {
+    if (tween.data.type === "waypoint") {
       tween.data._internalOnCall = () => {
-        setLastState('complete')
+        setLastState("complete");
       };
-  
+
       tween.data._internalOnReverseCall = () => {
-        setLastState('reverse-complete')
-      }
+        setLastState("reverse-complete");
+      };
     }
   }, [tween.data]);
 
   return (
-    <div style={{
-      // @ts-ignore
-      "--start-offset-percentage": tween._start + "%",
-    }} className={s["waypoint"]}>
-      <span className={clsx(s['onReverseCall'], lastState === 'reverse-complete' && s['active'])}>
-        <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M6.375 9.75L2.625 6L6.375 2.25M9.375 9.75L5.625 6L9.375 2.25" stroke="white" stroke-linecap="round" stroke-linejoin="round"/>
+    <div
+      style={{
+        // @ts-ignore
+        "--start-offset-percentage": tween._start + "%",
+      }}
+      className={s["waypoint"]}
+    >
+      <span
+        className={clsx(
+          s["onReverseCall"],
+          lastState === "reverse-complete" && s["active"]
+        )}
+      >
+        <svg
+          width="12"
+          height="12"
+          viewBox="0 0 12 12"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M6.375 9.75L2.625 6L6.375 2.25M9.375 9.75L5.625 6L9.375 2.25"
+            stroke="white"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
         </svg>
       </span>
       <svg
@@ -164,18 +187,31 @@ const Waypoint = ({tween}: {
         <path
           d="M1.5 1.5V2.25V1.5ZM1.5 10.5V7.5V10.5ZM1.5 7.5L2.885 7.1535C3.9272 6.89302 5.0282 7.01398 5.989 7.4945L6.043 7.5215C6.98459 7.9921 8.06137 8.11772 9.086 7.8765L10.643 7.5105C10.4523 5.76591 10.4515 4.00577 10.6405 2.261L9.0855 2.627C8.06097 2.86794 6.98439 2.74215 6.043 2.2715L5.989 2.2445C5.0282 1.76398 3.9272 1.64302 2.885 1.9035L1.5 2.25M1.5 7.5V2.25V7.5Z"
           fill="white"
-          fill-opacity="0.12"
+          fillOpacity="0.12"
         />
         <path
           d="M1.5 1.5V2.25M1.5 2.25L2.885 1.9035C3.9272 1.64302 5.0282 1.76398 5.989 2.2445L6.043 2.2715C6.98439 2.74215 8.06097 2.86794 9.0855 2.627L10.6405 2.261C10.4515 4.00577 10.4523 5.76591 10.643 7.5105L9.086 7.8765C8.06137 8.11772 6.98459 7.9921 6.043 7.5215L5.989 7.4945C5.0282 7.01398 3.9272 6.89302 2.885 7.1535L1.5 7.5M1.5 2.25V7.5M1.5 10.5V7.5"
           stroke="white"
-          stroke-linecap="round"
-          stroke-linejoin="round"
+          strokeLinecap="round"
+          strokeLinejoin="round"
         />
       </svg>
-      <span className={clsx(s['onCall'], lastState === 'complete' && s['active'])}>
-        <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M5.625 2.25L9.375 6L5.625 9.75M2.625 2.25L6.375 6L2.625 9.75" stroke="white" stroke-linecap="round" stroke-linejoin="round"/>
+      <span
+        className={clsx(s["onCall"], lastState === "complete" && s["active"])}
+      >
+        <svg
+          width="12"
+          height="12"
+          viewBox="0 0 12 12"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M5.625 2.25L9.375 6L5.625 9.75M2.625 2.25L6.375 6L2.625 9.75"
+            stroke="white"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
         </svg>
       </span>
     </div>
@@ -196,17 +232,30 @@ const ProgressStatus = ({ root }: { root: VisualizerRoot | undefined }) => {
 
   return <>{(progress * 100).toFixed(0)}%</>;
 };
- 
-const Select: React.FC<React.ComponentProps<'select'>> = (props) => {
+
+const Select: React.FC<React.ComponentProps<"select">> = (props) => {
+  //asd
   return (
     <div className={s["selectWrapper"]}>
-      <select {...props} className={clsx(s['select'], props.className)} />
-      <svg className={s['arrow']} width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M9.75 4.125L6 7.875L2.25 4.125" stroke="white" stroke-linecap="round" stroke-linejoin="round"/>
+      <select {...props} className={clsx(s["select"], props.className)} />
+      <svg
+        className={s["arrow"]}
+        width="12"
+        height="12"
+        viewBox="0 0 12 12"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M9.75 4.125L6 7.875L2.25 4.125"
+          stroke="white"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
       </svg>
     </div>
-  )
-}
+  );
+};
 
 export const Visualizer = () => {
   const panelRef = useRef<HTMLDivElement>(null);
@@ -226,7 +275,9 @@ export const Visualizer = () => {
     const handleUpdate = () => {
       const progress = root?.tween?.progress();
 
-      if (!markerRef.current || !trailRef.current || progress === undefined) return;
+      if (!markerRef.current || !trailRef.current || progress === undefined) {
+        return;
+      }
 
       markerRef.current.style.left = `${progress * 100}%`;
       trailRef.current.style.left = `${progress * 100}%`;
@@ -241,7 +292,9 @@ export const Visualizer = () => {
 
     /* Get last position from sessionStorage */
 
-    const lastPosition = sessionStorage.getItem("@bmsmnt/scrollytelling-visualizer:position");
+    const lastPosition = sessionStorage.getItem(
+      "@bmsmnt/scrollytelling-visualizer:position"
+    );
 
     if (!panel || !panelHeader) return;
 
@@ -306,7 +359,7 @@ export const Visualizer = () => {
 
     panelHeader.addEventListener("mousedown", dragMouseDown);
 
-    setInitialized(true)
+    setInitialized(true);
 
     return () => {
       panelHeader.removeEventListener("mousedown", dragMouseDown);
@@ -383,7 +436,10 @@ export const Visualizer = () => {
   if (dismiss) return <></>;
 
   return (
-    <div className={clsx(s["root"], initialized && s['initialized'])} ref={panelRef}>
+    <div
+      className={clsx(s["root"], initialized && s["initialized"])}
+      ref={panelRef}
+    >
       <header className={s["header"]} ref={panelHeaderRef}>
         <div className={s["actions"]}>
           <Select
@@ -407,11 +463,21 @@ export const Visualizer = () => {
                 triggerElement.scrollIntoView({ behavior: "smooth" });
               }
             }}
-          > 
-            <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M10.875 6.00004L6.398 1.52254C6.178 1.30304 5.822 1.30304 5.6025 1.52254L1.125 6.00004M9.75 4.87504V9.93754C9.75 10.248 9.498 10.5 9.1875 10.5H7.125V8.06254C7.125 7.75204 6.873 7.50004 6.5625 7.50004H5.4375C5.127 7.50004 4.875 7.75204 4.875 8.06254V10.5H2.8125C2.502 10.5 2.25 10.248 2.25 9.93754V4.87504M7.875 10.5H3.75" stroke="white" stroke-linecap="round" stroke-linejoin="round"/>
+          >
+            <svg
+              width="12"
+              height="12"
+              viewBox="0 0 12 12"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M10.875 6.00004L6.398 1.52254C6.178 1.30304 5.822 1.30304 5.6025 1.52254L1.125 6.00004M9.75 4.87504V9.93754C9.75 10.248 9.498 10.5 9.1875 10.5H7.125V8.06254C7.125 7.75204 6.873 7.50004 6.5625 7.50004H5.4375C5.127 7.50004 4.875 7.75204 4.875 8.06254V10.5H2.8125C2.502 10.5 2.25 10.248 2.25 9.93754V4.87504M7.875 10.5H3.75"
+                stroke="white"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
             </svg>
-
             SCROLL TO ROOT
           </button>
         </div>
@@ -503,7 +569,7 @@ export const Visualizer = () => {
                       </div>
                     );
                   }
-  
+
                   if (data.type === "waypoint") {
                     return (
                       <div className={s["row"]} key={idx}>
@@ -514,7 +580,7 @@ export const Visualizer = () => {
 
                   return <></>;
                 })}
-              </div> 
+              </div>
               <div className={s["progress"]}>
                 <div className={s["marker"]} ref={markerRef}>
                   <span className={s["thumb"]}>
@@ -553,17 +619,18 @@ export const Visualizer = () => {
                   <div className={s["gradient"]} ref={trailRef} />
                 </div>
               </div>
-            </div> 
+            </div>
           </main>
           <footer className={s["footer"]}>
             <span>
-              Visualizer - <span className={s["version"]}>v.{libPackage.version}</span>
+              Visualizer -{" "}
+              <span className={s["version"]}>v.{libPackage.version}</span>
             </span>
-            <span>  
+            <span>
               made with 🖤 by{" "}
               <a
                 href="https://basement.studio"
-                target="_blank" 
+                target="_blank"
                 className={s["bsmnt"]}
                 rel="noopener"
               >

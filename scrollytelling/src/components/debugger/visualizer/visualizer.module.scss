@@ -1,13 +1,13 @@
-@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=JetBrains+Mono&display=swap");
 
 .root {
-  --color-gray-lighter: #A3A3A3;
+  --color-gray-lighter: #a3a3a3;
   --color-gray-light: #383838;
   --color-gray: #232323;
   --color-gray-dark: #121212;
   --color-black: #000000;
   --color-white: #ffffff;
-  --color-orange: #FF4D00;
+  --color-orange: #ff4d00;
 
   display: flex;
   flex-direction: column;
@@ -23,8 +23,9 @@
   line-height: 1;
   top: 16px;
   left: 16px;
-  font-family: 'JetBrains Mono', monospace;
+  font-family: "JetBrains Mono", monospace;
   visibility: hidden;
+  color: var(--color-white);
 
   &.initialized {
     visibility: visible;
@@ -117,7 +118,7 @@
           }
         }
       }
-      
+
       .progress {
         pointer-events: none;
         position: absolute;
@@ -138,7 +139,11 @@
             top: 0;
             bottom: 0;
             width: 200px;
-            background: linear-gradient(270deg, rgba(255, 255, 255, 0.14) 0.53%, rgba(255, 255, 255, 0) 100%);
+            background: linear-gradient(
+              270deg,
+              rgba(255, 255, 255, 0.14) 0.53%,
+              rgba(255, 255, 255, 0) 100%
+            );
             transform: translateX(-100%);
           }
         }
@@ -152,7 +157,7 @@
           background: var(--color-white);
           box-sizing: content-box;
           font-size: 14px;
-  
+
           .thumb {
             top: 0;
             transform: translateX(-50%) translateY(-100%);
@@ -162,7 +167,7 @@
             flex-direction: column;
             align-items: center;
             padding-bottom: 2px;
-  
+
             .percent {
               line-height: 1;
               padding-bottom: 3px;
@@ -243,7 +248,7 @@
 
 .waypoint {
   --start-offset-percentage: 0;
-  
+
   position: relative;
   left: var(--start-offset-percentage);
   width: 22px;
@@ -279,7 +284,7 @@
     position: absolute;
     left: -8px;
     transform: translateX(-50%);
-    
+
     &.active {
       opacity: 1;
       transform: translateX(-100%) scale(1.2);
@@ -289,7 +294,7 @@
 
 .selectWrapper {
   position: relative;
-  
+
   .select {
     appearance: none;
     cursor: pointer;
@@ -300,12 +305,13 @@
     width: max-content;
     min-width: 110px;
     padding: 0 8px;
+    padding-right: 24px;
   }
 
   .arrow {
     pointer-events: none;
     position: absolute;
-    content: '';
+    content: "";
     right: 8px;
     top: 50%;
     width: 12px;
