@@ -11,9 +11,17 @@ export const LastParallax = () => {
     <Scrollytelling.Root
       start="top bottom"
       scrub={0.75}
-      // debug={{ label: "last parallax" }}
+      debug={{ label: "last parallax" }}
     >
       <section className={s["section"]}>
+        <Scrollytelling.Waypoint
+          at={50}
+          tween={{
+            target: "body",
+            duration: 0.5,
+            to: { background: "white", color: "black" },
+          }}
+        />
         <div className="wrapper">
           <Scrollytelling.Parallax
             tween={{
