@@ -1,31 +1,40 @@
 import { defineConfig } from "tsup";
+import { ScssModulesPlugin } from "esbuild-scss-modules-plugin";
 
-const prependUseClientPlugin = {
-  name: "prepend-use-client",
+const fixGsapImportPlugin = {
+  name: "fix-gsap-import",
   setup(build: any) {
     build.onEnd((result: any) => {
-      result.outputFiles
-        ?.filter((file: any) => !file.path.endsWith(".map"))
-        .forEach(async (file: any) => {
-          // add 'use client' for RSC
+      result.outputFiles?.forEach(async (file: any) => {
+        if (file.path.endsWith(".js")) {
+          // change gsap import to point to the cjs one https://greensock.com/forums/topic/26104-nuxt-gsapdraggable-cannot-use-import-statement-outside-a-module/
+          // and https://github.com/basementstudio/scrollytelling/issues/33
           Object.defineProperty(file, "text", {
-            value: `"use client";\n${file.text}`,
+            value: file.text.replace(
+              "gsap/ScrollTrigger",
+              "gsap/dist/ScrollTrigger"
+            ),
           });
-          if (file.path.endsWith(".js")) {
-            // change gsap import to point to the cjs one https://greensock.com/forums/topic/26104-nuxt-gsapdraggable-cannot-use-import-statement-outside-a-module/
-            // and https://github.com/basementstudio/scrollytelling/issues/33
-            Object.defineProperty(file, "text", {
-              value: file.text.replace(
-                "gsap/ScrollTrigger",
-                "gsap/dist/ScrollTrigger"
-              ),
-            });
-          }
-        });
+        }
+      });
     });
   },
 };
 
 export default defineConfig({
-  esbuildPlugins: [prependUseClientPlugin],
+  esbuildPlugins: [fixGsapImportPlugin, ScssModulesPlugin()],
+  banner: {
+    js: `"use client";`,
+  },
+  entry: {
+    index: "./src/index.ts",
+  },
+  dts: true,
+  format: ["cjs", "esm"],
+  sourcemap: false,
+  minify: process.env.NODE_ENV !== "development",
+  treeshake: true,
+  splitting: true,
+  injectStyle: true,
+  bundle: true,
 });

@@ -1,48 +1,28 @@
-import * as React from "react";
-import { useScrollytelling } from "../../context";
+import { useEffect, useState } from "react";
+import { Visualizer } from "./visualizer";
+import { Portal } from "@radix-ui/react-portal";
 
 // ---- Debugger
 
-export const Debugger = () => {
-  const { timeline, rootRef } = useScrollytelling();
-  const [progress, setProgress] = React.useState<{
-    percentage: string;
-    px: string;
-  }>();
+export default function Debugger() {
+  const [mountInstance, setMountInstance] = useState(false);
 
-  React.useEffect(() => {
-    if (!timeline || !rootRef.current) return;
-    const handleUpdate = () => {
-      const progress = timeline.progress();
-      if (!timeline.scrollTrigger) return;
-
-      const start = timeline.scrollTrigger.start;
-      const end = timeline.scrollTrigger.end;
-      const scroll = (end - start) * progress;
-      setProgress({
-        percentage: `${(progress * 100).toFixed(2)}%`,
-        px: `${scroll.toFixed(0)}px`,
-      });
+  useEffect(() => {
+    const w = window as {
+      __scrollytelling_alreadyMountedDebuggerInstance?: boolean;
     };
 
-    timeline.eventCallback("onUpdate", handleUpdate);
+    const alreadyMountedInstance =
+      w.__scrollytelling_alreadyMountedDebuggerInstance;
+    if (alreadyMountedInstance) return;
+    setMountInstance(true);
+    w.__scrollytelling_alreadyMountedDebuggerInstance = true;
+  }, []);
 
-    return () => {
-      timeline.eventCallback("onUpdate", null);
-    };
-  }, [timeline, rootRef]);
-
+  if (!mountInstance) return <></>;
   return (
-    <div
-      style={{
-        width: "370px",
-        padding: "24px",
-        border: "1px solid black",
-        fontSize: "12px",
-        background: "#360202",
-      }}
-    >
-      <pre>{JSON.stringify({ progress }, null, 2)}</pre>
-    </div>
+    <Portal>
+      <Visualizer />
+    </Portal>
   );
-};
+}

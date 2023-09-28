@@ -13,6 +13,7 @@ import {
 import * as React from "react";
 import { useScrollytelling } from "../../primitive";
 import { getTweenTarget, getValidAt, buildDeclarativeTween } from "../../util";
+import { DataAttribute } from "../debugger/visualizer/shared-types";
 
 export function Waypoint(
   props: WaypointBaseDef & {
@@ -34,7 +35,7 @@ export function Waypoint({
   label,
   onCall,
   onReverseCall,
-  disabled = true,
+  disabled = false,
 }: WaypointBaseDef & {
   children?: AnimationProps["children"];
   tween?: SimpleTween & { target?: TweenTarget };
@@ -46,6 +47,8 @@ export function Waypoint({
   );
 
   const { timeline } = useScrollytelling();
+
+  const waypointLabel = label ?? `label-${id}`;
 
   React.useEffect(() => {
     if (!timeline || disabled) return;
@@ -68,7 +71,20 @@ export function Waypoint({
     const validAt = getValidAt(at);
 
     // create a new paused set
-    const newSet = gsap.set({}, { id, paused: true });
+    const newSet = gsap.set(
+      {},
+      {
+        id,
+        paused: true,
+        data: {
+          id,
+          type: "waypoint",
+          rootId: timeline.data.id,
+          isScrollytellingTween: true,
+          label: waypointLabel,
+        } satisfies DataAttribute,
+      }
+    );
 
     /**
      * if the lastStateRef is "complete", it means that this waypoint was already triggered
@@ -84,11 +100,13 @@ export function Waypoint({
     // set the callbacks
     newSet.vars.onComplete = () => {
       lastStateRef.current = "complete";
+      newSet.data._internalOnCall?.()
       onCall?.();
       generatedTween?.play();
     };
     newSet.vars.onReverseComplete = () => {
       lastStateRef.current = "reverse-complete";
+      newSet.data._internalOnReverseCall?.()
       onReverseCall?.();
       if (!tween?.forwards) {
         generatedTween?.reverse();
@@ -101,16 +119,14 @@ export function Waypoint({
     // this won't actually play it. it will enable it so that the timeline can play it whenever it needs to
     newSet.play();
 
-    if (label) {
-      timeline.addLabel(label, validAt);
-    }
+    timeline.addLabel(waypointLabel, validAt);
 
     return () => {
       gsap.getById(id)?.revert();
       cleanupTween?.();
-      if (label) timeline.removeLabel(label);
+      timeline.removeLabel(waypointLabel);
     };
-  }, [at, disabled, id, label, onCall, onReverseCall, timeline, tween]);
+  }, [at, disabled, id, waypointLabel, onCall, onReverseCall, timeline, tween]);
 
   if (children) {
     return <Slot ref={ref}>{children}</Slot>;
