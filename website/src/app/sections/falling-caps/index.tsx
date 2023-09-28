@@ -78,34 +78,24 @@ export const FallingCaps = () => {
           </div>
 
           <p className={s["paragraph"]}>
-            {splittedText.map((word, wordIdx) => {
-              const currWordTimeline = perWordTimeline[wordIdx];
-
-              if (!currWordTimeline) {
-                return null;
-              }
-
-              return (
-                <Scrollytelling.Animation
-                  tween={{
-                    start: currWordTimeline.start,
-                    end: currWordTimeline.end,
-                    fromTo: [
-                      {
-                        opacity: 0.2,
-                      },
-                      {
-                        opacity: 1,
-                        ease: "power2.out",
-                      },
-                    ],
-                  }}
-                  key={wordIdx}
-                >
-                  {word}
-                </Scrollytelling.Animation>
-              );
-            })}
+            <Scrollytelling.Stagger
+              overlap={0.7}
+              tween={{
+                start: 0,
+                end: 50,
+                fromTo: [
+                  {
+                    opacity: 0.2,
+                  },
+                  {
+                    opacity: 1,
+                    ease: "power2.out",
+                  },
+                ],
+              }}
+            >
+              {splittedText}
+            </Scrollytelling.Stagger>
           </p>
         </div>
       </section>

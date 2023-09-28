@@ -121,3 +121,5 @@ export function getValidAt(at: number) {
   }
   return at;
 }
+
+export const isDev = process.env.NODE_ENV === "development";
