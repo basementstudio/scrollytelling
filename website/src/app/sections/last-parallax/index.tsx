@@ -11,10 +11,26 @@ export const LastParallax = () => {
     <Scrollytelling.Root
       start="top bottom"
       scrub={0.75}
-      // debug={{ label: "last parallax" }}
+      debug={{ label: "last parallax" }}
     >
       <section className={s["section"]}>
         <div className="wrapper">
+          <Scrollytelling.Waypoint at={50} tween={{ target: ['body'], to: { background: 'white', color: 'black' }, duration: 0.35 }} />
+          <Scrollytelling.Waypoint at={100} tween={{ target: ['body'], to: { background: 'black', color: 'white' }, duration: 0.35 }} />
+          <Scrollytelling.Parallax
+            tween={{
+              start: 0,
+              end: 100,
+              movementY: { value: 40, unit: "px" },
+            }}
+          >
+            <Image
+              alt="PC"
+              className={s["pc"]}
+              src={PC_IMAGE}
+              placeholder="blur"
+            />
+          </Scrollytelling.Parallax>
           <Scrollytelling.Parallax
             tween={{
               start: 0,
@@ -44,25 +60,11 @@ export const LastParallax = () => {
               ],
             }}
           >
-            <h2>
+            <h2 className={s['title']}>
               THAT&apos;S ALL, <br />
               FOLKS
             </h2>
           </Scrollytelling.Animation>
-          <Scrollytelling.Parallax
-            tween={{
-              start: 0,
-              end: 100,
-              movementY: { value: 40, unit: "px" },
-            }}
-          >
-            <Image
-              alt="PC"
-              className={s["pc"]}
-              src={PC_IMAGE}
-              placeholder="blur"
-            />
-          </Scrollytelling.Parallax>
         </div>
       </section>
     </Scrollytelling.Root>
