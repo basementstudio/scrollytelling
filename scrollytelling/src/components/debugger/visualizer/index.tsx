@@ -25,8 +25,6 @@ const Tween = ({
   const [isHovering, setIsHovering] = useState(false);
   const [active, setActive] = useState(false);
 
-  const data = tween.data;
-
   // Highlight tween target element on hover
   useEffect(() => {
     if (isHovering) {
@@ -104,20 +102,16 @@ const Tween = ({
       onMouseEnter={() => setIsHovering(true)}
       onMouseLeave={() => setIsHovering(false)}
       onClick={() => {
-        // todo scroll to regular tweens
-        // should we have a label for every timeline? or is there an easier way to do this?
-
         const st = root.tween?.scrollTrigger;
         if (!st) return;
 
-        if (data.type === "waypoint") {
-          // scroll to label
-          const foundLabel = root.tween?.labels[data.label];
-          if (foundLabel) {
-            const targetPx = st.labelToScroll(data.label);
-            window.scrollTo({ top: targetPx + 0, behavior: "smooth" });
-          }
-        }
+        const start = st.start;
+        const end = st.end;
+        const scroll = start + (end - start) * (tween._start / 100);
+
+        console.log({ start, end, tweenStart: tween._start });
+
+        window.scrollTo({ top: scroll, behavior: "smooth" });
       }}
     >
       {targetString}
@@ -127,6 +121,7 @@ const Tween = ({
 
 const Waypoint = ({
   tween,
+  root,
 }: {
   tween: VisualizerItem;
   root: VisualizerRoot;
@@ -155,6 +150,19 @@ const Waypoint = ({
         "--start-offset-percentage": tween._start + "%",
       }}
       className={s["waypoint"]}
+      onClick={() => {
+        const st = root.tween?.scrollTrigger;
+        if (!st) return;
+
+        if (tween.data.type === "waypoint") {
+          // scroll to label
+          const foundLabel = root.tween?.labels[tween.data.label];
+          if (foundLabel) {
+            const targetPx = st.labelToScroll(tween.data.label);
+            window.scrollTo({ top: targetPx + 0, behavior: "smooth" });
+          }
+        }
+      }}
     >
       <span
         className={clsx(
