@@ -4,6 +4,8 @@ import Image from "next/image";
 import bsmtTeamImg from "../../../../public/footer/basement-team-footer.jpg";
 import * as Scrollytelling from "~/lib/scrollytelling-client";
 import QRImg from "../../../../public/footer/QR.svg";
+import confetti from "canvas-confetti"
+
 
 import s from "./footer.module.scss";
 import Link from "next/link";
@@ -11,7 +13,7 @@ import { DottedDiv } from "../../components/dotted-container";
 import basementTeamSVG from "../../../../public/footer/basement-team.svg";
 import { useMedia } from "../../../hooks/use-media";
 import { toVw } from "../../../lib/utils";
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import clsx from "clsx";
 
 const ghHref = "https://github.com/basementstudio/scrollytelling";
@@ -22,7 +24,7 @@ export const Footer = () => {
   return (
     <Scrollytelling.Root
       start="top 80%"
-      // debug={{ label: "footer" }}
+      debug={{ label: "footer" }}
     >
       <footer className={s.footer}>
         <PreFooter />
@@ -97,8 +99,37 @@ export const Footer = () => {
 };
 
 const PreFooter = () => {
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+  
+  const triggerConfetti = useCallback(() => {
+    const canvas = canvasRef.current;
+
+    if (!canvas) return;
+
+    confetti.create(canvas, {
+      resize: true,
+      useWorker: true,
+    })({
+      startVelocity: 20,
+      particleCount: 140,
+      spread: 2000,
+      gravity: 0.6,
+      origin: { y: 0.425 },
+      colors: [
+        "#ff4d00",
+        "#ff5e00",
+        "#ff8000",
+        "#ffa200",
+        "#b23500",
+        "#d84000",
+      ],
+    });
+  }, []);
+
   return (
     <div className={s["pre-footer"]}>
+      <canvas ref={canvasRef} className={s.confetti} />
+      <Scrollytelling.Waypoint at={50} onCall={triggerConfetti} />
       <div className={s["left-content"]}>
         <p>
           Now we are talking! Say hello to our brand new scrollytelling library.

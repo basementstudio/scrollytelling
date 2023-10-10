@@ -88,7 +88,7 @@ export function buildDeclarativeTween({
       gsap.fromTo(
         target,
         { ...op.fromTo[0] },
-        { ...op.fromTo[1], id, duration }
+        { ...op.fromTo[1], id, duration, paused }
       );
     }
   } else throw new Error("Invalid TweenOp");
