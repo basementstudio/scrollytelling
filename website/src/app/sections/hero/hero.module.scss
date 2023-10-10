@@ -3,6 +3,8 @@
 .pin-spacer {
   position: relative;
   z-index: 1;
+  opacity: 0;
+  transition: opacity 1s ease-in-out;
 }
 
 .header {
