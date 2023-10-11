@@ -24,7 +24,7 @@ export const Footer = () => {
   return (
     <Scrollytelling.Root
       start="top 80%"
-      debug={{ label: "footer" }}
+      // debug={{ label: "footer" }}
     >
       <footer className={s.footer}>
         <PreFooter />
