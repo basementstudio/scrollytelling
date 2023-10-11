@@ -260,6 +260,7 @@
 
       .terminal-title {
         margin: auto;
+        color: white;
       }
 
       .dots {
@@ -291,6 +292,7 @@
     padding: tovw(9px, "desktop-large", 9px) tovw(11px, "desktop-large", 11px)
       tovw(8px, "desktop-large", 8px);
     background-color: #121212;
+    color: white;
     border: 1px solid #3a3a3a;
     z-index: 100;
     pointer-events: none;
