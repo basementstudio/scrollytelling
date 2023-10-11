@@ -17,7 +17,6 @@ export const LastParallax = () => {
       <section className={s["section"]}>
         <div className="wrapper">
           <Scrollytelling.Waypoint at={50} tween={{ target: ['body'], to: { background: 'white', color: 'black' }, duration: 0.35 }} />
-          <Scrollytelling.Waypoint at={100} tween={{ target: ['body'], to: { background: 'black', color: 'white' }, duration: 0.35 }} />
           <Scrollytelling.Waypoint at={75} tween={{ target: ['#smile-image', '#pc-image'], fromTo: [{ opacity: 0, scale: 0.4 }, { opacity: 1, scale: 1, ease: 'elastic.out(1,0.5)' }], duration: 1.2 }} />
           <Image
             alt="PC"

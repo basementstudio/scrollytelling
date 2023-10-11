@@ -130,6 +130,7 @@ const PreFooter = () => {
     <div className={s["pre-footer"]}>
       <canvas ref={canvasRef} className={s.confetti} />
       <Scrollytelling.Waypoint at={50} onCall={triggerConfetti} />
+      <Scrollytelling.Waypoint at={75} tween={{ target: ['body'], to: { background: 'black', color: 'white' }, duration: 0.35 }} />
       <div className={s["left-content"]}>
         <p>
           Now we are talking! Say hello to our brand new scrollytelling library.
