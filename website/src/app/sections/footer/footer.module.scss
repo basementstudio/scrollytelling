@@ -100,18 +100,23 @@
   display: flex;
   align-items: center;
   gap: tovw(100px, "desktop-large", 100px);
-  padding: 0 tovw(282px, "desktop-large", 32px);
-  margin: 14vw auto;
+  padding: 14vw tovw(282px, "desktop-large", 32px);
 
   @media screen and (max-width: 1024px) {
-    margin: tovw(160px, "desktop") auto;
-    padding: 0 8vw;
+    padding: tovw(160px, "desktop") 8vw;
   }
 
   @media screen and (max-width: 800px) {
     width: 100%;
-    padding: 0;
-    margin: 0 auto tovw(40px, "mobile");
+    padding: 0 auto tovw(40px, "mobile");
+  }
+
+  .confetti {
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    position: absolute;
   }
 
   p {
@@ -202,6 +207,7 @@
     }
 
     .content {
+      position: relative;
       display: flex;
       align-items: center;
       padding: 0 tovw(28px, "desktop-large", 28px);
@@ -254,6 +260,7 @@
 
       .terminal-title {
         margin: auto;
+        color: white;
       }
 
       .dots {
@@ -285,6 +292,7 @@
     padding: tovw(9px, "desktop-large", 9px) tovw(11px, "desktop-large", 11px)
       tovw(8px, "desktop-large", 8px);
     background-color: #121212;
+    color: white;
     border: 1px solid #3a3a3a;
     z-index: 100;
     pointer-events: none;

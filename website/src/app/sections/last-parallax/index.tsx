@@ -1,6 +1,7 @@
+'use client'
+
 import * as Scrollytelling from "~/lib/scrollytelling-client";
 import Image from "next/image";
-
 import SMILE_IMAGE from "../../../../public/images/parallax/smile.png";
 import PC_IMAGE from "../../../../public/images/parallax/pc.png";
 
@@ -15,20 +16,22 @@ export const LastParallax = () => {
     >
       <section className={s["section"]}>
         <div className="wrapper">
-          <Scrollytelling.Parallax
-            tween={{
-              start: 0,
-              end: 100,
-              movementY: { value: -30, unit: "px" },
-            }}
-          >
-            <Image
-              alt="Smile"
-              className={s["smile"]}
-              src={SMILE_IMAGE}
-              placeholder="blur"
-            />
-          </Scrollytelling.Parallax>
+          <Scrollytelling.Waypoint at={50} tween={{ target: ['body'], to: { background: 'white', color: 'black' }, duration: 0.35 }} />
+          <Scrollytelling.Waypoint at={75} tween={{ target: ['#smile-image', '#pc-image'], fromTo: [{ opacity: 0, scale: 0.4 }, { opacity: 1, scale: 1, ease: 'elastic.out(1,0.5)' }], duration: 1.2 }} />
+          <Image
+            alt="PC"
+            className={s["pc"]}
+            src={PC_IMAGE}
+            placeholder="blur"
+            id="pc-image"
+          />
+          <Image
+            alt="Smile"
+            className={s["smile"]}
+            src={SMILE_IMAGE}
+            placeholder="blur"
+            id="smile-image"
+          />
           <Scrollytelling.Animation
             tween={{
               start: 0,
@@ -44,25 +47,11 @@ export const LastParallax = () => {
               ],
             }}
           >
-            <h2>
+            <h2 className={s['title']}>
               THAT&apos;S ALL, <br />
               FOLKS
             </h2>
           </Scrollytelling.Animation>
-          <Scrollytelling.Parallax
-            tween={{
-              start: 0,
-              end: 100,
-              movementY: { value: 40, unit: "px" },
-            }}
-          >
-            <Image
-              alt="PC"
-              className={s["pc"]}
-              src={PC_IMAGE}
-              placeholder="blur"
-            />
-          </Scrollytelling.Parallax>
         </div>
       </section>
     </Scrollytelling.Root>

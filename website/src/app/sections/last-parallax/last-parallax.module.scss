@@ -4,7 +4,6 @@
   min-height: 100vh;
   overflow: hidden;
   position: relative;
-  z-index: 1;
 
   @media screen and (max-width: 800px) {
     margin-top: -34vh;
@@ -40,6 +39,11 @@
     width: tovw(603px);
     height: tovw(664px);
     z-index: 1;
+  }
+
+  .title {
+    color: white;
+    mix-blend-mode: difference;
   }
 
   .smile {
