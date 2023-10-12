@@ -63,7 +63,7 @@ export const FallingCaps = () => {
 
           <p className={s["paragraph"]}>
             <Scrollytelling.Stagger
-              overlap={0.7}
+              overlap={0}
               tween={{
                 start: 0,
                 end: 50,
