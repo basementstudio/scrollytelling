@@ -4,8 +4,7 @@ import Image from "next/image";
 import bsmtTeamImg from "../../../../public/footer/basement-team-footer.jpg";
 import * as Scrollytelling from "~/lib/scrollytelling-client";
 import QRImg from "../../../../public/footer/QR.svg";
-import confetti from "canvas-confetti"
-
+import confetti from "canvas-confetti";
 
 import s from "./footer.module.scss";
 import Link from "next/link";
@@ -22,10 +21,7 @@ export const Footer = () => {
   const isDesktopSm = useMedia("(min-width: 1024px)");
 
   return (
-    <Scrollytelling.Root
-      start="top 80%"
-      // debug={{ label: "footer" }}
-    >
+    <Scrollytelling.Root start="top 80%" debug={{ label: "Footer" }}>
       <footer className={s.footer}>
         <PreFooter />
         <div className={s["imgs-container"]}>
@@ -100,7 +96,7 @@ export const Footer = () => {
 
 const PreFooter = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  
+
   const triggerConfetti = useCallback(() => {
     const canvas = canvasRef.current;
 
@@ -130,7 +126,14 @@ const PreFooter = () => {
     <div className={s["pre-footer"]}>
       <canvas ref={canvasRef} className={s.confetti} />
       <Scrollytelling.Waypoint at={50} onCall={triggerConfetti} />
-      <Scrollytelling.Waypoint at={75} tween={{ target: ['body'], to: { background: 'black', color: 'white' }, duration: 0.35 }} />
+      <Scrollytelling.Waypoint
+        at={75}
+        tween={{
+          target: ["body"],
+          to: { background: "black", color: "white" },
+          duration: 0.35,
+        }}
+      />
       <div className={s["left-content"]}>
         <p>
           Now we are talking! Say hello to our brand new scrollytelling library.
