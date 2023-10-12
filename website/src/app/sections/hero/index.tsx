@@ -8,14 +8,34 @@ import { LogoBasement } from "../../logos/logo";
 import { CanvasWithMacModel } from "./mac-model";
 import { toVw } from "~/lib/utils";
 import { useMedia } from "~/hooks/use-media";
+import { useEffect } from "react";
 
 export const Hero = () => {
   const isMobileSize = useMedia("(max-width: 768px)");
 
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "k") {
+        const el = document.querySelector<HTMLDivElement>(
+          `.${s["pin-spacer"]}`
+        );
+        if (el) {
+          el.style.opacity = "1";
+        }
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, []);
+
   return (
     <Scrollytelling.Root
       defaults={{ ease: "linear" }}
-      // debug={{ label: "hero" }}
+      debug={{ label: "Hero" }}
     >
       <Scrollytelling.Pin
         childHeight={"100vh"}
