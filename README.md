@@ -5,6 +5,7 @@ BSMNT Scrollytelling is a library for creating Scrollytelling animations. It's p
 ![Frame 7](https://user-images.githubusercontent.com/40034115/233121992-12eb2448-4f62-4cba-b9a3-c0d3e9233aa7.jpg)
 
 ---
+
 ### 👇 New documentation here! 👇
 
 - 💡 [Core Concepts](/docs/core-concepts.md)
@@ -22,7 +23,7 @@ yarn add @bsmnt/scrollytelling gsap
 
 ## Why
 
-At [basement](https://basement.studio/), we've built a bunch of websites that use scroll animations. Over the years, we faced some issues that required solutions that we copy-pased throughout different project. While preparing his talk for the React Miami Conference, [JB](https://twitter.com/julianbenegas8) decided to build a library to share how we build these with the world.
+At [basement](https://basement.studio/), we've built a bunch of websites that use scroll animations. Over the years, we faced some issues that required solutions that we copy-pased throughout different project. We decided to build a library to share how we build these with the world.
 
 **Challenges we faced**
 
@@ -51,7 +52,7 @@ A simple example of how this works:
 
 - `Root`: Creates timeline and scrollTrigger, provides React Context.
 - `Animation`: Appends an animation to the timeline. Receives a `tween` prop that will control how the animation behaves.
-- `Waypoint`: Runs a callback or tween at a specific point in the timeline. Can also receive a `label` prop, that will create a GSAP label at that position. 
+- `Waypoint`: Runs a callback or tween at a specific point in the timeline. Can also receive a `label` prop, that will create a GSAP label at that position.
 - `RegisterGsapPlugins`: Registers custom GSAP plugins, if you need them for a specific use case.
 - `Parallax`: Helper to create a simple parallax.
 - `ImageSequenceCanvas`: Helper to create a simple image sequence animation.
@@ -60,7 +61,7 @@ A simple example of how this works:
 
 ## Demo
 
-For our talk at React Miami Conf, we did a small demo to showcase this library in action. This is the best place to see how the library works in a real world scenario. Check it out:
+We did a small demo to showcase this library in action. This is the best place to see how the library works in a real world scenario. Check it out:
 
 - Site URL: [https://scrollytelling.basement.studio/](https://scrollytelling.basement.studio/)
 - Code: [https://github.com/basementstudio/scrollytelling/blob/main/website/README.md](https://github.com/basementstudio/scrollytelling/blob/main/website/README.md)
@@ -86,8 +87,9 @@ Please check your `start` and `end` values for your `Root` component. A typical 
 3. the element your `Root` wraps around is only `100vh` tall, so the animation's duration is 0.
 
 To fix this, either add more height to the element your `Root` wraps, or tweak the `end` value to be something like `bottom start`, which would mean "when the bottom of the scroller hits the start of the viewport".
+
 </details>
 
-***
+---
 
 GSAP files are subject to GreenSock's standard license which can be found at [https://greensock.com/standard-license/](https://greensock.com/standard-license/)

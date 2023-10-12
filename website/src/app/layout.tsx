@@ -25,9 +25,9 @@ const basementGrotesque = localFont({
 });
 
 export const metadata: Metadata = {
-  title: "BSMNT @ React Miami Conf",
+  title: "BSMNT @ Scrollytelling",
   description:
-    "A demo website made exclusively for the React Miami Conference, to showcase a couple of cool animations powered by our new library, @bsmnt/scrollytelling.",
+    "A demo website made exclusively to showcase a couple of cool animations powered by our new library, @bsmnt/scrollytelling.",
   viewport: {
     height: "device-height",
     initialScale: 1,
@@ -41,17 +41,17 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     creator: "@basementstudio",
-    description: "BSMNT @ React Miami Conf",
+    description: "BSMNT @ Scrollytelling",
     images: [{ width: 1200, height: 630, url: `${siteOrigin}/og.jpg` }],
     site: "@basementstudio",
-    title: "BSMNT @ React Miami Conf",
+    title: "BSMNT @ Scrollytelling",
   },
   openGraph: {
-    description: "BSMNT @ React Miami Conf",
+    description: "BSMNT @ Scrollytelling",
     images: [{ width: 1200, height: 630, url: `${siteOrigin}/og.jpg` }],
     locale: "en-US",
-    siteName: "BSMNT @ React Miami Conf",
-    title: "BSMNT @ React Miami Conf",
+    siteName: "BSMNT @ Scrollytelling",
+    title: "BSMNT @ Scrollytelling",
     type: "website",
     url: siteOrigin,
   },
