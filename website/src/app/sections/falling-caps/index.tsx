@@ -6,7 +6,6 @@ import s from "./falling-caps.module.scss";
 import { CapsModel } from "./caps";
 import { Canvas } from "@react-three/fiber";
 import { useMemo } from "react";
-import { getTimeline } from "../../../lib/utils";
 
 const splitText = (text: string, wordClass?: string) => {
   const wordsArray = text.split(" ");
@@ -45,23 +44,8 @@ export const FallingCaps = () => {
     []
   );
 
-  const perWordTimeline = useMemo(
-    () =>
-      getTimeline({
-        start: 0,
-        end: 50,
-        /* Chunk per word */
-        chunks: splittedText.length,
-        overlap: 0.7,
-      }),
-    [splittedText]
-  );
-
   return (
-    <Scrollytelling.Root
-      end="bottom bottom"
-      // debug={{ label: "falling caps" }}
-    >
+    <Scrollytelling.Root end="bottom bottom" debug={{ label: "Falling Caps" }}>
       <section className={s["spacer"]}>
         <div className={s["pin"]}>
           <div className={s["canvas-container"]}>

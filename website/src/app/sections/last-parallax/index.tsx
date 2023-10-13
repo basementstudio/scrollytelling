@@ -1,4 +1,4 @@
-'use client'
+"use client";
 
 import * as Scrollytelling from "~/lib/scrollytelling-client";
 import Image from "next/image";
@@ -12,12 +12,29 @@ export const LastParallax = () => {
     <Scrollytelling.Root
       start="top bottom"
       scrub={0.75}
-      // debug={{ label: "last parallax" }}
+      debug={{ label: "Last Parallax" }}
     >
       <section className={s["section"]}>
         <div className="wrapper">
-          <Scrollytelling.Waypoint at={50} tween={{ target: ['body'], to: { background: 'white', color: 'black' }, duration: 0.35 }} />
-          <Scrollytelling.Waypoint at={75} tween={{ target: ['#smile-image', '#pc-image'], fromTo: [{ opacity: 0, scale: 0.4 }, { opacity: 1, scale: 1, ease: 'elastic.out(1,0.5)' }], duration: 1.2 }} />
+          <Scrollytelling.Waypoint
+            at={50}
+            tween={{
+              target: ["body"],
+              to: { background: "white", color: "black" },
+              duration: 0.35,
+            }}
+          />
+          <Scrollytelling.Waypoint
+            at={75}
+            tween={{
+              target: ["#smile-image", "#pc-image"],
+              fromTo: [
+                { opacity: 0, scale: 0.4 },
+                { opacity: 1, scale: 1, ease: "elastic.out(1,0.5)" },
+              ],
+              duration: 1.2,
+            }}
+          />
           <Image
             alt="PC"
             className={s["pc"]}
@@ -47,7 +64,7 @@ export const LastParallax = () => {
               ],
             }}
           >
-            <h2 className={s['title']}>
+            <h2 className={s["title"]}>
               THAT&apos;S ALL, <br />
               FOLKS
             </h2>

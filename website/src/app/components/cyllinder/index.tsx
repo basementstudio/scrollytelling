@@ -5,9 +5,8 @@ import Image from "next/image";
 
 import s from "./cyllinder.module.scss";
 import clsx from "clsx";
-import { defaultConfig, useMapToCylinder } from "./helpers";
+import { useMapToCylinder } from "./helpers";
 import { Experiment } from "../../../lib/types";
-import { useMedia } from "../../../hooks/use-media";
 import Link from "next/link";
 import { useViewportSize } from "~/hooks/use-viewport";
 
@@ -22,8 +21,7 @@ const itemsInViewAtOnce = 7;
 const itemsPadding = 4;
 
 export const Cyllinder: React.FC<CyllinderProps> = ({ experiments }) => {
-  const { height, aspect } = useViewportSize();
-  const isMobileSize = useMedia("(max-width: 768px)");
+  const { height } = useViewportSize();
   const pinSpacerHeight = `calc(3 * ${itemHeight} * ${
     Math.max(itemsInViewAtOnce, experiments.length) + itemsPadding
   })`;
@@ -51,9 +49,7 @@ export const Cyllinder: React.FC<CyllinderProps> = ({ experiments }) => {
       callbacks={{
         onRefresh: () => update(progress.value),
       }}
-      // debug={{
-      //   label: "cylinder",
-      // }}
+      debug={{ label: "Cylinder" }}
     >
       <div
         className={s["section"]}
