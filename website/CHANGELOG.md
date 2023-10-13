@@ -1,5 +1,15 @@
 # website
 
+## 0.1.6
+
+### Patch Changes
+
+- ce898b6: Visualizer.
+- Updated dependencies [bb9d8dd]
+- Updated dependencies [ce898b6]
+- Updated dependencies [d852467]
+  - @bsmnt/scrollytelling@0.3.0
+
 ## 0.1.5
 
 ### Patch Changes
