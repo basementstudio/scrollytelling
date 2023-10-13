@@ -1,5 +1,16 @@
 # @bsmnt/scrollytelling
 
+## 0.3.0
+
+### Minor Changes
+
+- ce898b6: Visualizer.
+- d852467: Add visualizer
+
+### Patch Changes
+
+- bb9d8dd: click to scroll to tween functionality
+
 ## 0.2.8
 
 ### Patch Changes
