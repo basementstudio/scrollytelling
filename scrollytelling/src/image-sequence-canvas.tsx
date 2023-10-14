@@ -2,6 +2,17 @@ import * as React from "react";
 import { mergeRefs } from "./util/merge-refs";
 
 /**
+ * TODO
+ *
+ * - array of `images` instead of `getFrameSrc`? not sure...
+ * - Animation inside this component — receive props for animation.
+ * - `preload` prop to preload images. undefined | boolean | string[]
+ * - Slot for `canvas`
+ * - user doesn't need to useRef or else... let's just do it all
+ * - we need to figure out image aspect ratio, and draw image quality
+ */
+
+/**
  * ImageSequenceCanvas
  */
 
