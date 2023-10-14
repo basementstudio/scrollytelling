@@ -22,7 +22,7 @@
     width: max-content;
   }
 
-  p {
+  .cta {
     font-size: tovw(24px, "desktop-large", 16px);
     font-weight: 800;
     line-height: 1.2;
@@ -33,6 +33,12 @@
 
     @media screen and (max-width: 800px) {
       display: none;
+    }
+
+    button {
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
   }
 }
