@@ -11,7 +11,8 @@
 
   display: flex;
   flex-direction: column;
-  width: 55vw;
+  width: 90vw;
+  max-width: 800px;
   height: auto;
   max-height: 50vh;
   position: fixed;
@@ -324,4 +325,11 @@
 .highlight {
   background: #ec5b29aa;
   z-index: 999;
+}
+
+@media (max-width: 768px) {
+  .root {
+    left: 50%;
+    transform: translateX(-50%);
+  }
 }
