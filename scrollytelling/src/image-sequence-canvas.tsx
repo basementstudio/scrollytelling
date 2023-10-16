@@ -2,27 +2,40 @@ import * as React from "react";
 import { mergeRefs } from "./util/merge-refs";
 
 /**
+ * TODO
+ *
+ * - array of `images` instead of `getFrameSrc`? not sure...
+ * - Animation inside this component — receive props for animation.
+ * - `preload` prop to preload images. undefined | boolean | string[]
+ * - Slot for `canvas`
+ * - user doesn't need to useRef or else... let's just do it all
+ * - we need to figure out image aspect ratio, and draw image quality
+ */
+
+/**
  * ImageSequenceCanvas
  */
 
 type SupportTable = { supportsWebp: boolean; supportsAvif: boolean };
 
+export type ImageSequenceCanvasController = {
+  preload: (frameStart: number, frameEnd: number) => Promise<void>;
+  draw: (frame: number) => Promise<void>;
+  canvas: HTMLCanvasElement | null;
+};
+
 export type ImageSequenceCanvasProps = {
   getFrameSrc: (frame: number, supportTable: SupportTable) => string;
-  controllerRef: React.ForwardedRef<{
-    preload: (frameStart: number, frameEnd: number) => Promise<void>;
-    draw: (frame: number) => Promise<void>;
-    canvas: HTMLCanvasElement | null;
-  }>;
+  controllerRef: React.ForwardedRef<ImageSequenceCanvasController>;
   ref?: React.ForwardedRef<HTMLCanvasElement>;
-  /**
-   * Width and height define the drawing's quality
-   */
-  width: number;
-  /**
-   * Width and height define the drawing's quality
-   */
-  height: number;
+  // /**
+  //  * Width and height define the drawing's quality
+  //  */
+  // width: number;
+  // /**
+  //  * Width and height define the drawing's quality
+  //  */
+  // height: number;
 } & JSX.IntrinsicElements["canvas"];
 
 export const ImageSequenceCanvas = React.forwardRef<
@@ -30,6 +43,7 @@ export const ImageSequenceCanvas = React.forwardRef<
   ImageSequenceCanvasProps
 >(({ controllerRef, getFrameSrc, ...rest }, ref) => {
   const canvasRef = React.useRef<HTMLCanvasElement>(null);
+  const canvasRectRef = React.useRef<DOMRect | null>(null);
   const supportTableRef = React.useRef<SupportTable>({
     supportsAvif: false,
     supportsWebp: false,
@@ -63,8 +77,19 @@ export const ImageSequenceCanvas = React.forwardRef<
           const src = getFrameSrc(frame, supportTableRef.current);
           const canvas = canvasRef.current;
           const context = canvas?.getContext("2d");
-          if (!canvas || !context || !src) return;
+          if (!canvas || !context || !src || !canvasRectRef.current) return;
           const img = await loadImage(src);
+
+          // Get the DPR and size of the canvas
+          const dpr = window.devicePixelRatio || 1;
+
+          // Set the "actual" size of the canvas
+          canvas.width = canvasRectRef.current.width * dpr;
+          canvas.height = canvasRectRef.current.height * dpr;
+
+          // Scale the context to ensure correct drawing operations
+          // context.scale(dpr, dpr);
+
           // thanks https://stackoverflow.com/a/31910088
           // @ts-ignore
           context.mozImageSmoothingEnabled = false;
@@ -75,6 +100,35 @@ export const ImageSequenceCanvas = React.forwardRef<
           context.imageSmoothingEnabled = false;
           context.clearRect(0, 0, canvas.width, canvas.height);
           context.drawImage(img, 0, 0, canvas.width, canvas.height);
+
+          // const canvasWidth = canvas.width;
+          // const canvasHeight = canvas.height;
+          // const imgWidth = img.width;
+          // const imgHeight = img.height;
+
+          // const ratio = Math.min(
+          //   canvasWidth / imgWidth,
+          //   canvasHeight / imgHeight
+          // );
+
+          // const newWidth = imgWidth * ratio;
+          // const newHeight = imgHeight * ratio;
+
+          // const offsetX = (canvasWidth - newWidth) / 2;
+          // const offsetY = (canvasHeight - newHeight) / 2;
+
+          // context.clearRect(0, 0, canvas.width, canvas.height);
+          // context.drawImage(
+          //   img,
+          //   0,
+          //   0,
+          //   imgWidth,
+          //   imgHeight,
+          //   offsetX,
+          //   offsetY,
+          //   newWidth,
+          //   newHeight
+          // );
         },
         get canvas() {
           return canvasRef.current;
@@ -84,8 +138,48 @@ export const ImageSequenceCanvas = React.forwardRef<
     [getFrameSrc]
   );
 
-  return <canvas {...rest} ref={mergeRefs([canvasRef, ref])} />;
+  // get canvas rect into a ref, update with a resize observer
+  React.useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const resizeObserver = new ResizeObserver((entries) => {
+      const c = entries[0];
+      if (!c) return;
+      canvasRectRef.current = c.contentRect;
+      console.log("here.");
+    });
+    resizeObserver.observe(canvas);
+    return () => resizeObserver.disconnect();
+  }, []);
+
+  return (
+    <>
+      <canvas {...rest} ref={mergeRefs([canvasRef, ref])} />
+      {/* <Scrollytelling.Animation
+        tween={{
+          start: 0,
+          end: 100,
+          target: sequence,
+          to: {
+            frame: 202,
+            snap: "frame",
+            ease: "none",
+            onUpdate: () => {
+              console.log(sequence);
+              ref.current?.draw(sequence.frame);
+            },
+          },
+        }}
+      /> */}
+    </>
+  );
 });
+
+export const useImageSequence = (firstFrame = 0) => {
+  const controllerRef = React.useRef<ImageSequenceCanvasController>(null);
+  const sequence = { frame: firstFrame };
+  return { controllerRef, sequence };
+};
 
 ImageSequenceCanvas.displayName = "Scrollytelling.ImageSequenceCanvas";
 
