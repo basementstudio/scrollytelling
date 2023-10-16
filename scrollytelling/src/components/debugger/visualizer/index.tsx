@@ -463,8 +463,10 @@ export const Visualizer = () => {
               );
             })}
           </Select>
+          <div className={s['actions']}>
+
           <button
-            className={s["scrollToRoot"]}
+            className={clsx(s["button"], s["scrollToRoot"])}
             onClick={() => {
               const triggerElement = root?.tween?.scrollTrigger?.trigger;
               if (triggerElement) {
@@ -486,8 +488,12 @@ export const Visualizer = () => {
                 stroke-linejoin="round"
               />
             </svg>
-            SCROLL TO ROOT
+
+            <span className={s['text']}>
+              SCROLL TO ROOT
+            </span>
           </button>
+          </div>
         </div>
 
         <div className={s["actions"]}>
@@ -631,8 +637,8 @@ export const Visualizer = () => {
           </main>
           <footer className={s["footer"]}>
             <span>
-              Visualizer -{" "}
-              <span className={s["version"]}>v.{libPackage.version}</span>
+              Visualizer
+              <span className={s["version"]}> (v.{libPackage.version})</span>
             </span>
             <span>
               made with 🖤 by{" "}
