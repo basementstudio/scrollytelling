@@ -15,24 +15,43 @@
   @media screen and (max-width: 800px) {
     display: flex;
     justify-content: center;
+    align-items: center;
     padding: tovw(24px, "tablet", 24px) tovw(32px, "desktop-large", 16px);
+    flex-direction: column;
   }
 
   a {
     width: max-content;
   }
 
-  p {
-    font-size: tovw(24px, "desktop-large", 16px);
-    font-weight: 800;
+  .cta {
+    font-size: tovw(16px, "desktop-large", 12px);
     line-height: 1.2;
     max-width: tovw(537px);
     margin-right: 0;
     margin-left: auto;
     text-align: right;
+    display: flex;
+    align-items: center;
+    gap: toem(16px, 16px);
 
     @media screen and (max-width: 800px) {
-      display: none;
+      max-width: unset;
+      margin: 0;
+      justify-content: center;
+      margin-top: tovw(12px, "tablet", 12px);
+    }
+
+    a {
+      font-size: tovw(22px, "desktop-large", 14px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: toem(4px, 16px);
+      background-color: white;
+      border-radius: 999999px;
+      color: black;
+      padding: toem(4px, 16px) toem(8px, 16px);
     }
   }
 }

@@ -99,3 +99,8 @@ body:not(.user-is-tabbing) textarea:focus {
     }
   }
 }
+
+::selection {
+  color: #000;
+  background-color: #ff4d00;
+}
