@@ -57,22 +57,27 @@
       align-items: center;
 
       .button {
-        height: 24px;
-        width: 24px;
         padding: 4px;
         border-radius: 4px;
         background: var(--color-gray);
         border: 1px solid var(--color-gray-light);
 
         svg {
-          width: 100%;
+          width: 16px;
+          height: 16px;
         }
       }
 
       .scrollToRoot {
         display: flex;
+        align-items: center;
+        padding-left: 8px;
+        padding-right: 8px;
         gap: 0 8px;
-        padding: 0 8px;
+
+        .text {
+          transform: translateY(0.05em);
+        }
       }
     }
   }
@@ -331,5 +336,15 @@
   .root {
     left: 50%;
     transform: translateX(-50%);
+
+    .version {
+      display: none;
+    }
+
+    .scrollToRoot {
+      .text {
+        display: none;
+      }
+    }
   }
 }
