@@ -17,8 +17,8 @@
     "react-dom": ">=18"
   },
   "dependencies": {
-    "@radix-ui/react-portal": "^1.0.4",
-    "@radix-ui/react-slot": "^1.0.2"
+    "@radix-ui/react-portal": ">=1",
+    "@radix-ui/react-slot": ">=1"
   },
   "devDependencies": {
     "@types/react": "^18.2.33",
