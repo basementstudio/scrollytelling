@@ -1,45 +1,27 @@
 "use client";
 
-import { useMemo, useRef, useState } from "react";
+import { useMemo, useRef } from "react";
 import * as Scrollytelling from "~/lib/scrollytelling-client";
-import gsap from "gsap";
-import { useIsoLayoutEffect } from "~/app/hooks/use-iso-layout-effect";
 
 import s from "./horizontal-scroll.module.scss";
-
-// Define the sections for the animation
-const sectionData = [
-  { label: "SECTION 1" },
-  { label: "SECTION 2" },
-  { label: "SECTION 3" },
-  { label: "SECTION 4" },
-  { label: "SECTION 5" },
-];
 
 export const HorizontalScroll = () => {
   // Ref for the main container
   const containerRef = useRef<HTMLDivElement>(null);
 
-  // State to store the inner sections
-  const [sections, setSections] = useState<HTMLDivElement[]>([]);
-
-  // Effect to initialize the sections
-  useIsoLayoutEffect(() => {
-    if (!containerRef.current) return;
-
-    // Use a selector to find the inner sections
-    const scopedQuerySelector = gsap.utils.selector(containerRef);
-    const inner_sections = scopedQuerySelector(
-      `.${s["panel"]}`
-    ) as HTMLDivElement[];
-
-    setSections(inner_sections);
-  }, []);
+  // Define the sections for the animation
+  const sectionData = [
+    { label: "SECTION 1" },
+    { label: "SECTION 2" },
+    { label: "SECTION 3" },
+    { label: "SECTION 4" },
+    { label: "SECTION 5" },
+  ];
 
   // Calculate animation configuration for horizontal scroll
   const horizontalScrollTween = useMemo(() => {
-    return { xPercent: -100 * (sections.length - 1), ease: "none" };
-  }, [sections.length]);
+    return { xPercent: -100 * (sectionData.length - 1), ease: "none" };
+  }, [sectionData.length]);
 
   // Create animated section elements
   const sectionElements = sectionData.map((section, index) => (
@@ -60,7 +42,7 @@ export const HorizontalScroll = () => {
   // Main component with horizontal scroll effect
   return (
     <Scrollytelling.Root
-      defaults={{ ease: "linear" }}
+      defaults={{ ease: "none" }}
       debug={{ label: "Horizontal Scroll" }}
       scrub={1}
       end="+=3500"
