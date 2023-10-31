@@ -463,36 +463,33 @@ export const Visualizer = () => {
               );
             })}
           </Select>
-          <div className={s['actions']}>
-
-          <button
-            className={clsx(s["button"], s["scrollToRoot"])}
-            onClick={() => {
-              const triggerElement = root?.tween?.scrollTrigger?.trigger;
-              if (triggerElement) {
-                triggerElement.scrollIntoView({ behavior: "smooth" });
-              }
-            }}
-          >
-            <svg
-              width="12"
-              height="12"
-              viewBox="0 0 12 12"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
+          <div className={s["actions"]}>
+            <button
+              className={clsx(s["button"], s["scrollToRoot"])}
+              onClick={() => {
+                const triggerElement = root?.tween?.scrollTrigger?.trigger;
+                if (triggerElement) {
+                  triggerElement.scrollIntoView({ behavior: "smooth" });
+                }
+              }}
             >
-              <path
-                d="M10.875 6.00004L6.398 1.52254C6.178 1.30304 5.822 1.30304 5.6025 1.52254L1.125 6.00004M9.75 4.87504V9.93754C9.75 10.248 9.498 10.5 9.1875 10.5H7.125V8.06254C7.125 7.75204 6.873 7.50004 6.5625 7.50004H5.4375C5.127 7.50004 4.875 7.75204 4.875 8.06254V10.5H2.8125C2.502 10.5 2.25 10.248 2.25 9.93754V4.87504M7.875 10.5H3.75"
-                stroke="white"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              />
-            </svg>
+              <svg
+                width="12"
+                height="12"
+                viewBox="0 0 12 12"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M10.875 6.00004L6.398 1.52254C6.178 1.30304 5.822 1.30304 5.6025 1.52254L1.125 6.00004M9.75 4.87504V9.93754C9.75 10.248 9.498 10.5 9.1875 10.5H7.125V8.06254C7.125 7.75204 6.873 7.50004 6.5625 7.50004H5.4375C5.127 7.50004 4.875 7.75204 4.875 8.06254V10.5H2.8125C2.502 10.5 2.25 10.248 2.25 9.93754V4.87504M7.875 10.5H3.75"
+                  stroke="white"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
 
-            <span className={s['text']}>
-              SCROLL TO ROOT
-            </span>
-          </button>
+              <span className={s["text"]}>SCROLL TO ROOT</span>
+            </button>
           </div>
         </div>
 

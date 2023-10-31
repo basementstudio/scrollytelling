@@ -13,17 +13,16 @@ export const toVw = (px: number, base: string | number = 1920, min?: number) =>
         (typeof base === "number" ? base : Number(base.replace("px", "")))
       }vw`;
 
-
 // Overlap duration arrays by a factor mantaining the final duration between them
 const overlapDurationArrayByFactor = (
   durations: { start: number; end: number }[],
   factor: number
-  ) => {
+) => {
   const first = durations[0];
   const last = durations[durations.length - 1];
-  
-  if(first === undefined || last === undefined) {
-    throw Error('Durations array is empty');
+
+  if (first === undefined || last === undefined) {
+    throw Error("Durations array is empty");
   }
 
   /*
@@ -49,8 +48,14 @@ const overlapDurationArrayByFactor = (
     const newEnd = duration.end - overlapDurationPerDuration * i;
 
     return {
-      start: Math.max(veryStart + (newStart - veryStart) * afterOverlapDurationDiffFactor, 0),
-      end: Math.min(veryStart + (newEnd - veryStart) * afterOverlapDurationDiffFactor, 100),
+      start: Math.max(
+        veryStart + (newStart - veryStart) * afterOverlapDurationDiffFactor,
+        0
+      ),
+      end: Math.min(
+        veryStart + (newEnd - veryStart) * afterOverlapDurationDiffFactor,
+        100
+      ),
     };
   });
 
@@ -65,8 +70,8 @@ export const getTimeline = (config: {
 }) => {
   const { start, end, overlap = 0, chunks = 1 } = config;
 
-  if(overlap > 1 || overlap < 0) {
-    throw new Error('Overlap must be between 0 and 1');
+  if (overlap > 1 || overlap < 0) {
+    throw new Error("Overlap must be between 0 and 1");
   }
 
   const duration = end - start;

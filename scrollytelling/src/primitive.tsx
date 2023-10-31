@@ -50,9 +50,12 @@ interface ScrollytellingProps {
   defaults?: GSAPTweenVars | undefined;
   disabled?: boolean;
   end?: ScrollTrigger.Vars["end"];
+  fastScrollEnd?: boolean | number;
+  invalidateOnRefresh?: boolean;
   scrub?: boolean | number;
-  start?: ScrollTrigger.Vars["start"];
+  start?: ScrollTrigger.Vars["start"];  
   toggleActions?: ScrollTrigger.Vars["toggleActions"];
+  toggleClass?: string;
   trigger?: ScrollTrigger.Vars["trigger"];
 }
 
@@ -70,16 +73,19 @@ const Scrollytelling = ({
   defaults,
   disabled = false,
   end,
+  fastScrollEnd,
+  invalidateOnRefresh,
   scrub,
   start,
   toggleActions,
-  trigger,
+  toggleClass,
+  trigger
 }: ScrollytellingProps) => {
   const explicitTriggerMode = trigger !== undefined;
 
+  const id = React.useId();
   const ref = React.useRef<HTMLDivElement>(null);
   const scopedQuerySelector = gsap.utils.selector(ref);
-  const id = React.useId();
 
   const [timeline, setTimeline] = React.useState<GSAPTimeline>();
 
@@ -101,25 +107,28 @@ const Scrollytelling = ({
     gsap.registerPlugin(ScrollTrigger);
 
     const ctx = gsap.context(()=>{
-      const tl = gsap.timeline({
+      const tl = gsap.timeline({             
+        defaults: { ...defaults, duration: 1 },      
+        paused: true,
+        scrollTrigger: {
+          end: end ?? "bottom bottom",
+          fastScrollEnd,
+          invalidateOnRefresh,
+          markers: debugMarkers,
+          scrub: scrub ?? true,
+          start: start ?? "top top",
+          toggleActions,
+          toggleClass,
+          trigger: explicitTriggerMode ? trigger : ref.current,
+          ...callbacks
+        },
         data: {
           debug: debugVisualizer,
           id,
           isScrollytellingTween: true,
           label: debugLabel ?? id,
-          type: "root",
-        } satisfies DataAttribute,      
-        defaults: { ...defaults, duration: 1 },      
-        paused: true,
-        scrollTrigger: {
-          end: end ?? "bottom bottom",
-          markers: debugMarkers,
-          scrub: scrub ?? true,
-          start: start ?? "top top",
-          toggleActions,
-          trigger: explicitTriggerMode ? trigger : ref.current,
-          ...callbacks,
-        },
+          type: "root"
+        } satisfies DataAttribute,
       });
   
       tl.eventCallback("onUpdate", () => {
@@ -132,21 +141,7 @@ const Scrollytelling = ({
     return () => {
       ctx.revert();
     };
-  }, [
-    callbacks,
-    debugLabel,
-    debugMarkers,
-    debugVisualizer,
-    defaults,
-    disabled,
-    end,
-    explicitTriggerMode,
-    id,
-    scrub,
-    start,
-    toggleActions,
-    trigger
-  ]);
+  }, [callbacks, debugLabel, debugMarkers, debugVisualizer, defaults, disabled, end, explicitTriggerMode, fastScrollEnd, id, invalidateOnRefresh, scrub, start, toggleActions, toggleClass, trigger]);
 
   /**
  * Adds a "rest" tween to ensure the timeline is always 100 units long.

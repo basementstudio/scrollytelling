@@ -93,7 +93,6 @@ export const CapsModel = () => {
   const halfViewportWidth = responsiveVPWidth / 2;
   const fadeInYoffset = 0.1;
 
-
   const handleUpdate = React.useCallback(
     (idx: number) => {
       const currMaterials = clonedMaterials[idx];
@@ -126,21 +125,19 @@ export const CapsModel = () => {
     <>
       <Scrollytelling.Stagger
         overlap={0.65}
-        tween={
-          {
-            start: 48,
-            end: 100,
-            target: capProps,
-            to: {
-              progress: 1,
-              ease: "power2.inOut",
-              /* We pass current target idx by params */
-              onUpdate: (idx) => {
-                handleUpdate(idx);
-              },
+        tween={{
+          start: 48,
+          end: 100,
+          target: capProps,
+          to: {
+            progress: 1,
+            ease: "power2.inOut",
+            /* We pass current target idx by params */
+            onUpdate: (idx) => {
+              handleUpdate(idx);
             },
-          }
-        }
+          },
+        }}
       />
 
       {/* clean this up when the scrollytelling leaves, as when scrolling really fast,

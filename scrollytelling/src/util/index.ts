@@ -100,7 +100,7 @@ export function buildDeclarativeTween({
 
 export const clsx = (...classes: any[]) => {
   return classes.filter(Boolean).join(" ");
-}
+};
 
 export function getValidAt(at: number) {
   if (at < 0) {

@@ -26,7 +26,6 @@ Parallax component applies a [parallax effect](https://en.wikipedia.org/wiki/Par
 
 > **Keep in mind that either `movementX` or `movementY` are required for the Parallax to work**
 
-
 #### Usage
 
 ```jsx
