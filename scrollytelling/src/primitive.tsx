@@ -28,39 +28,7 @@ const Debugger = React.lazy(() => import("./components/debugger"));
  * Root
  * -----------------------------------------------------------------------------------------------*/
 
-// ---- Component
-const Scrollytelling = ({
-  children,
-  debug,
-  start,
-  end,
-  callbacks,
-  scrub,
-  defaults,
-  toggleActions,
-  disabled = false,
-  trigger,
-}: {
-  children?: React.ReactNode;
-  debug?:
-    | false
-    | {
-        label: string;
-        visualizer?: boolean;
-        markers?: boolean;
-      };
-  /**
-   * The start position of the timeline. This can be a string like "top top" or a number.
-   * See https://greensock.com/docs/v3/Plugins/ScrollTrigger/start
-   * @default "top top"
-   */
-  start?: ScrollTrigger.Vars["start"];
-  /**
-   * The end position of the timeline. This can be a string like "top top" or a number.
-   * See https://greensock.com/docs/v3/Plugins/ScrollTrigger/end
-   * @default "bottom bottom"
-   */
-  end?: ScrollTrigger.Vars["end"];
+interface ScrollytellingProps {
   callbacks?: Pick<
     ScrollTrigger.Vars,
     | "onEnter"
@@ -71,19 +39,49 @@ const Scrollytelling = ({
     | "onUpdate"
     | "onRefresh"
   >;
-  trigger?: ScrollTrigger.Vars["trigger"];
-  scrub?: boolean | number;
-  defaults?: gsap.TweenVars | undefined;
-  toggleActions?: ScrollTrigger.Vars["toggleActions"];
+  children?: React.ReactNode;
+  debug?:
+    | false
+    | {
+        label: string;
+        visualizer?: boolean;
+        markers?: boolean;
+      };
+  defaults?: GSAPTweenVars | undefined;
   disabled?: boolean;
-}) => {
+  end?: ScrollTrigger.Vars["end"];
+  scrub?: boolean | number;
+  start?: ScrollTrigger.Vars["start"];
+  toggleActions?: ScrollTrigger.Vars["toggleActions"];
+  trigger?: ScrollTrigger.Vars["trigger"];
+}
+
+/**
+ * The `Scrollytelling` component serves as the root component for setting up Scrollytelling animations. It encapsulates the timeline and provides context for child components.
+ *
+ * @param {ScrollytellingProps} props - Props for the Scrollytelling component.
+ * @returns {React.ReactNode} The Scrollytelling component.
+ */
+
+const Scrollytelling = ({
+  callbacks,
+  children,
+  debug,
+  defaults,
+  disabled = false,
+  end,
+  scrub,
+  start,
+  toggleActions,
+  trigger,
+}: ScrollytellingProps) => {
   const explicitTriggerMode = trigger !== undefined;
 
   const ref = React.useRef<HTMLDivElement>(null);
   const scopedQuerySelector = gsap.utils.selector(ref);
   const id = React.useId();
 
-  const [timeline, setTimeline] = React.useState<gsap.core.Timeline>();
+  const [timeline, setTimeline] = React.useState<GSAPTimeline>();
 
   const debugMarkers = debug ? debug.markers : false;
   const debugVisualizer = debug
@@ -102,55 +100,63 @@ const Scrollytelling = ({
 
     gsap.registerPlugin(ScrollTrigger);
 
-    const tl = gsap.timeline({
-      scrollTrigger: {
-        markers: debugMarkers,
-        scrub: scrub ?? true,
-        start: start ?? "top top",
-        end: end ?? "bottom bottom",
-        trigger: explicitTriggerMode ? trigger : ref.current,
-        toggleActions,
-        ...callbacks,
-      },
-      paused: true,
-      defaults: { ...defaults, duration: 1 },
-      data: {
-        id,
-        type: "root",
-        label: debugLabel ?? id,
-        debug: debugVisualizer,
-        isScrollytellingTween: true,
-      } satisfies DataAttribute,
-    });
-
-    tl.eventCallback("onUpdate", () => {
-      internalEventEmmiter.emit("timeline:update", tl);
-    });
-
-    setTimeline(tl);
+    const ctx = gsap.context(()=>{
+      const tl = gsap.timeline({
+        data: {
+          debug: debugVisualizer,
+          id,
+          isScrollytellingTween: true,
+          label: debugLabel ?? id,
+          type: "root",
+        } satisfies DataAttribute,      
+        defaults: { ...defaults, duration: 1 },      
+        paused: true,
+        scrollTrigger: {
+          end: end ?? "bottom bottom",
+          markers: debugMarkers,
+          scrub: scrub ?? true,
+          start: start ?? "top top",
+          toggleActions,
+          trigger: explicitTriggerMode ? trigger : ref.current,
+          ...callbacks,
+        },
+      });
+  
+      tl.eventCallback("onUpdate", () => {
+        internalEventEmmiter.emit("timeline:update", tl);
+      });
+  
+      setTimeline(tl);
+    }, ref); 
 
     return () => {
-      tl.revert();
+      ctx.revert();
     };
   }, [
-    debugLabel,
-    explicitTriggerMode,
-    end,
-    start,
     callbacks,
-    scrub,
-    defaults,
-    toggleActions,
-    disabled,
-    trigger,
-    id,
+    debugLabel,
     debugMarkers,
     debugVisualizer,
+    defaults,
+    disabled,
+    end,
+    explicitTriggerMode,
+    id,
+    scrub,
+    start,
+    toggleActions,
+    trigger
   ]);
 
-  // rest tween to ensure timeline is always 100 long
+  /**
+ * Adds a "rest" tween to ensure the timeline is always 100 units long.
+ *
+ * @param {number} lastEnd - The end position of the last tween.
+ * @param {GSAPTimeline} timeline - The GSAP timeline.
+ * @returns {Function} A cleanup function to remove the rest tween.
+ */
   const addRestToTimeline = React.useCallback(
-    (lastEnd: number, timeline: gsap.core.Timeline) => {
+    (lastEnd: number, timeline: GSAPTimeline) => {
       const restTweenId = `rest-${id}`;
       // clear previous rest tween, if any
       gsap.getById(restTweenId)?.revert();
@@ -176,6 +182,15 @@ const Scrollytelling = ({
     [id]
   );
 
+  /**
+   * Gets the available timeline space between the start and end positions.
+   *
+   * @param {Object} param - Object containing start and end positions.
+   * @param {number} param.start - The start position.
+   * @param {number} param.end - The end position.
+   * @returns {Object|null} An object with duration, position, and cleanup function. Returns null if disabled.
+   * @throws {Error} Throws an error if the timeline is not initialized or if the positions are invalid.
+   */
   const getTimelineSpace: ScrollytellingDispatchersContextType["getTimelineSpace"] =
     React.useCallback(
       ({ start, end }) => {
