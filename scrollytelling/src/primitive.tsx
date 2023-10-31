@@ -22,7 +22,6 @@ import {
   useScrollytelling,
 } from "./context";
 import { useScrollToLabel } from "./hooks/use-scroll-to-label";
-import { useDebugOptions } from "./hooks/use-debug-options";
 
 // Utilities and Types Imports
 import { internalEventEmmiter } from "./util/internal-event-emmiter";
@@ -96,9 +95,14 @@ const Scrollytelling = React.memo(({
 
   const [timeline, setTimeline] = React.useState<GSAPTimeline>();
 
-  const { debugMarkers, debugVisualizer, debugLabel } = useDebugOptions(debug);
+  const debugMarkers = debug ? debug.markers : false;
+  const debugVisualizer = debug
+    ? debug.visualizer ?? true // default to true if undefined
+    : false;
+  const debugLabel = debug ? debug.label : undefined;
 
-  const initializeTimeline = React.useCallback(() => {
+  // initialize timeline
+  React.useEffect(() => {
     if (!explicitTriggerMode && !ref.current) return;
 
     if (disabled) {
@@ -144,12 +148,6 @@ const Scrollytelling = React.memo(({
       ctx.revert();
     };
   }, [callbacks, debugLabel, debugMarkers, debugVisualizer, defaults, disabled, end, explicitTriggerMode, fastScrollEnd, id, invalidateOnRefresh, scrub, start, toggleActions, toggleClass, trigger]);
-
-  // initialize timeline
-  React.useEffect(() => {
-    const cleanup = initializeTimeline();
-    return cleanup;
-  }, [initializeTimeline]);
 
   /**
    *
