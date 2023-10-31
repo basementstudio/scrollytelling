@@ -21,6 +21,7 @@ import {
 import { useScrollToLabel } from "./hooks/use-scroll-to-label";
 import { internalEventEmmiter } from "./util/internal-event-emmiter";
 import type { DataAttribute } from "./components/debugger/visualizer/shared-types";
+import useDebugOptions from "./hooks/use-debug-options";
 
 const Debugger = React.lazy(() => import("./components/debugger"));
 
@@ -66,7 +67,7 @@ interface ScrollytellingProps {
  * @returns {React.ReactNode} The Scrollytelling component.
  */
 
-const Scrollytelling = ({
+const Scrollytelling = React.memo(({
   callbacks,
   children,
   debug,
@@ -89,14 +90,9 @@ const Scrollytelling = ({
 
   const [timeline, setTimeline] = React.useState<GSAPTimeline>();
 
-  const debugMarkers = debug ? debug.markers : false;
-  const debugVisualizer = debug
-    ? debug.visualizer ?? true // default to true if undefined
-    : false;
-  const debugLabel = debug ? debug.label : undefined;
+  const { debugMarkers, debugVisualizer, debugLabel } = useDebugOptions(debug);
 
-  // initialize timeline
-  React.useEffect(() => {
+  const initializeTimeline = React.useCallback(() => {
     if (!explicitTriggerMode && !ref.current) return;
 
     if (disabled) {
@@ -143,13 +139,19 @@ const Scrollytelling = ({
     };
   }, [callbacks, debugLabel, debugMarkers, debugVisualizer, defaults, disabled, end, explicitTriggerMode, fastScrollEnd, id, invalidateOnRefresh, scrub, start, toggleActions, toggleClass, trigger]);
 
+  // initialize timeline
+  React.useEffect(() => {
+    const cleanup = initializeTimeline();
+    return cleanup;
+  }, [initializeTimeline]);
+
   /**
- * Adds a "rest" tween to ensure the timeline is always 100 units long.
- *
- * @param {number} lastEnd - The end position of the last tween.
- * @param {GSAPTimeline} timeline - The GSAP timeline.
- * @returns {Function} A cleanup function to remove the rest tween.
- */
+   *
+   * @param {GSAPTimeline} timeline - The GSAP timeline.
+   * @param {number} lastEnd - The end position of the last tween.
+   * @returns {Function} A cleanup function to remove the rest tween.
+   * Adds a "rest" tween to ensure the timeline is always 100 units long.
+   */
   const addRestToTimeline = React.useCallback(
     (lastEnd: number, timeline: GSAPTimeline) => {
       const restTweenId = `rest-${id}`;
@@ -232,7 +234,7 @@ const Scrollytelling = ({
       </ScrollytellingDispatchersContext.Provider>
     </ScrollytellingContext.Provider>
   );
-};
+});
 
 /* -------------------------------------------------------------------------------------------------
  * Exports
