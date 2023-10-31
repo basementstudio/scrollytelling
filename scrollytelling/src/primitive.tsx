@@ -1,17 +1,20 @@
+// External Library Imports
 import { gsap } from "gsap";
 import { Slot } from "@radix-ui/react-slot";
-import * as React from "react";
 import ScrollTrigger from "gsap/ScrollTrigger";
 
-// ---- Components ----
+// React Imports
+import * as React from "react";
+
+// Component Imports
 import { Animation } from "./components/animation";
 import { Parallax } from "./components/parallax";
 import { Pin } from "./components/pin";
 import { RegisterGsapPlugins } from "./components/register-plugins";
+import { Stagger } from './components/stagger';
 import { Waypoint } from "./components/waypoint";
-import { Stagger } from './components/stagger'
 
-// ---- Context ----
+// Context and Custom Hooks Imports
 import {
   ScrollytellingContext,
   ScrollytellingDispatchersContext,
@@ -19,10 +22,13 @@ import {
   useScrollytelling,
 } from "./context";
 import { useScrollToLabel } from "./hooks/use-scroll-to-label";
+import { useDebugOptions } from "./hooks/use-debug-options";
+
+// Utilities and Types Imports
 import { internalEventEmmiter } from "./util/internal-event-emmiter";
 import type { DataAttribute } from "./components/debugger/visualizer/shared-types";
-import useDebugOptions from "./hooks/use-debug-options";
 
+// Lazy Components
 const Debugger = React.lazy(() => import("./components/debugger"));
 
 /* -------------------------------------------------------------------------------------------------

@@ -14,7 +14,7 @@ interface DebugValues {
   debugLabel: string | null;
 }
 
-const useDebugOptions = (debug: DebugOptions["debug"]): DebugValues => {
+export const useDebugOptions = (debug: DebugOptions["debug"]): DebugValues => {
   const debugMarkers =
     typeof debug === "object" && debug ? debug.markers ?? false : false;
   const debugVisualizer =
@@ -24,5 +24,3 @@ const useDebugOptions = (debug: DebugOptions["debug"]): DebugValues => {
 
   return { debugMarkers, debugVisualizer, debugLabel };
 };
-
-export default useDebugOptions;
