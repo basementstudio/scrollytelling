@@ -26,7 +26,6 @@ Parallax component applies a [parallax effect](https://en.wikipedia.org/wiki/Par
 
 > **Keep in mind that either `movementX` or `movementY` are required for the Parallax to work**
 
-
 #### Usage
 
 ```jsx
@@ -49,7 +48,7 @@ export const HomePage = () => (
 
 #### Example
 
-https://stackblitz.com/edit/react-ts-wkxnja
+<https://stackblitz.com/edit/react-ts-wkxnja>
 
 ---
 
@@ -92,7 +91,47 @@ export const HomePage = () => (
 
 #### Example
 
-https://stackblitz.com/edit/react-ts-kittrj
+<https://stackblitz.com/edit/react-ts-kittrj>
+
+---
+
+### `<Stagger>`
+
+The `Stagger` component enables staggered animations for a group of elements using GSAP animations. It allows you to create a sequence of animations that start at different times with optional overlaps.
+
+#### Render Props
+
+```tsx
+<Scrollytelling.Stagger
+  overlap?: number; // Optional: Overlap factor for animations (0 to 1)
+  tween: TweenWithChildrenDef | TweenWithTargetDef; // Animation configuration
+>
+  {children}
+</Scrollytelling.Stagger>
+```
+
+#### Usage
+
+```jsx
+import * as Scrollytelling from "@bsmnt/scrollytelling";
+
+export const HomePage = () => (
+  <Scrollytelling.Root>
+    <Scrollytelling.Stagger
+      overlap={0.2}
+      tween={{
+        start: 0,
+        end: 100,
+        // Animation configuration here
+      }}
+    >
+      <div className="animated-element">Element 1</div>
+      <div className="animated-element">Element 2</div>
+      <div className="animated-element">Element 3</div>
+    </Scrollytelling.Stagger>
+  </Scrollytelling.Root>
+);
+```
 
 ---
 

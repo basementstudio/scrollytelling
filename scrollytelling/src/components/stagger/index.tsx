@@ -1,7 +1,3 @@
-/* -------------------------------------------------------------------------------------------------
- * Stagger
- * -----------------------------------------------------------------------------------------------*/
-
 import * as React from "react";
 import {
   StaggerBaseDef,
@@ -9,7 +5,25 @@ import {
   TweenWithTargetDef,
 } from "../../types";
 import { Animation } from "../animation";
-import { isDev } from "../../util";
+import { getStaggeredTimeline, isDev } from "../../util";
+
+/* -------------------------------------------------------------------------------------------------
+ * Stagger
+ * -----------------------------------------------------------------------------------------------*/
+
+/**
+ * Stagger component enables staggered animations for a group of elements using GSAP animations.
+ * It allows you to create a sequence of animations that start at different times with optional overlaps.
+ *
+ * @param {StaggerBaseDef} props - Stagger component props
+ * @returns {React.ReactElement} Stagger component
+ * @link https://github.com/basementstudio/scrollytelling/blob/main/docs/api.md#stagger
+ */
+
+type StaggerProps = {
+  children?: React.ReactNode[];
+  tween: TweenWithChildrenDef | TweenWithTargetDef;
+} & StaggerBaseDef;
 
 export function Stagger(
   props: StaggerBaseDef & {
@@ -26,13 +40,10 @@ export function Stagger(
 
 export function Stagger({
   children,
+  disabled = false,
   overlap,
   tween,
-  disabled = false,
-}: StaggerBaseDef & {
-  children?: React.ReactNode[];
-  tween: TweenWithChildrenDef | TweenWithTargetDef;
-}) {
+}: StaggerProps) {
   const isTweenWithTarget = "target" in tween;
   const targetLength =
     isTweenWithTarget && Array.isArray(tween.target)
@@ -51,12 +62,12 @@ export function Stagger({
     }
 
     return getStaggeredTimeline({
-      start: tween?.start,
-      end: tween?.end,
       chunks: targetLength,
+      end: tween?.end,
       overlap: overlap,
+      start: tween?.start,
     });
-  }, [targetLength, overlap, tween?.end, tween?.start]);
+  }, [overlap, targetLength, tween?.end, tween?.start]);
 
   if (children) {
     return children.map((child, i) => {
@@ -97,9 +108,9 @@ export function Stagger({
               key={i}
               tween={{
                 ...tween,
-                target: target,
-                start: currTween.start,
                 end: currTween.end,
+                start: currTween.start,
+                target: target,
                 to: {
                   ...tween.to,
                   onUpdateParams: [i],
@@ -114,10 +125,10 @@ export function Stagger({
               key={i}
               tween={{
                 ...tween,
-                target: target,
-                start: currTween.start,
                 end: currTween.end,
                 from: { ...tween.from, onUpdateParams: [i] },
+                start: currTween.start,
+                target: target,
               }}
               disabled={disabled}
             />
@@ -128,8 +139,6 @@ export function Stagger({
               key={i}
               tween={{
                 ...tween,
-                target: target,
-                start: currTween.start,
                 end: currTween.end,
                 fromTo: [
                   {
@@ -140,6 +149,8 @@ export function Stagger({
                     onUpdateParams: [i],
                   },
                 ],
+                start: currTween.start,
+                target: target,
               }}
               disabled={disabled}
             />
@@ -153,84 +164,3 @@ export function Stagger({
 
   return <></>;
 }
-
-// Overlap duration arrays by a factor mantaining the final duration between them
-const overlapDurationArrayByFactor = (
-  durations: { start: number; end: number }[],
-  factor: number
-) => {
-  const first = durations[0];
-  const last = durations[durations.length - 1];
-
-  if (first === undefined || last === undefined) {
-    throw Error("Durations array is empty");
-  }
-
-  /*
-    We need the veryStart because is our left shift in a [0% - 100%] timeline. Overlapping durations
-    affect the timeline total duration & we don't want that, so to scale it proportionally. Steps are:
-    1. We unshift it to bring the start to 0
-    2. Then we scale it proportionally to match the initial totalDuration
-    3. And then we shift it back to the veryStart
-  */
-  const veryStart = first.start;
-  const veryEnd = last.end;
-  const totalDuration = veryEnd - veryStart;
-
-  const overlapDuration = totalDuration * factor;
-  const overlapDurationPerDuration = overlapDuration / durations.length;
-
-  const afterOverlapDuration =
-    totalDuration - overlapDurationPerDuration * (durations.length - 1);
-  const afterOverlapDurationDiffFactor = totalDuration / afterOverlapDuration;
-
-  const newDurations = durations.map((duration, i) => {
-    const newStart = duration.start - overlapDurationPerDuration * i;
-    const newEnd = duration.end - overlapDurationPerDuration * i;
-
-    return {
-      start: Math.max(
-        veryStart + (newStart - veryStart) * afterOverlapDurationDiffFactor,
-        0
-      ),
-      end: Math.min(
-        veryStart + (newEnd - veryStart) * afterOverlapDurationDiffFactor,
-        100
-      ),
-    };
-  });
-
-  return newDurations;
-};
-
-export const getStaggeredTimeline = (config: {
-  start: number;
-  end: number;
-  overlap?: number;
-  chunks?: number;
-}) => {
-  const { start, end, overlap = 0, chunks = 1 } = config;
-
-  if (overlap > 1 || overlap < 0) {
-    throw new Error("Overlap must be between 0 and 1");
-  }
-
-  const duration = end - start;
-  const chunkDuration = duration / chunks;
-
-  const animationChunks = Array.from({ length: chunks }).map((_, i) => {
-    const chunkStart = start + chunkDuration * i;
-    const chunkEnd = chunkStart + chunkDuration;
-
-    return {
-      start: chunkStart,
-      end: chunkEnd,
-    };
-  });
-
-  if (overlap > 0) {
-    return overlapDurationArrayByFactor(animationChunks, overlap);
-  }
-
-  return animationChunks;
-};
