@@ -5,6 +5,7 @@
   "version": "0.0.0",
   "workspaces": [
     "website",
+    "docs",
     "scrollytelling",
     "internal/*"
   ],
