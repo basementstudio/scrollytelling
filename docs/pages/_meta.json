@@ -2,8 +2,6 @@
   "introduction": {
     "title": "Introduction"
   },
-  "another": "Another Page",
-  "advanced": "Advanced (A Folder)",
   "about": {
     "title": "About",
     "type": "page"
@@ -13,8 +11,5 @@
     "type": "page",
     "href": "https://twitter.com/basementdotstudio",
     "newWindow": true
-  },
-  "why": {
-    "title": "Core concepts"
   }
 }
