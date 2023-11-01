@@ -1,5 +1,7 @@
 {
-  "index": "Introduction",
+  "introduction": {
+    "title": "Introduction"
+  },
   "another": "Another Page",
   "advanced": "Advanced (A Folder)",
   "about": {
@@ -9,7 +11,10 @@
   "contact": {
     "title": "Contact ↗",
     "type": "page",
-    "href": "https://twitter.com/shuding_",
+    "href": "https://twitter.com/basementdotstudio",
     "newWindow": true
+  },
+  "why": {
+    "title": "Core concepts"
   }
 }

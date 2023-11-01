@@ -1,0 +1,16 @@
+## Troubleshooting
+
+<details>
+<summary>
+<b>"My simple animation is not doing anything on scroll"</b>
+</summary>
+
+Please check your `start` and `end` values for your `Root` component. A typical issue comes when:
+
+1. your animation _"starts when the start of the scroller hits the start of the viewport"_,
+2. your animation _"ends when the bottom of the scroller hits the bottom of the viewport"_,
+3. the element your `Root` wraps around is only `100vh` tall, so the animation's duration is 0.
+
+To fix this, either add more height to the element your `Root` wraps, or tweak the `end` value to be something like `bottom start`, which would mean "when the bottom of the scroller hits the start of the viewport".
+
+</details>
