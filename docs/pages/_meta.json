@@ -1,7 +1,9 @@
 {
-  "introduction": {
+  "index": {
     "title": "Introduction"
   },
+  "quick-start": "Quick start",
+  "components": "Components",
   "about": {
     "title": "About",
     "type": "page"
