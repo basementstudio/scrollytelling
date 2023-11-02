@@ -6,8 +6,8 @@ The `Animation` component acts as a wrapper for configuring the animation of chi
 
 ```tsx
 <Scrollytelling.Animation
-  children: React.ReactNode; // Element/s to animate
-  tween: TweenWithChildrenDef | TweenWithTargetDef; // Animation config and target
+  children: React.ReactNode; // Children to animate
+  tween: DataOrDataArray<TweenWithTargetDef>; // Animation configuration
   disabled: boolean; // Disable animations, defaults to false
 >
   {children}
@@ -16,7 +16,7 @@ The `Animation` component acts as a wrapper for configuring the animation of chi
 
 #### Usage
 
-```jsx
+```jsx copy
 import * as Scrollytelling from "@bsmnt/scrollytelling";
 
 export const HomePage = () => (
@@ -29,7 +29,6 @@ export const HomePage = () => (
             end: 100,
             to: { scale: 1.5 },
           }}
-          disabled={isDisabled}
         >
           <h1
             style={{
