@@ -28,6 +28,7 @@ html {
     --color-gray-light: rgba(0, 0, 0, 0.45);
     --color-purple: #6f42c1;
     --color-orange: #e54602;
+    --color-green: #006e2c;
   }
 
   &.dark {
