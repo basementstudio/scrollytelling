@@ -1,0 +1,47 @@
+### `<Stagger>`
+
+The `Animation` component acts as a wrapper for configuring the animation of children elements.
+
+#### Render Props
+
+```tsx
+<Scrollytelling.Animation
+  children: React.ReactNode; // Element/s to animate
+  tween: TweenWithChildrenDef | TweenWithTargetDef; // Animation config and target
+  disabled: boolean; // Disable animations, defaults to false
+>
+  {children}
+</Scrollytelling.Animation>
+```
+
+#### Usage
+
+```jsx
+import * as Scrollytelling from "@bsmnt/scrollytelling";
+
+export const HomePage = () => (
+  <Scrollytelling.Root disabled={isDisabled} key={i} debug={{ label: "texts" }}>
+    <div style={{ height: "200vh", background: "black" }}>
+      <div style={{ position: "sticky", top: 0 }}>
+        <Scrollytelling.Animation
+          tween={{
+            start: 0,
+            end: 100,
+            to: { scale: 1.5 },
+          }}
+          disabled={isDisabled}
+        >
+          <h1
+            style={{
+              fontSize: "5rem",
+              transformOrigin: "top left",
+            }}
+          >
+            This is a text
+          </h1>
+        </Scrollytelling.Animation>
+      </div>
+    </div>
+  </Scrollytelling.Root>
+);
+```
