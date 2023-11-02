@@ -5,6 +5,7 @@
   --color-black: #101010;
   --color-orange: #e54602;
   --color-purple: #ae86ff;
+  --color-green: #59bd82;
 
   /* shiki */
   --shiki-color-text: #414141;
@@ -15,7 +16,7 @@
   --shiki-token-keyword: var(--color-purple);
   --shiki-token-parameter: var(--color-orange);
   --shiki-token-function: var(--color-purple);
-  --shiki-token-string-expression: var(--color-white);
+  --shiki-token-string-expression: var(--color-green);
   --shiki-token-punctuation: #212121;
   --shiki-token-link: var(--color-orange);
 }
@@ -32,6 +33,12 @@ html {
   &.dark {
     --shiki-color-text: #d1d1d1;
     --shiki-token-punctuation: #bbb;
+
+    .nextra-button {
+      color: var(--color-black);
+      background-color: var(--color-orange);
+      border-color: color-mix(in srgb, var(--color-orange) 50%, black 50%);
+    }
   }
 }
 
