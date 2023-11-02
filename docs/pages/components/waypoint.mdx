@@ -6,11 +6,11 @@
 
 ```tsx
 <Scrollytelling.Waypoint
-  at: number; // Scrolled position at which to trigger the waypoint
+  at: number; // Scrolled percentage of timeline at which the waypoint is triggered
   children?: AnimationProps["children"]; // Optional: children to animate
-  tween?: SimpleTween & { target?: TweenTarget }; // Optional: tween config and target, to apply when the waypoint is triggered
+  tween?: SimpleTween & { target?: TweenTarget }; // Optional: tween config and target, applied when the waypoint is triggered
   onCall?: (() => void) | undefined; // Optional: called when the waypoint is triggered
-  onReverseCall?: (() => void) | undefined; // Optional: called when the waypoint is triggered in reverse
+  onReverseCall?: (() => void) | undefined; // Optional: called when the waypoint is triggered on reverse
   label?: string | undefined; // Optional: label for the waypoint
   disabled?: boolean | undefined; // Optional: whether the waypoint is disabled
 />
@@ -18,7 +18,7 @@
 
 #### Usage
 
-```jsx copy
+```tsx copy
 import * as Scrollytelling from "@bsmnt/scrollytelling";
 
 export const HomePage = () => (

@@ -17,6 +17,10 @@ const config: DocsThemeConfig = {
   },
   primaryHue: 21,
   primarySaturation: 94,
+  feedback: {
+    content: 'Give us feedback on GitHub!',
+    labels: "documentation",
+  },
   useNextSeoProps() {
     const { asPath } = useRouter()
     if (asPath !== '/') {
