@@ -8,6 +8,12 @@ const nextConfig = {
   images: {
     domains: ["lab.basement.studio"],
   },
+  rewrites: async () => [
+    {
+      source: "/docs",
+      destination: process.env.NEXT_PUBLIC_DOCS_URL,
+    },
+  ],
 };
 
 module.exports = (_phase, { defaultConfig: _ }) => {
