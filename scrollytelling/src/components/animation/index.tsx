@@ -70,6 +70,7 @@ export function Animation({
           target: tweenTarget,
           duration: timelineSpace.duration,
           position: timelineSpace.position,
+          repeat: tween.repeat,
         });
 
         return () => {

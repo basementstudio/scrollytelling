@@ -12,10 +12,11 @@ export type RequireAtLeastOne<T, Keys extends keyof T = keyof T> = Pick<
   }[Keys];
 
 // ---- Tween Specifics
+type TweenVars = gsap.tweenVars & { repeat?: number };
 export type FromToOptions =
   | { to: gsap.TweenVars; from?: never; fromTo?: never }
   | { from: gsap.TweenVars; to?: never; fromTo?: never }
-  | { fromTo: [gsap.TweenVars, gsap.TweenVars]; to?: never; from?: never };
+  | { fromTo: [TweenVars, TweenVars]; to?: never; from?: never };
 
 export type StartEndOptions = {
   start: number;
@@ -38,6 +39,7 @@ export interface AnimationProps {
   tween: DataOrDataArray<TweenBaseDef | TweenWithTargetDef>;
   children?: React.ReactNode;
   disabled?: boolean;
+  repeat?: number;
 }
 
 export type WaypointBaseDef = {

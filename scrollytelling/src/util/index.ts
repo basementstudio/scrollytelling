@@ -31,6 +31,7 @@ export function buildDeclarativeTween({
   target,
   duration,
   paused,
+  repeat,
   ...timelineAndPosition
 }: {
   op: FromToOptions;
@@ -38,6 +39,7 @@ export function buildDeclarativeTween({
   target: TweenTarget;
   duration: number;
   paused?: boolean;
+  repeat?: number;
 } & (
   | { timeline?: never; position?: never }
   | { timeline: gsap.core.Timeline; position: number }
@@ -64,12 +66,15 @@ export function buildDeclarativeTween({
     }
   } else if ("fromTo" in op) {
     if (timelineAndPosition.timeline) {
-      timelineAndPosition.timeline.fromTo(
+      const tween = timelineAndPosition.timeline.fromTo(
         target,
         { ...op.fromTo[0] },
         { ...op.fromTo[1], id, duration, paused },
         timelineAndPosition.position
       );
+      if (repeat) {
+        const _tween = tween.repeat(repeat);
+      }
     } else {
       gsap.fromTo(
         target,
