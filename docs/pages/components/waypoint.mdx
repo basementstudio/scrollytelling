@@ -4,17 +4,15 @@
 
 #### Render Props
 
-```tsx
-<Scrollytelling.Waypoint
-  at: number; // Scrolled percentage of timeline at which the waypoint is triggered
-  children?: AnimationProps["children"]; // Optional: children to animate
-  tween?: SimpleTween & { target?: TweenTarget }; // Optional: tween config and target, applied when the waypoint is triggered
-  onCall?: (() => void) | undefined; // Optional: called when the waypoint is triggered
-  onReverseCall?: (() => void) | undefined; // Optional: called when the waypoint is triggered on reverse
-  label?: string | undefined; // Optional: label for the waypoint
-  disabled?: boolean | undefined; // Optional: whether the waypoint is disabled
-/>
-```
+| Prop            |                   Type                   |                                  Details                                  | Default |
+| :-------------- | :--------------------------------------: | :-----------------------------------------------------------------------: | ------: |
+| `at`            |                 `number`                 |    Scrolled percentage of timeline at which the waypoint is triggered     |       - |
+| `children`      |            `React.ReactNode`             |                       Optional: children to animate                       |       - |
+| `tween`         | `SimpleTween & { target?: TweenTarget }` | Optional: tween config and target, applied when the waypoint is triggered |       - |
+| `onCall`        |       `(() => void) \| undefined`        |              Optional: called when the waypoint is triggered              |       - |
+| `onReverseCall` |       `(() => void) \| undefined`        |        Optional: called when the waypoint is triggered on reverse         |       - |
+| `label`         |          `string \| undefined`           |                     Optional: label for the waypoint                      |       - |
+| `disabled`      |          `boolean \| undefined`          |                Optional: whether the waypoint is disabled                 | `false` |
 
 #### Usage
 

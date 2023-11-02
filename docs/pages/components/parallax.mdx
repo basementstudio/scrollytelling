@@ -8,19 +8,21 @@ Parallax component applies a [parallax effect](https://en.wikipedia.org/wiki/Par
 
 #### Render Props
 
-```tsx
-<Scrollytelling.Parallax
-  tween: {
-    start: number; // The time where the movement starts relative to the scroll progress
-    end: number; // The time where the movement ends relative to the scroll progress
-    target?: TweenTarget; // Optional: The target element or elements to apply the animation to.
-    movementX?: UnitValue; // Optional: The amount of movement on the X-axis.
-    movementY?: UnitValue; // Optional: The amount of movement on the Y-axis.
-  }
->
-  {children}
-</Scrollytelling.Parallax>
-```
+| Prop       |       Type        |           Details           | Default |
+| :--------- | :---------------: | :-------------------------: | ------: |
+| `tween`    |                   |        Tween config         |       - |
+| `children` | `React.ReactNode` | Children element to animate |       - |
+| `disabled` |     `boolean`     |      Disable animation      | `false` |
+
+#### Parallax Tween Props
+
+| Prop        |     Type      |                              Details                               | Default |
+| :---------- | :-----------: | :----------------------------------------------------------------: | ------: |
+| `start`     |   `number`    |   Time where the movement starts relative to the scroll progress   |       - |
+| `end`       |   `number`    |    Time where the movement ends relative to the scroll progress    |       - |
+| `target`    | `TweenTarget` | Optional: The target element or elements to apply the animation to |       - |
+| `movementX` |  `UnitValue`  |           Optional: The amount of movement on the X-axis           |       - |
+| `movementY` |  `UnitValue`  |           Optional: The amount of movement on the Y-axis           |       - |
 
 > **Keep in mind that either `movementX` or `movementY` are required for the Parallax to work**
 

@@ -4,16 +4,12 @@ The `Stagger` component enables staggered animations that start at different tim
 
 #### Render Props
 
-```tsx
-<Scrollytelling.Stagger
-  children?: React.ReactNode; // Optional: Children to animate
-  overlap?: number; // Optional: Overlap factor for animations (0 to 1)
-  tween: TweenWithChildrenDef | TweenWithTargetDef; // Animation config and target
-  disabled: boolean; // Disable animations, defaults to false
->
-  {children}
-</Scrollytelling.Stagger>
-```
+| Prop       |                     Type                     |                     Details                      | Default |
+| :--------- | :------------------------------------------: | :----------------------------------------------: | ------: |
+| `children` |              `React.ReactNode`               |          Optional: Children to animate           |       - |
+| `overlap`  |                   `number`                   | Optional: Overlap factor for animations (0 to 1) |       - |
+| `tween`    | `TweenWithChildrenDef \| TweenWithTargetDef` |           Animation config and target            |       - |
+| `disabled` |                  `boolean`                   |                Disable animations                | `false` |
 
 #### Usage
 

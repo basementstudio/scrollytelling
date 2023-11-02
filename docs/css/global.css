@@ -103,6 +103,15 @@ table {
         font-weight: 600;
       }
 
+      & td:nth-child(2) {
+        white-space: nowrap;
+        color: var(--color-gray-light);
+      }
+
+      & td:last-child {
+        color: var(--color-gray-light);
+      }
+
       &:not(:last-child) {
         border-bottom: 1px solid var(--color-gray-light);
       }
