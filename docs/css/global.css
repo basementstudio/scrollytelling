@@ -66,3 +66,46 @@ html {
     background: var(--color-white);
   }
 }
+
+/* props table */
+
+table {
+  width: fit-content;
+  overflow: unset !important;
+
+  border: 1px solid var(--color-gray-light);
+  border-radius: 10px;
+
+  & thead {
+    border-bottom: 1px solid var(--color-gray-light);
+  }
+
+  & th,
+  td,
+  tr {
+    text-align: start;
+    border: none;
+  }
+
+  & td {
+    padding: 14px 18px !important;
+  }
+
+  & th {
+    padding: 10px 18px !important;
+    font-weight: 600;
+  }
+
+  & tbody {
+    & tr {
+      & td:first-child {
+        color: var(--color-orange);
+        font-weight: 600;
+      }
+
+      &:not(:last-child) {
+        border-bottom: 1px solid var(--color-gray-light);
+      }
+    }
+  }
+}

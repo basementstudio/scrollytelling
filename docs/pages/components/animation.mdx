@@ -4,15 +4,11 @@ The `Animation` component acts as a wrapper for configuring the animation of chi
 
 #### Render Props
 
-```tsx
-<Scrollytelling.Animation
-  children: React.ReactNode; // Children to animate
-  tween: DataOrDataArray<TweenWithTargetDef>; // Animation configuration
-  disabled: boolean; // Disable animations, defaults to false
->
-  {children}
-</Scrollytelling.Animation>
-```
+| Prop       |                 Type                  |         Details         | Default |
+| :--------- | :-----------------------------------: | :---------------------: | ------: |
+| `children` |           `React.ReactNode`           |   Children to animate   |       - |
+| `tween`    | `DataOrDataArray<TweenWithTargetDef>` | Animation configuration |       - |
+| `disabled` |               `boolean`               |   Disable animations    | `false` |
 
 #### Usage
 
