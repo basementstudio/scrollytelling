@@ -163,6 +163,14 @@ table {
     &:not(:first-child) {
       margin-left: 8px;
     }
+
+    @media (hover: hover) {
+      transition: color 0.2s ease-in-out;
+
+      &:hover {
+        color: var(--color-orange);
+      }
+    }
   }
 }
 
