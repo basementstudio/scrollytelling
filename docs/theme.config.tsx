@@ -9,7 +9,7 @@ const config: DocsThemeConfig = {
     link: 'https://github.com/basementstudio/scrollytelling',
   },
   chat: {
-    link: 'https://discord.com',
+    link: 'https://discord.gg/CFM7dtXX',
   },
   docsRepositoryBase: 'https://github.com/basementstudio/scrollytelling/tree/main/docs',
   footer: {

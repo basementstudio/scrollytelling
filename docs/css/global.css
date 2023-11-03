@@ -44,8 +44,22 @@ html {
   }
 }
 
+body {
+  font-family: var(--font-body);
+}
+
+code,
+pre {
+  font-family: var(--font-mono);
+}
+
+.nextra-code-block code {
+  gap: 2px;
+}
+
 .nextra-code-block pre {
   border-radius: 8px;
+  font-size: 16px;
   border: 1px solid var(--color-gray-light);
   padding: 24px 8px;
   background-color: var(--color-black) !important;
