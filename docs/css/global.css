@@ -46,15 +46,15 @@ html {
 
 body {
   font-family: var(--font-body);
+
+  & * code {
+    color: var(--color-orange);
+  }
 }
 
 code,
 pre {
   font-family: var(--font-mono);
-}
-
-code {
-  color: var(--color-orange);
 }
 
 /* props table */
@@ -126,11 +126,16 @@ table {
 
         &:nth-child(2) {
           white-space: nowrap;
-          color: var(--color-gray-light);
+
+          & code {
+            color: var(--color-gray-light);
+          }
         }
 
         &:last-child {
-          color: var(--color-gray-light);
+          & code {
+            color: var(--color-gray-light);
+          }
         }
       }
     }
