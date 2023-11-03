@@ -53,35 +53,6 @@ pre {
   font-family: var(--font-mono);
 }
 
-.nextra-code-block code {
-  gap: 2px;
-}
-
-.nextra-code-block pre {
-  border-radius: 8px;
-  font-size: 16px;
-  border: 1px solid var(--color-gray-light);
-  padding: 24px 8px;
-  background-color: var(--color-black) !important;
-
-  &::-webkit-scrollbar {
-    height: 8px;
-  }
-
-  &::-webkit-scrollbar-corner {
-    background: transparent;
-  }
-
-  &::-webkit-scrollbar-track {
-    background: transparent;
-  }
-
-  &::-webkit-scrollbar-thumb {
-    border-radius: 8px;
-    background: var(--color-white);
-  }
-}
-
 /* props table */
 
 table {
@@ -159,5 +130,55 @@ table {
         }
       }
     }
+  }
+}
+
+/* nextra theme overrides */
+
+.nextra-toc .nextra-scrollbar {
+  padding-left: 2px;
+}
+
+.nextra-code-block code {
+  gap: 2px;
+}
+
+.nextra-nav-container nav {
+  & > a {
+    padding: 0;
+
+    &:not(:first-child) {
+      margin-left: 8px;
+    }
+  }
+}
+
+.nextra-search {
+  margin-left: 18px;
+  margin-right: 10px;
+}
+
+.nextra-code-block pre {
+  border-radius: 8px;
+  font-size: 16px;
+  border: 1px solid var(--color-gray-light);
+  padding: 24px 8px;
+  background-color: var(--color-black) !important;
+
+  &::-webkit-scrollbar {
+    height: 8px;
+  }
+
+  &::-webkit-scrollbar-corner {
+    background: transparent;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    border-radius: 8px;
+    background: var(--color-white);
   }
 }
