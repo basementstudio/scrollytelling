@@ -1,10 +1,18 @@
 import { Callout } from "nextra/components";
+import Image from "next/image";
+import scrollyLogo from "../public/assets/home-img.jpg";
 
 # BSMNT Scrollytelling
 
 BSMNT Scrollytelling is a library for creating Scrollytelling animations. It's powered by GSAP ScrollTrigger, but abstracts away some things to make it work better with React.
 
-![Frame 7](https://user-images.githubusercontent.com/40034115/233121992-12eb2448-4f62-4cba-b9a3-c0d3e9233aa7.jpg)
+<Image
+  src={scrollyLogo}
+  quality={95}
+  sizes="(max-width: 767px) 100vw, 840px"
+  placeholder="blur"
+  alt="Hello"
+/>
 
 ## Why
 

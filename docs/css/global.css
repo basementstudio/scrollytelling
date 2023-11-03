@@ -50,6 +50,10 @@ body {
   & * code {
     color: var(--color-orange);
   }
+
+  & article img {
+    margin-top: 24px;
+  }
 }
 
 code,
