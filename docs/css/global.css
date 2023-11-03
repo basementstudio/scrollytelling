@@ -14,7 +14,7 @@
   --shiki-token-constant: var(--color-orange);
   --shiki-token-string: var(--color-orange);
   --shiki-token-comment: var(--color-gray-light);
-  --shiki-token-keyword: var(--color-purple);
+  --shiki-token-keyword: var(--color-orange);
   --shiki-token-parameter: var(--color-orange);
   --shiki-token-function: var(--color-purple);
   --shiki-token-string-expression: var(--color-green);
@@ -25,8 +25,8 @@
 html {
   &.light {
     --color-white: rgba(0, 0, 0, 0.7);
-    --color-black: rgba(0, 0, 0, 0.08);
-    --color-gray-light: rgba(0, 0, 0, 0.45);
+    --color-black: rgba(0, 0, 0, 0.04);
+    --color-gray-light: rgba(0, 0, 0, 0.25);
     --color-purple: #6f42c1;
     --color-orange: #e54602;
     --color-green: #006e2c;
@@ -34,7 +34,7 @@ html {
 
   &.dark {
     --shiki-color-text: #d1d1d1;
-    --shiki-token-punctuation: #bbb;
+    --shiki-token-punctuation: #dbae54;
 
     .nextra-button {
       color: var(--color-black);
@@ -51,6 +51,10 @@ body {
 code,
 pre {
   font-family: var(--font-mono);
+}
+
+code {
+  color: var(--color-orange);
 }
 
 /* props table */
