@@ -2,6 +2,7 @@
   --color-white: #fff;
   --color-gray: rgba(255, 255, 255, 0.2);
   --color-gray-light: rgba(255, 255, 255, 0.5);
+  --color-text: #101010;
   --color-black: #101010;
   --color-orange: #e54602;
   --color-purple: #ae86ff;
@@ -70,11 +71,21 @@ html {
 /* props table */
 
 table {
+  position: relative;
   width: fit-content;
-  overflow: unset !important;
-
+  max-width: 100%;
+  overflow: auto !important;
+  scrollbar-gutter: unset !important;
   border: 1px solid var(--color-gray-light);
-  border-radius: 10px;
+  border-radius: 8px;
+
+  &::-webkit-scrollbar {
+    height: 8px !important;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: var(--color-white) !important;
+  }
 
   & thead {
     border-bottom: 1px solid var(--color-gray-light);
@@ -98,22 +109,40 @@ table {
 
   & tbody {
     & tr {
-      & td:first-child {
-        color: var(--color-orange);
-        font-weight: 600;
-      }
+      border-bottom: 1px solid
+        color-mix(in srgb, var(--color-gray) 100%, transparent 50%) !important;
 
-      & td:nth-child(2) {
-        white-space: nowrap;
-        color: var(--color-gray-light);
-      }
-
-      & td:last-child {
-        color: var(--color-gray-light);
+      &:nth-child(even) {
+        background-color: color-mix(
+          in srgb,
+          var(--color-black) 100%,
+          var(--color-gray) 30%
+        ) !important;
       }
 
       &:not(:last-child) {
         border-bottom: 1px solid var(--color-gray-light);
+      }
+
+      &:last-child {
+        background-color: unset;
+        border-bottom: unset !important;
+      }
+
+      & td {
+        &:first-child {
+          color: var(--color-orange);
+          font-weight: 600;
+        }
+
+        &:nth-child(2) {
+          white-space: nowrap;
+          color: var(--color-gray-light);
+        }
+
+        &:last-child {
+          color: var(--color-gray-light);
+        }
       }
     }
   }
