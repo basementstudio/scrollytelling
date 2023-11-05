@@ -54,6 +54,16 @@ body {
   & article img {
     margin-top: 24px;
   }
+
+  & main {
+    & div:last-child a {
+      @media (hover: hover) {
+        &:hover {
+          color: var(--color-orange);
+        }
+      }
+    }
+  }
 }
 
 code,
