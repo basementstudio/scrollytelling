@@ -55,6 +55,16 @@ body {
     margin-top: 24px;
   }
 
+  & article a {
+    @media (hover: hover) {
+      transition: color 0.2s ease-in-out;
+
+      &:hover {
+        color: var(--color-gray-light);
+      }
+    }
+  }
+
   & main {
     & div:last-child a {
       @media (hover: hover) {

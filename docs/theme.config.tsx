@@ -28,6 +28,10 @@ const config: DocsThemeConfig = {
     content: 'Give us feedback on GitHub!',
     labels: "documentation",
   },
+  darkMode: false,
+  nextThemes: {
+    defaultTheme: 'dark',
+  },
   useNextSeoProps() {
     const { asPath } = useRouter()
     if (asPath !== '/') {
