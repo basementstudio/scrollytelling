@@ -65,6 +65,10 @@ body {
     }
   }
 
+  & details {
+    padding: 16px 14px !important;
+  }
+
   & main {
     & div:last-child a {
       @media (hover: hover) {
