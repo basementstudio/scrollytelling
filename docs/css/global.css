@@ -139,15 +139,19 @@ table {
         }
 
         &:nth-child(2) {
-          white-space: nowrap;
+          line-height: 160%;
 
           & code {
+            white-space: nowrap;
             color: var(--color-gray-light);
           }
         }
 
         &:last-child {
+          line-height: 160%;
+
           & code {
+            white-space: nowrap;
             color: var(--color-gray-light);
           }
         }
