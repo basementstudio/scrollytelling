@@ -3,23 +3,9 @@ const withNextra = require('nextra')({
   themeConfig: './theme.config.tsx',
 })
 
-const securityHeaders = [
-  {
-    key: "Access-Control-Allow-Origin",
-    value: "*",
-  },
-]
 
 module.exports = {
   ...withNextra({
-    async headers() {
-      return [
-        {
-          source: '/(.*)',
-          headers: securityHeaders,
-        },
-      ]
-    },
     images: {
       domains: ["user-images.githubusercontent.com"],
     },
