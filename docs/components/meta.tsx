@@ -18,7 +18,7 @@ export const siteOrigin = siteURL.origin
 
 const defaultMeta = {
   title: 'BSMNT Scrollytelling | Docs',
-  description: `Developer-friendly publisher of fine indie games.`,
+  description: "Docs for our animation library, @bsmnt/scrollytelling.",
   ogImage: `${siteOrigin}/og.jpg`,
   twitter: {
     handle: '@nullgames',
