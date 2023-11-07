@@ -1,7 +1,7 @@
 import NextHead from 'next/head'
 import * as React from 'react'
 
-import ogImage from '../../public/og.jpg'
+import ogImage from "../public/og.jpg"
 
 type BasicMeta = {
   title?: string
