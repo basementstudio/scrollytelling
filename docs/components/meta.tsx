@@ -1,6 +1,8 @@
 import NextHead from 'next/head'
 import * as React from 'react'
 
+import ogImage from '../../public/og.jpg'
+
 type BasicMeta = {
   title?: string
   description?: string
@@ -19,7 +21,7 @@ export const siteOrigin = siteURL.origin
 const defaultMeta = {
   title: 'BSMNT Scrollytelling | Docs',
   description: "Docs for our animation library, @bsmnt/scrollytelling.",
-  ogImage: `${siteOrigin}/og.jpg`,
+  ogImage: ogImage.src,
   twitter: {
     handle: '@nullgames',
     site: '@nullgames'
