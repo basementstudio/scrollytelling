@@ -20,9 +20,9 @@ module.exports = {
         },
       ]
     },
-    assetPrefix: process.env.NEXT_PUBLIC_SITE_URL,
     images: {
       domains: ["user-images.githubusercontent.com"],
     },
+    basePath: '/docs',
   }),
 }

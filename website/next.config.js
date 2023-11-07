@@ -10,12 +10,16 @@ const nextConfig = {
   },
   rewrites: async () => [
     {
+      source: "/:path*",
+      destination: `/:path*`,
+    },
+    {
       source: "/docs",
-      destination: process.env.NEXT_PUBLIC_DOCS_URL,
+      destination: `${process.env.NEXT_PUBLIC_DOCS_URL}/docs`,
     },
     {
       source: "/docs/:path*",
-      destination: `${process.env.NEXT_PUBLIC_DOCS_URL}/:path*`,
+      destination: `${process.env.NEXT_PUBLIC_DOCS_URL}/docs/:path*`,
     },
   ],
 };
