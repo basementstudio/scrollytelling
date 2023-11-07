@@ -8,10 +8,11 @@ const nextConfig = {
   images: {
     domains: ["lab.basement.studio"],
   },
+  assetPrefix: process.env.NEXT_PUBLIC_SITE_URL,
   rewrites: async () => [
     {
-      source: "/docs",
-      destination: process.env.NEXT_PUBLIC_DOCS_URL,
+      source: "/docs/:path*",
+      destination: process.env.NEXT_PUBLIC_DOCS_URL + "/:path*",
     },
   ],
 };

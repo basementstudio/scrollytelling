@@ -29,23 +29,24 @@ export const geistMono = localFont({
 });
 
 export default function MyApp({ Component, pageProps }) {
-  return (
-    <>
-      <Meta />
-      <Head>
-        <style
-          type="text/css"
-          dangerouslySetInnerHTML={{
-            __html: `
+
+return (
+
+<>
+  <Meta />
+  <Head>
+    <style
+      type="text/css"
+      dangerouslySetInnerHTML={{
+        __html: `
         :root {
           --font-body: ${geistSans.style.fontFamily}, sans-serif;
           --font-mono: ${geistMono.style.fontFamily}, monospace;
         }
         `,
-          }}
-        />
-      </Head>
-      <Component {...pageProps} />
-    </>
-  );
-}
+      }}
+    />
+  </Head>
+  <Component {...pageProps} />
+</>
+); }
