@@ -1,8 +1,6 @@
 import NextHead from 'next/head'
 import * as React from 'react'
 
-import ogImage from "../public/og.jpg"
-
 type BasicMeta = {
   title?: string
   description?: string
@@ -15,13 +13,13 @@ type BasicMeta = {
   prefetch?: { href: string; as: string; type: string; crossOrigin?: string }[]
 }
 
-export const siteURL = new URL(process.env.NEXT_PUBLIC_SITE_URL)
+export const siteURL = new URL(process.env.NEXT_PUBLIC_SCROLLY_URL)
 export const siteOrigin = siteURL.origin
 
 const defaultMeta = {
   title: 'BSMNT Scrollytelling | Docs',
   description: "Docs for our animation library, @bsmnt/scrollytelling.",
-  ogImage: ogImage.src,
+  ogImage: `${siteOrigin}/og.jpg`,
   twitter: {
     handle: '@nullgames',
     site: '@nullgames'
