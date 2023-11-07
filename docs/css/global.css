@@ -148,14 +148,14 @@ table {
       }
 
       & td {
+        line-height: 160%;
+
         &:first-child {
           color: var(--color-orange);
           font-weight: 600;
         }
 
         &:nth-child(2) {
-          line-height: 160%;
-
           & code {
             white-space: nowrap;
             color: var(--color-gray-light);
