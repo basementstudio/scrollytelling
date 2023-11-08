@@ -6,18 +6,18 @@ Allows the creation of timelines, scrollTrigger and their configuration; provide
 
 #### Render Props
 
-| Prop            |                                        Type                                        |                                                     Details                                                      |           Default |
-| :-------------- | :--------------------------------------------------------------------------------: | :--------------------------------------------------------------------------------------------------------------: | ----------------: |
-| `children`      |                                 `React.ReactNode`                                  |                                Optional: Children to animate, provide context to                                 |                 - |
-| `debug`         |                                                                                    |                                       Optional: Enables debugging features                                       |           `false` |
-| `start`         |                                       `enum`                                       |                       Optional: Start position of the scroll-triggered animation timeline                        |       `"top top"` |
-| `end`           |                                       `enum`                                       |                        Optional: End position of the scroll-triggered animation timeline                         | `"bottom bottom"` |
-| `callbacks`     |                                       `enum`                                       |                          Optional: Includes callbacks for various ScrollTrigger events.                          |                 - |
-| `scrub`         |                                `boolean \| number`                                 |           Optional: Whether the animation should scrub (move proportionally with the scroll position)            |            `true` |
-| `defaults`      |                                                                                    |                             Optional: An object of default values for the GSAP tween                             |                 - |
-| `toggleActions` | [See toggleActions](https://gsap.com/docs/v3/Plugins/ScrollTrigger/#config-object) | Optional: Sets how the anim is handled at toggle points (`onEnter`, `onLeave`, `onEnterBack`, and `onLeaveBack`) |                 - |
-| `trigger`       |                                                                                    |                Optional: Triggers the scroll animation. Can be a DOM element or a selector string                |           `false` |
-| `disabled`      |                                     `boolean`                                      |                                Optional: To disable the Scrollytelling component                                 |           `false` |
+| Prop                    |                                        Type                                        |                                                     Details                                                      |           Default |
+| :---------------------- | :--------------------------------------------------------------------------------: | :--------------------------------------------------------------------------------------------------------------: | ----------------: |
+| `children`              |                                 `React.ReactNode`                                  |                                Optional: Children to animate, provide context to                                 |                 - |
+| [`debug`](#debug-props) |                                                                                    |                                       Optional: Enables debugging features                                       |           `false` |
+| `start`                 |                                       `enum`                                       |                       Optional: Start position of the scroll-triggered animation timeline                        |       `"top top"` |
+| `end`                   |                                       `enum`                                       |                        Optional: End position of the scroll-triggered animation timeline                         | `"bottom bottom"` |
+| `callbacks`             |                                       `enum`                                       |                          Optional: Includes callbacks for various ScrollTrigger events.                          |                 - |
+| `scrub`                 |                                `boolean \| number`                                 |           Optional: Whether the animation should scrub (move proportionally with the scroll position)            |            `true` |
+| `defaults`              |                                                                                    |                             Optional: An object of default values for the GSAP tween                             |                 - |
+| `toggleActions`         | [See toggleActions](https://gsap.com/docs/v3/Plugins/ScrollTrigger/#config-object) | Optional: Sets how the anim is handled at toggle points (`onEnter`, `onLeave`, `onEnterBack`, and `onLeaveBack`) |                 - |
+| `trigger`               |                                                                                    |                Optional: Triggers the scroll animation. Can be a DOM element or a selector string                |           `false` |
+| `disabled`              |                                     `boolean`                                      |                                Optional: To disable the Scrollytelling component                                 |           `false` |
 
 #### `debug` Props
 
