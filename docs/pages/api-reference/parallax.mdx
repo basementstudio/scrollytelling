@@ -1,0 +1,52 @@
+import { Callout } from "nextra/components";
+
+### `<Parallax>`
+
+Parallax component applies a [parallax effect](https://en.wikipedia.org/wiki/Parallax) to its children using GSAP animations.
+
+#### Render Props
+
+| Prop                             |       Type        |           Details           | Default |
+| :------------------------------- | :---------------: | :-------------------------: | ------: |
+| [`tween`](#parallax-tween-props) |                   |        Tween config         |       - |
+| `children`                       | `React.ReactNode` | Children element to animate |       - |
+| `disabled`                       |     `boolean`     |      Disable animation      | `false` |
+
+#### Parallax Tween Props
+
+| Prop        |     Type      |                                                            Details |
+| :---------- | :-----------: | -----------------------------------------------------------------: |
+| `start`     |   `number`    |     Time where the movement starts relative to the scroll progress |
+| `end`       |   `number`    |       Time where the movement ends relative to the scroll progress |
+| `target`    | `TweenTarget` | Optional: The target element or elements to apply the animation to |
+| `movementX` |  `UnitValue`  |                     Optional: The amount of movement on the X-axis |
+| `movementY` |  `UnitValue`  |                     Optional: The amount of movement on the Y-axis |
+
+<Callout type="warning">
+  > **Keep in mind that either `movementX` or `movementY` are required for the
+  Parallax to work**
+</Callout>
+
+#### Usage
+
+```jsx copy
+import * as Scrollytelling from "@bsmnt/scrollytelling";
+
+export const HomePage = () => (
+  <Scrollytelling.Root>
+    <Scrollytelling.Parallax
+      tween={{
+        start: 0,
+        end: 100,
+        movementY: { value: 40, unit: "px" },
+      }}
+    >
+      <p>This text will move on scroll</p>
+    </Scrollytelling.Parallax>
+  </Scrollytelling.Root>
+);
+```
+
+#### Example
+
+https://stackblitz.com/edit/react-ts-wkxnja

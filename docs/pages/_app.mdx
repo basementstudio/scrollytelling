@@ -1,0 +1,50 @@
+import "../css/global.css";
+import Head from "next/head";
+import localFont from "next/font/local";
+
+export const geistSans = localFont({
+  src: [
+    {
+      path: "../public/font/Geist-Regular.woff2",
+      weight: "400",
+    },
+    {
+      path: "../public/font/Geist-Bold.woff2",
+      weight: "700",
+    },
+  ],
+});
+export const geistMono = localFont({
+  src: [
+    {
+      path: "../public/font/GeistMono-Regular.woff2",
+      weight: "400",
+    },
+    {
+      path: "../public/font/GeistMono-SemiBold.woff2",
+      weight: "600",
+    },
+  ],
+});
+
+export default function MyApp({ Component, pageProps }) {
+
+return (
+
+<>
+  <Head>
+    <style
+      type="text/css"
+      dangerouslySetInnerHTML={{
+        __html: `
+        :root {
+          --font-body: ${geistSans.style.fontFamily}, sans-serif;
+          --font-mono: ${geistMono.style.fontFamily}, monospace;
+        }
+        `,
+      }}
+    />
+  </Head>
+  <Component {...pageProps} />
+</>
+); }
