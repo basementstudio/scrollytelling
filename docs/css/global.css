@@ -185,10 +185,6 @@ table {
   gap: 2px;
 }
 
-article .nextra-scrollbar {
-  padding-left: 10px;
-}
-
 .nextra-nav-container nav {
   & > a {
     padding: 0;

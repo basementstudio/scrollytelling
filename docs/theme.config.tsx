@@ -53,7 +53,7 @@ const config: DocsThemeConfig = {
       content={defaultMeta.description}
     />
     <meta name="twitter:image" content={defaultMeta.ogImage} />
-    <meta property="og:title" content={asPath === "/" ? defaultMeta.title : (title + " | " + defaultMeta.title)} />
+    <meta property="og:title" content={defaultMeta.title} />
     <meta
       property="og:description"
       content={defaultMeta.description}
