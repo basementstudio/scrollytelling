@@ -2,6 +2,7 @@
 import React from 'react'
 import { DocsThemeConfig } from 'nextra-theme-docs'
 import { useRouter } from 'next/router'
+import { useConfig } from 'nextra-theme-docs'
 
 export const siteURL = new URL(process.env.NEXT_PUBLIC_SCROLLY_URL)
 export const siteOrigin = siteURL.origin
@@ -22,7 +23,11 @@ const config: DocsThemeConfig = {
   project: {
     link: 'https://github.com/basementstudio/scrollytelling',
   },
-  head: (<>
+  head: ()=> { 
+    const { asPath } = useRouter()
+    const { title } = useConfig()
+    
+    return (<>
     <meta
       name="viewport"
       key="viewport"
@@ -37,7 +42,7 @@ const config: DocsThemeConfig = {
     />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <link rel="manifest" href="/manifest.webmanifest" />
-    <title>{defaultMeta.title}</title>
+    <title>{asPath === "/" ? defaultMeta.title : (title + " | " + defaultMeta.title)}</title>
     <meta name="description" content={defaultMeta.description} />
     <meta name="twitter:card" content={defaultMeta.twitter.cardType} />
     <meta name="twitter:site" content={defaultMeta.twitter.site} />
@@ -48,7 +53,7 @@ const config: DocsThemeConfig = {
       content={defaultMeta.description}
     />
     <meta name="twitter:image" content={defaultMeta.ogImage} />
-    <meta property="og:title" content={defaultMeta.title} />
+    <meta property="og:title" content={asPath === "/" ? defaultMeta.title : (title + " | " + defaultMeta.title)} />
     <meta
       property="og:description"
       content={defaultMeta.description}
@@ -63,7 +68,7 @@ const config: DocsThemeConfig = {
       property="og:image:height"
       content={"630"}
     /></>
-  ),
+  )},
   chat: {
     link: 'https://discord.gg/CFM7dtXX',
   },
