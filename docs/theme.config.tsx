@@ -4,7 +4,7 @@ import { DocsThemeConfig } from 'nextra-theme-docs'
 import { useRouter } from 'next/router'
 
 const config: DocsThemeConfig = {
-  logo: <span>basement scrollytelling</span>,
+  logo: <span>docs | basement scrollytelling</span>,
   project: {
     link: 'https://github.com/basementstudio/scrollytelling',
   },
