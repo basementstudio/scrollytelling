@@ -77,6 +77,18 @@ body {
         }
       }
     }
+
+    @media (max-width: 767px) {
+      padding: 16px !important;
+    }
+  }
+
+  & footer {
+    @media (width <= 767px) {
+      > div {
+        padding: 24px !important;
+      }
+    }
   }
 }
 
@@ -200,6 +212,10 @@ table {
         color: var(--color-orange);
       }
     }
+  }
+
+  @media (max-width: 767px) {
+    padding: 16px;
   }
 }
 
