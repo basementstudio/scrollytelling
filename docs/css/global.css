@@ -213,7 +213,11 @@ table {
   font-size: 14px;
   border: 1px solid var(--color-gray-light);
   padding: 24px 8px;
-  background-color: var(--color-black) !important;
+  background-color: color-mix(
+    in srgb,
+    var(--color-black) 100%,
+    var(--color-white) 2%
+  ) !important;
 
   &::-webkit-scrollbar {
     height: 8px;
