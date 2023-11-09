@@ -5,10 +5,6 @@
   "quick-start": "Quick start",
   "api-reference": "API Reference",
   "utils": "Utils",
-  "about": {
-    "title": "About",
-    "type": "page"
-  },
   "contact": {
     "title": "Contact ↗",
     "type": "page",
