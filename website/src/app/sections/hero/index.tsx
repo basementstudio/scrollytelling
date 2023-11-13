@@ -113,6 +113,7 @@ export const Hero = () => {
             <pre>
               <code>npm i @bsmnt/scrollytelling</code>
             </pre>
+            <div className={s["cta--buttons"]}>
             <a
               href="https://github.com/basementstudio/scrollytelling"
               target="_blank"
@@ -134,6 +135,13 @@ export const Hero = () => {
               </svg>
               <span>GitHub</span>
             </a>
+            <Link 
+            target="_blank"
+            rel="noopener noreferrer"
+            className={s["docs-link"]} href="/docs">
+              <span>b</span>
+              Docs</Link>
+            </div>
           </div>
         </header>
 
