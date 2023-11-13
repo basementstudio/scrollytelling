@@ -44,6 +44,27 @@ html {
   }
 }
 
+.logo {
+  width: 140px;
+  height: auto;
+
+  & path {
+    fill: var(--color-white);
+  }
+
+  @media (hover: hover) {
+    & path {
+      transition: fill 0.2s ease-in-out;
+    }
+
+    &:hover {
+      & path {
+        fill: var(--color-orange);
+      }
+    }
+  }
+}
+
 body {
   font-family: var(--font-body);
 
