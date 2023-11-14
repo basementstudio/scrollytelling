@@ -135,12 +135,12 @@ export const Hero = () => {
               </svg>
               <span>GitHub</span>
             </a>
-            <Link 
+            <a 
             target="_blank"
             rel="noopener noreferrer"
             className={s["docs-link"]} href="/docs">
               <span>b</span>
-              Docs</Link>
+              Docs</a>
             </div>
           </div>
         </header>
