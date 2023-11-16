@@ -290,8 +290,11 @@ export const Visualizer = () => {
     window.addEventListener("scroll", onScroll);
 
     const activeRoot = roots.find((r) => {
-      const progress = r?.tween?.progress();
-      return progress !== undefined && (progress > 0 && progress < 1);
+      const progress = r?.tween?.progress() as number; 
+      const roundedProgress = Math.round(progress * 100) / 100
+
+      return roundedProgress !== undefined &&
+      (roundedProgress > 0 && roundedProgress < 1);
     }
     );
 
