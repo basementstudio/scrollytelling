@@ -27,8 +27,6 @@ export const Hero = () => {
             <LogoBasement className={s["logo"]} />
           </Link>
 
-          <Scrollytelling.Waypoint at={50} />
-
           <svg
             className={s["star"]}
             fill="none"
@@ -113,6 +111,7 @@ export const Hero = () => {
             <pre>
               <code>npm i @bsmnt/scrollytelling</code>
             </pre>
+            <div className={s["cta--buttons"]}>
             <a
               href="https://github.com/basementstudio/scrollytelling"
               target="_blank"
@@ -134,6 +133,13 @@ export const Hero = () => {
               </svg>
               <span>GitHub</span>
             </a>
+            <a 
+            target="_blank"
+            rel="noopener noreferrer"
+            className={s["docs-link"]} href="/docs">
+              <span>b</span>
+              Docs</a>
+            </div>
           </div>
         </header>
 

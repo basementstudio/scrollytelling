@@ -1,0 +1,19 @@
+### `useScrollytelling`
+
+Context consumer. Returns the `timeline`. Must be used within a `Scrollytelling.Root`.
+
+#### Usage
+
+```jsx
+import { useScrollytelling } from "@bsmnt/scrollytelling";
+
+// ...
+
+const { timeline } = useScrollytelling();
+
+useEffect(() => {
+  if (!timeline) return;
+
+  const doSomething = () => {
+    // something
+```

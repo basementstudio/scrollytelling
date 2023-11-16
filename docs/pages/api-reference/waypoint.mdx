@@ -1,0 +1,37 @@
+### `<Waypoint>`
+
+`Waypoint` allows to determine a point in a timeline in which to trigger a tween or function.
+
+#### Render Props
+
+| Prop            |                   Type                   |                                  Details                                  | Default |
+| :-------------- | :--------------------------------------: | :-----------------------------------------------------------------------: | ------: |
+| `at`            |                 `number`                 |    Scrolled percentage of timeline at which the waypoint is triggered     |       - |
+| `children`      |            `React.ReactNode`             |                       Optional: children to animate                       |       - |
+| `tween`         | `SimpleTween & { target?: TweenTarget }` | Optional: tween config and target, applied when the waypoint is triggered |       - |
+| `onCall`        |       `(() => void) \| undefined`        |              Optional: called when the waypoint is triggered              |       - |
+| `onReverseCall` |       `(() => void) \| undefined`        |        Optional: called when the waypoint is triggered on reverse         |       - |
+| `label`         |          `string \| undefined`           |                     Optional: label for the waypoint                      |       - |
+| `disabled`      |          `boolean \| undefined`          |                Optional: whether the waypoint is disabled                 | `false` |
+
+#### Usage
+
+```tsx copy
+import * as Scrollytelling from "@bsmnt/scrollytelling";
+
+export const HomePage = () => (
+  <Scrollytelling.Root>
+    <div id="fun-div">
+      <Scrollytelling.Waypoint at={50} onCall={triggerConfetti} />
+      <Scrollytelling.Waypoint
+        at={75}
+        tween={{
+          target: ["#fun-div"],
+          to: { background: "black", color: "white" },
+          duration: 0.35,
+        }}
+      />
+    </div>
+  </Scrollytelling.Root>
+);
+```

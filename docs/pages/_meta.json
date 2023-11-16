@@ -1,0 +1,14 @@
+{
+  "index": {
+    "title": "Introduction"
+  },
+  "quick-start": "Quick start",
+  "api-reference": "API Reference",
+  "utils": "Utils",
+  "contact": {
+    "title": "Contact ↗",
+    "type": "page",
+    "href": "https://twitter.com/basementstudio",
+    "newWindow": true
+  }
+}

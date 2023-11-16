@@ -1,0 +1,59 @@
+import { Callout } from "nextra/components";
+
+### `<Root>`
+
+Allows the creation of timelines, scrollTrigger and their configuration; provides React Context.
+
+#### Render Props
+
+| Prop                    |                                        Type                                        |                                                     Details                                                      |           Default |
+| :---------------------- | :--------------------------------------------------------------------------------: | :--------------------------------------------------------------------------------------------------------------: | ----------------: |
+| `children`              |                                 `React.ReactNode`                                  |                                Optional: Children to animate, provide context to                                 |                 - |
+| [`debug`](#debug-props) |                                                                                    |                                       Optional: Enables debugging features                                       |           `false` |
+| `start`                 |                                       `enum`                                       |                       Optional: Start position of the scroll-triggered animation timeline                        |       `"top top"` |
+| `end`                   |                                       `enum`                                       |                        Optional: End position of the scroll-triggered animation timeline                         | `"bottom bottom"` |
+| `callbacks`             |                                       `enum`                                       |                          Optional: Includes callbacks for various ScrollTrigger events.                          |                 - |
+| `scrub`                 |                                `boolean \| number`                                 |           Optional: Whether the animation should scrub (move proportionally with the scroll position)            |            `true` |
+| `defaults`              |                                                                                    |                             Optional: An object of default values for the GSAP tween                             |                 - |
+| `toggleActions`         | [See toggleActions](https://gsap.com/docs/v3/Plugins/ScrollTrigger/#config-object) | Optional: Sets how the anim is handled at toggle points (`onEnter`, `onLeave`, `onEnterBack`, and `onLeaveBack`) |                 - |
+| `trigger`               |                                                                                    |                Optional: Triggers the scroll animation. Can be a DOM element or a selector string                |           `false` |
+| `disabled`              |                                     `boolean`                                      |                                Optional: To disable the Scrollytelling component                                 |           `false` |
+
+#### `debug` Props
+
+| Prop         |          Type          | Details                                              |
+| :----------- | :--------------------: | ---------------------------------------------------- |
+| `label`      |        `string`        | Optional: Label to be displayed in the debug overlay |
+| `visualizer` | `boolean \| undefined` | Optional: Enable/disable visualizer                  |
+| `markers`    | `boolean \| undefined` | Optional: Enable/disable timeline markers            |
+
+#### Usage
+
+```jsx copy
+import * as Scrollytelling from "@bsmnt/scrollytelling";
+
+export const Footer = () => (
+  <Scrollytelling.Root start="top 80%" debug={{ label: "Footer" }}>
+    <footer className={s.footer}>
+      <div className={s["container"]}>
+        <Scrollytelling.Animation
+          tween={{
+            start: 60,
+            end: 100,
+            from: {
+              y: "-120%",
+              position: "absolute",
+              x: isDesktopSm ? "-8vw" : toVw(-20),
+              scale: 0.6,
+            },
+          }}
+        >
+          <a href={ghHref} target="_blank" rel="noreferrer">
+            <Image className={s.QR} src={QRImg} alt="QR" />
+          </a>
+        </Scrollytelling.Animation>
+      </div>
+    </footer>
+  </Scrollytelling.Root>
+);
+```

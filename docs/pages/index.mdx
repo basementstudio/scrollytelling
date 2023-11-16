@@ -1,0 +1,113 @@
+import { Callout } from "nextra/components";
+import Image from "next/image";
+import scrollyLogo from "../public/assets/home-img.jpg";
+
+# BSMNT Scrollytelling
+
+**BSMNT Scrollytelling** is a library for creating Scrollytelling animations. It's powered by GSAP ScrollTrigger, but abstracts away some things to make it work better with React.
+
+<Image
+  src={scrollyLogo}
+  quality={95}
+  sizes="(max-width: 767px) 100vw, 840px"
+  placeholder="blur"
+  alt="Hello"
+/>
+
+## Why
+
+At [basement](https://basement.studio/), we've built a bunch of websites that use scroll animations. Over the years, we faced some issues that required solutions that we copy-pased throughout different project. We decided to build a library to share how we build these with the world.
+
+**Challenges we faced**
+
+- Needed a deep understanding of how GSAP works with ScrollTrigger.
+- Needed to be careful about running animations inside `useEffect` and then cleaning them up.
+- Couldn’t think of scroll animations in terms of a `start` and an `end`, so it was hard to fire up animations at the exact scroll progress we needed to.
+
+## What
+
+We aimed at componentizing a way of building scroll animations that could:
+
+- ✅ Provide sensible defaults for scroll animations, such as `scrub: true`, and `ease: 'linear'`.
+- ✅ Take care of component mounting and unmounting.
+- ✅ Create animations with absolute positioning defined by a `start` and an `end`, instead of a time-based `duration`.
+
+As an added benefit, going "component-based" allowed us to:
+
+- ✅ Improve compatibility with React Server Components: our components definitely `'use client'`, but not necessarily the parents or children of our components.
+- ✅ Compose animations at every level of the tree, as it all works with React Context.
+
+A simple example of how this works:
+
+**_With plain GSAP:_**
+
+```tsx
+'use client' ;
+
+import { gsap } from 'gsap' ;
+import Scr011Trigger from 'gsap/dist /Scr011Trigger ' ;
+import { useEffect } from 'react' ;
+
+const Component = () => {
+  useEffect(() => {
+    gsap.registerPlugin(ScrollTrigger);
+
+    const timeline = gsap.timeline({
+      scr011Trigger: {
+        scrub: true,
+        trigger: ".container",
+      },
+    });
+
+    timeline.from(".title"), {opacity: 0, scale: 0.9, duration: 0.5});
+    timeline.to(".box", {rotate: 360, duration: 2});
+    timeline.to(".box", {y: 100, duration: 0.3});
+
+    return () => {
+      timeline.revert();
+    };
+  }, []);
+
+  return (
+    <div className="container">
+      <h1 className="title">Hello World</h1>
+      <div className="box" />
+    </div>
+  );
+};
+```
+
+**_With BSMNT Scrollytelling:_**
+
+```tsx copy
+import * as Scrollytelling from "@bsmnt/scrollytelling";
+
+const Component = () => {
+  return (
+    <Scrollytelling.Root>
+      <div className="container">
+        <Scrollytelling.Animation
+          tween={{ start: 0, end: 30, from: { opacity: 0, scale: 0.9 } }}
+        >
+          <h1 className="title">Hello World</h1>
+        </Scrollytelling.Animation>
+        <Scrollytelling.Animation
+          tween={[
+            { start: 30, end: 80, to: { rotate: 360 } },
+            { start: 80, end: 100, to: { y: 100 } },
+          ]}
+        >
+          <div className="box" />
+        </Scrollytelling.Animation>
+      </div>
+    </Scrollytelling.Root>
+  );
+};
+```
+
+---
+
+<Callout type="info">
+  _GSAP files are subject to GreenSock's standard license which can be found at
+  [https://greensock.com/standard-license/](https://greensock.com/standard-license/)_
+</Callout>

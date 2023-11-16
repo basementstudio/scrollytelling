@@ -1,0 +1,46 @@
+### `<Animation>`
+
+`Animation` appends a configurable anim to the timeline. Acts as a wrapper for the animation of children elements.
+
+#### Render Props
+
+| Prop       |                 Type                  |         Details         | Default |
+| :--------- | :-----------------------------------: | :---------------------: | ------: |
+| `children` |           `React.ReactNode`           |   Children to animate   |       - |
+| `tween`    | `DataOrDataArray<TweenWithTargetDef>` | Animation configuration |       - |
+| `disabled` |               `boolean`               |   Disable animations    | `false` |
+
+#### Usage
+
+```jsx copy
+import * as Scrollytelling from "@bsmnt/scrollytelling";
+
+export const HomePage = () => (
+  <Scrollytelling.Root disabled={isDisabled} key={i} debug={{ label: "texts" }}>
+    <div style={{ height: "200vh", background: "black" }}>
+      <div style={{ position: "sticky", top: 0 }}>
+        <Scrollytelling.Animation
+          tween={{
+            start: 0,
+            end: 100,
+            to: { scale: 1.5 },
+          }}
+        >
+          <h1
+            style={{
+              fontSize: "5rem",
+              transformOrigin: "top left",
+            }}
+          >
+            This is a text
+          </h1>
+        </Scrollytelling.Animation>
+      </div>
+    </div>
+  </Scrollytelling.Root>
+);
+```
+
+#### Example
+
+https://stackblitz.com/edit/react-ts-8rqm8k

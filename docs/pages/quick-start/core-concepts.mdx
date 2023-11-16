@@ -1,3 +1,6 @@
+import Image from "next/image";
+import pinImg from "../../public/assets/pin.png";
+
 ## Core concepts
 
 ### How the Pin internally works
@@ -6,7 +9,13 @@ What is a `Pin Spacer`?
 
 The Pin Spacer is the container where the Pin itself (with all its children) moves when pinned. It tells the Pin where the boundaries of its movement are.
 
-![How the Pin component works](../website/public/docs/pin.png)
+<Image
+  src={pinImg}
+  quality={95}
+  sizes="(max-width: 767px) 100vw, 840px"
+  placeholder="blur"
+  alt="Hello"
+/>
 
 ### What the heck is a tween?
 
@@ -17,10 +26,4 @@ From [gsap docs](https://greensock.com/docs/v3/GSAP/Tween):
 
 In this library we took this tween definition and use it with a few tweaks[^1] for our `Animation` component and its variants (`Pin`, `Parallax`, etc.)
 
-[^1]: For example we remove the duration and use `start` and `end` props based on the scrolling progress inside the `<Pin />` component to set the correct duration for each animation (_tween_).
-
----
-
-## Next Steps
-
-📕 [API Reference](/docs/api.md)
+[^1]: _For example we remove the duration and use `start` and `end` props based on the scrolling progress inside the `<Pin />` component to set the correct duration for each animation (*tween*)._

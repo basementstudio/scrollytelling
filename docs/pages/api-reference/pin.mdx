@@ -1,0 +1,40 @@
+### `<Pin>`
+
+The `Pin` component enables pinning an element in its initial position while the remaining content scrolls. It ensures that the pinned element stays fixed at its starting position within the active duration of Scrollytelling.
+
+#### Render Props
+
+| Prop                 |        Type        |                             Details                             | Default |
+| :------------------- | :----------------: | :-------------------------------------------------------------: | ------: |
+| `tween`              | `string \| number` |             Height of the pinned element in the pin             |       - |
+| `pinSpacerHeight`    | `string \| number` | Height of the spacer reserved for the pinned element in the pin |       - |
+| `childClassName`     |      `string`      |      Optional: Custom CSS class name for the child element      |       - |
+| `children`           | `React.ReactNode`  |   Optional: Content to be rendered inside the pinned element    |       - |
+| `pinSpacerClassName` |      `string`      |   Optional: Custom CSS class name for the pin spacer element    |       - |
+| `top`                | `string \| number` |      Optional: Custom top position for the pinned element       |     `0` |
+
+#### Usage
+
+```jsx copy
+import * as Scrollytelling from "@bsmnt/scrollytelling";
+
+export const HomePage = () => (
+  <Scrollytelling.Root>
+    <Scrollytelling.Pin childHeight={0} pinSpacerHeight={"100vh"} top={0}>
+      <section className="section">
+        <div className="wrapper">
+          <h1>Layered pinning 1</h1>
+        </div>
+      </section>
+    </Scrollytelling.Pin>
+  </Scrollytelling.Root>
+);
+```
+
+#### Example
+
+https://stackblitz.com/edit/react-ts-kittrj
+
+**_With horizontal scrolling:_**
+
+https://stackblitz.com/edit/stackblitz-starters-fx6y3a

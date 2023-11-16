@@ -1,0 +1,6 @@
+{
+  "register-gsap-plugins": "RegisterGsapPlugins",
+  "image-sequence-canvas": "ImageSequenceCanvas",
+  "use-scroll-to-label": "useScrollToLabel",
+  "use-scrollytelling": "useScrollytelling"
+}

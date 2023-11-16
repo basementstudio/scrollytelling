@@ -1,0 +1,39 @@
+### `<Stagger>`
+
+The `Stagger` component enables staggered animations that start at different times (with optional overlaps) for a group of elements.
+
+#### Render Props
+
+| Prop       |                     Type                     |                     Details                      | Default |
+| :--------- | :------------------------------------------: | :----------------------------------------------: | ------: |
+| `children` |              `React.ReactNode`               |          Optional: Children to animate           |       - |
+| `overlap`  |                   `number`                   | Optional: Overlap factor for animations (0 to 1) |       - |
+| `tween`    | `TweenWithChildrenDef \| TweenWithTargetDef` |           Animation config and target            |       - |
+| `disabled` |                  `boolean`                   |                Disable animations                | `false` |
+
+#### Usage
+
+```jsx copy
+import * as Scrollytelling from "@bsmnt/scrollytelling";
+
+export const HomePage = () => (
+  <Scrollytelling.Root>
+    <Scrollytelling.Stagger
+      overlap={0.2}
+      tween={{
+        start: 0,
+        end: 100,
+        // Animation configuration here
+      }}
+    >
+      <div className="animated-element">Element 1</div>
+      <div className="animated-element">Element 2</div>
+      <div className="animated-element">Element 3</div>
+    </Scrollytelling.Stagger>
+  </Scrollytelling.Root>
+);
+```
+
+#### Example
+
+https://stackblitz.com/edit/stackblitz-starters-jg37zm

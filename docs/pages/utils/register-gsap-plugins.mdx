@@ -1,0 +1,19 @@
+### `<RegisterGsapPlugins>`
+
+Registers custom **GSAP** plugins, if you need them for a specific use case.
+
+#### Usage
+
+```tsx
+import * as Scrollytelling from "@bsmnt/scrollytelling";
+import { CSSRulePlugin } from "gsap/dist/CSSRulePlugin";
+import { TextPlugin } from "gsap/dist/TextPlugin";
+
+export const BaboldComp = () => {
+  return (
+    <>
+      <Scrollytelling.RegisterGsapPlugins plugins={[CSSRulePlugin, TextPlugin]}>
+      <Scrollytelling.Root scrub={0.75}>
+        <div className={s["section"]}>
+//...
+```
