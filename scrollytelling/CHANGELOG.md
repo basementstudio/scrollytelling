@@ -1,5 +1,12 @@
 # @bsmnt/scrollytelling
 
+## 0.3.1
+
+### Patch Changes
+
+- 642ea58: - Fix visualizer size and content issues on mobile viewports
+- 03c2632: fix scrub false + default toggleActions mix causing a bug
+
 ## 0.3.0
 
 ### Minor Changes
