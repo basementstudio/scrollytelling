@@ -102,6 +102,9 @@ const Scrollytelling = ({
 
     gsap.registerPlugin(ScrollTrigger);
 
+    // fixes https://github.com/basementstudio/scrollytelling/issues/41
+    const defaultToggleActions = scrub === false ? "play none none none" : undefined;
+
     const tl = gsap.timeline({
       scrollTrigger: {
         markers: debugMarkers,
@@ -109,7 +112,7 @@ const Scrollytelling = ({
         start: start ?? "top top",
         end: end ?? "bottom bottom",
         trigger: explicitTriggerMode ? trigger : ref.current,
-        toggleActions,
+        toggleActions: toggleActions ?? defaultToggleActions,
         ...callbacks,
       },
       paused: true,

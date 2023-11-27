@@ -32,7 +32,7 @@ export default defineConfig({
   dts: true,
   format: ["cjs", "esm"],
   sourcemap: false,
-  minify: process.env.NODE_ENV !== "development",
+  minify: false,
   treeshake: true,
   splitting: true,
   injectStyle: true,

@@ -49,7 +49,7 @@ export type WaypointBaseDef = {
 };
 
 export type StaggerBaseDef = {
-  overlap: number;
+  overlap?: number;
   disabled?: boolean;
 };
 

@@ -26,7 +26,7 @@ export function Stagger(
 
 export function Stagger({
   children,
-  overlap,
+  overlap = 0,
   tween,
   disabled = false,
 }: StaggerBaseDef & {
