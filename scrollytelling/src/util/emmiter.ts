@@ -20,8 +20,12 @@ export class Emitter {
 
     // Return an unsubscribe function
     return () => {
-      this.events[event] = this.events[event]?.filter((i) => cb !== i) ?? [];
+      this.off(event, cb);
     };
+  }
+
+  off(event: string, cb: Callback) {
+    this.events[event] = this.events[event]?.filter((i) => cb !== i) ?? [];
   }
 
   destroy() {
