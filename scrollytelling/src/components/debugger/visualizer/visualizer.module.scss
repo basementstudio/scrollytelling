@@ -57,7 +57,11 @@
       align-items: center;
 
       .button {
-        padding: 4px;
+        color: var(--color-white);
+        display: flex;
+        align-items: center;
+        height: 24px;
+        padding: 0px 4px;
         border-radius: 4px;
         background: var(--color-gray);
         border: 1px solid var(--color-gray-light);
@@ -305,6 +309,7 @@
     appearance: none;
     cursor: pointer;
     background: var(--color-gray);
+    color: var(--color-white);
     border: 1px solid var(--color-gray-light);
     height: 24px;
     border-radius: 4px;

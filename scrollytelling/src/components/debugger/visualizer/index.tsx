@@ -470,6 +470,11 @@ export const Visualizer = () => {
     });
   }, []);
 
+  useEffect(() => {
+    // Force refresh on mount
+    internalEventEmmiter.emit("timeline:refresh");
+  }, []);
+
   if (dismiss) return <></>;
 
   return (
