@@ -1,5 +1,12 @@
 # @bsmnt/scrollytelling
 
+## 0.3.2
+
+### Patch Changes
+
+- 7b5128d: Make visualizer focus on active Scrollytelling as you scroll.
+- fd8a066: Visualizer bugfixing & UI corrections
+
 ## 0.3.1
 
 ### Patch Changes
