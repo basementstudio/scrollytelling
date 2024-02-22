@@ -1,6 +1,7 @@
 {
   "name": "docs",
   "version": "1.0.0",
+  "private": true,
   "description": "Scrollytelling docs",
   "scripts": {
     "dev": "next dev",
