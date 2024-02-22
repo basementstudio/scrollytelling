@@ -12,8 +12,9 @@ import {
 } from "../../types";
 import * as React from "react";
 import { useScrollytelling } from "../../primitive";
-import { getTweenTarget, getValidAt, buildDeclarativeTween } from "../../util";
+import { getTweenTarget, buildDeclarativeTween } from "../../util";
 import { DataAttribute } from "../debugger/visualizer/shared-types";
+import { useDispatcher } from "../../context";
 
 export function Waypoint(
   props: WaypointBaseDef & {
@@ -46,7 +47,8 @@ export function Waypoint({
     "idle"
   );
 
-  const { timeline } = useScrollytelling();
+  const { timeline,  } = useScrollytelling();
+  const { getTimelineSpace } = useDispatcher();
 
   const waypointLabel = label ?? `label-${id}`;
 
@@ -67,8 +69,9 @@ export function Waypoint({
       });
       generatedTween = gsap.getById<gsap.core.Tween>(id + "-tween");
     }
-
-    const validAt = getValidAt(at);
+    
+    const space = getTimelineSpace({ start: at, end: at })
+    if (!space) return
 
     // create a new paused set
     const newSet = gsap.set(
@@ -114,19 +117,20 @@ export function Waypoint({
     };
 
     // add it to the timeline
-    timeline.add(newSet, validAt);
+    timeline.add(newSet, space.position);
 
     // this won't actually play it. it will enable it so that the timeline can play it whenever it needs to
     newSet.play();
 
-    timeline.addLabel(waypointLabel, validAt);
+    timeline.addLabel(waypointLabel, space.position);
 
     return () => {
       gsap.getById(id)?.revert();
       cleanupTween?.();
       timeline.removeLabel(waypointLabel);
+      space.cleanup()
     };
-  }, [at, disabled, id, waypointLabel, onCall, onReverseCall, timeline, tween]);
+  }, [at, disabled, getTimelineSpace, id, onCall, onReverseCall, timeline, tween, waypointLabel]);
 
   if (children) {
     return <Slot ref={ref}>{children}</Slot>;
